@@ -16,6 +16,7 @@ import AdminSaveButton from '@/components/admin/AdminSaveButton';
 const TABS = [
   { id: 'hero', label: 'Hero' },
   { id: 'problem', label: 'Problem' },
+  { id: 'dashboard', label: 'Dashboard' },
   { id: 'health', label: 'Health' },
   { id: 'convenience', label: 'Convenience' },
   { id: 'progress', label: 'Progress' },
@@ -306,6 +307,36 @@ export default function LocalPage() {
               </AdminCard>
             ))}
           </>
+        )}
+
+        {/* ── DASHBOARD ────────────────────────────────────── */}
+        {activeTab === 'dashboard' && (
+          <AdminCard title="Dashboard — Showcase section" subtitle="Dark green section between How It Works and Health">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <AdminInput
+                label="Tag"
+                value={content.dashboardShowcase.tag}
+                onChange={(e) => update('dashboardShowcase', { ...content.dashboardShowcase, tag: e.target.value })}
+              />
+              <AdminInput
+                label="Heading"
+                value={content.dashboardShowcase.heading}
+                onChange={(e) => update('dashboardShowcase', { ...content.dashboardShowcase, heading: e.target.value })}
+              />
+              <TextareaField
+                label="Intro"
+                value={content.dashboardShowcase.intro}
+                onChange={(val) => update('dashboardShowcase', { ...content.dashboardShowcase, intro: val })}
+                rows={3}
+              />
+              <TextareaField
+                label="Features (one per line)"
+                value={content.dashboardShowcase.features.join('\n')}
+                onChange={(val) => update('dashboardShowcase', { ...content.dashboardShowcase, features: val.split('\n') })}
+                rows={content.dashboardShowcase.features.length + 1}
+              />
+            </div>
+          </AdminCard>
         )}
 
         {/* ── HEALTH ───────────────────────────────────────── */}

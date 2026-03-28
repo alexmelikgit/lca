@@ -39,6 +39,18 @@
       }
     ]
   },
+  "dashboardShowcase": {
+    "tag": "Your dashboard",
+    "heading": "Track every stage of your harvest.",
+    "intro": "From the moment seeds go in to the day of delivery — you see everything. No guessing, no uncertainty.",
+    "features": [
+      "Live plot status and current growth stage",
+      "Weekly photo updates from your farmer",
+      "Upcoming delivery day and estimated contents",
+      "Estimated harvest weight per crop type",
+      "Season progress timeline and weather notes"
+    ]
+  },
   "health": {
     "tag": "What you gain",
     "heading": "Food the way it was meant to be.",

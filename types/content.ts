@@ -179,9 +179,17 @@ export interface CtaFooterContent {
   note: string;
 }
 
+export interface DashboardShowcaseContent {
+  tag: string;
+  heading: string;
+  intro: string;
+  features: string[];
+}
+
 export interface LocalContent {
   hero: HeroContent;
   problem: ProblemContent;
+  dashboardShowcase: DashboardShowcaseContent;
   health: HealthContent;
   convenience: ConvenienceContent;
   progress: ProgressContent;

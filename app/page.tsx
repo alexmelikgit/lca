@@ -3,6 +3,7 @@ import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
 import Problem from '@/components/sections/Problem';
 import HowItWorks from '@/components/sections/HowItWorks';
+import DashboardShowcase from '@/components/sections/DashboardShowcase';
 import Health from '@/components/sections/Health';
 import Convenience from '@/components/sections/Convenience';
 import Progress from '@/components/sections/Progress';
@@ -29,6 +30,7 @@ export default async function Home() {
         <Hero content={local.hero} />
         <Problem content={local.problem} />
         <HowItWorks content={howItWorks} />
+        <DashboardShowcase content={local.dashboardShowcase} />
         <Health content={local.health} />
         <Convenience content={local.convenience} />
         <Progress content={local.progress} />
