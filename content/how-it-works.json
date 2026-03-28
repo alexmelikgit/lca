@@ -1,0 +1,27 @@
+{
+  "tag": "How it works",
+  "heading": "From plot to plate — in four steps.",
+  "intro": "No farming experience needed. We handle everything from soil to your door.",
+  "steps": [
+    {
+      "id": "step-1",
+      "title": "Choose your plot",
+      "description": "Pick your plot size, preferred region, and the crops you want. We'll match you with available land near Yerevan."
+    },
+    {
+      "id": "step-2",
+      "title": "A farmer takes care of it",
+      "description": "A real local farmer tends your plot — planting, watering, harvesting. You know their name and their land."
+    },
+    {
+      "id": "step-3",
+      "title": "Track everything on your dashboard",
+      "description": "See photos of your plot, growth stages, weather updates, and when your next harvest is expected."
+    },
+    {
+      "id": "step-4",
+      "title": "Receive weekly deliveries",
+      "description": "As your crops ripen, they're harvested and delivered to your door — 1–2 kg at a time, fresh and seasonal."
+    }
+  ]
+}

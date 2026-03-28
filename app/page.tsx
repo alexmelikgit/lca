@@ -1,0 +1,44 @@
+import { getNavContent, getHowItWorksContent, getLocalContent } from '@/lib/content';
+import Navbar from '@/components/layout/Navbar';
+import Hero from '@/components/sections/Hero';
+import Problem from '@/components/sections/Problem';
+import HowItWorks from '@/components/sections/HowItWorks';
+import Health from '@/components/sections/Health';
+import Convenience from '@/components/sections/Convenience';
+import Progress from '@/components/sections/Progress';
+import Farmer from '@/components/sections/Farmer';
+import Seasonal from '@/components/sections/Seasonal';
+import Trust from '@/components/sections/Trust';
+import FAQ from '@/components/sections/FAQ';
+import About from '@/components/sections/About';
+import CTAFooter from '@/components/sections/CTAFooter';
+
+export const revalidate = 60;
+
+export default async function Home() {
+  const [nav, howItWorks, local] = await Promise.all([
+    getNavContent(),
+    getHowItWorksContent(),
+    getLocalContent(),
+  ]);
+
+  return (
+    <>
+      <Navbar content={nav} page="local" />
+      <main>
+        <Hero content={local.hero} />
+        <Problem content={local.problem} />
+        <HowItWorks content={howItWorks} />
+        <Health content={local.health} />
+        <Convenience content={local.convenience} />
+        <Progress content={local.progress} />
+        <Farmer content={local.farmer} />
+        <Seasonal content={local.seasonal} />
+        <Trust content={local.trust} />
+        <FAQ content={local.faq} />
+        <About content={local.about} />
+        <CTAFooter content={local.ctaFooter} />
+      </main>
+    </>
+  );
+}

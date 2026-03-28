@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap');
+@import "tailwindcss";
+
+/* ─── Design Tokens ──────────────────────────────────────────── */
+:root {
+  /* Greens */
+  --green-deep:   #2D5A27;
+  --green:        #3D7A35;
+  --green-mid:    #5A9B50;
+  --green-light:  #A8D4A0;
+  --green-pale:   #E8F5E4;
+
+  /* Golds */
+  --gold:         #C49A3C;
+  --gold-light:   #F0D98A;
+  --gold-pale:    #FBF3DC;
+
+  /* Earths */
+  --soil:         #8B5E3C;
+  --soil-pale:    #F5EBE0;
+
+  /* Neutrals */
+  --cream:        #FBF8F2;
+  --cream2:       #F0EBE0;
+  --ink:          #1A1A14;
+  --ink2:         #4A4A3A;
+  --ink3:         #8A8A72;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+/* ─── Typography Utilities ───────────────────────────────────── */
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.text-display {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+  line-height: 1.15;
+}
+
+.text-h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.25;
+}
+
+.text-label {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 3px; }

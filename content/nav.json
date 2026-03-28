@@ -1,0 +1,52 @@
+{
+  "logoMain": "Own a Piece of",
+  "logoHighlight": "Armenias",
+  "localCta": "Join the pre-pilot",
+  "diasporaCta": "Get your plot",
+  "diasporaLinkText": "For the diaspora",
+  "localLinkText": "For those living in Armenia",
+  "localLinks": [
+    {
+      "id": "ll-1",
+      "label": "How it works",
+      "href": "#how-it-works"
+    },
+    {
+      "id": "ll-2",
+      "label": "Dashboard",
+      "href": "#dashboard"
+    },
+    {
+      "id": "ll-3",
+      "label": "Progress",
+      "href": "#progress"
+    },
+    {
+      "id": "ll-4",
+      "label": "FAQ",
+      "href": "#faq"
+    }
+  ],
+  "diasporaLinks": [
+    {
+      "id": "dl-1",
+      "label": "How it works",
+      "href": "#how-it-works"
+    },
+    {
+      "id": "dl-2",
+      "label": "Our farmers",
+      "href": "#farmers"
+    },
+    {
+      "id": "dl-3",
+      "label": "Pricing",
+      "href": "#pricing"
+    },
+    {
+      "id": "dl-4",
+      "label": "FAQ",
+      "href": "#faq"
+    }
+  ]
+}
