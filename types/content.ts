@@ -189,6 +189,7 @@ export interface DashboardShowcaseContent {
 export interface LocalContent {
   hero: HeroContent;
   problem: ProblemContent;
+  howItWorks: HowItWorksContent;
   dashboardShowcase: DashboardShowcaseContent;
   health: HealthContent;
   convenience: ConvenienceContent;

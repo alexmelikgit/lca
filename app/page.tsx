@@ -1,4 +1,4 @@
-import { getNavContent, getHowItWorksContent, getLocalContent } from '@/lib/content';
+import { getNavContent, getLocalContent } from '@/lib/content';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
 import Problem from '@/components/sections/Problem';
@@ -17,9 +17,8 @@ import CTAFooter from '@/components/sections/CTAFooter';
 export const revalidate = 60;
 
 export default async function Home() {
-  const [nav, howItWorks, local] = await Promise.all([
+  const [nav, local] = await Promise.all([
     getNavContent(),
-    getHowItWorksContent(),
     getLocalContent(),
   ]);
 
@@ -29,7 +28,7 @@ export default async function Home() {
       <main>
         <Hero content={local.hero} />
         <Problem content={local.problem} />
-        <HowItWorks content={howItWorks} />
+        <HowItWorks content={local.howItWorks} />
         <DashboardShowcase content={local.dashboardShowcase} />
         <Health content={local.health} />
         <Convenience content={local.convenience} />

@@ -10,9 +10,18 @@
     "secondaryCtaLabel": "See how it works",
     "secondaryCtaHref": "#how-it-works",
     "stats": [
-      { "value": "100%", "label": "Traceable" },
-      { "value": "Weekly", "label": "Deliveries" },
-      { "value": "Real", "label": "Your plot" }
+      {
+        "value": "101%",
+        "label": "Traceable"
+      },
+      {
+        "value": "Weekly",
+        "label": "Deliveries"
+      },
+      {
+        "value": "Real",
+        "label": "Your plot"
+      }
     ]
   },
   "problem": {
@@ -119,21 +128,36 @@
         "year": "Year 1",
         "size": "2 m²",
         "label": "Getting started",
-        "features": ["2–3 crop types", "Weekly 1–2 kg deliveries", "Dashboard access", "Farmer updates"]
+        "features": [
+          "2–3 crop types",
+          "Weekly 1–2 kg deliveries",
+          "Dashboard access",
+          "Farmer updates"
+        ]
       },
       {
         "id": "m2",
         "year": "Year 2",
         "size": "6 m²",
         "label": "Growing roots",
-        "features": ["5–6 crop types", "Larger weekly harvests", "Seasonal calendar", "Named plot certificate"]
+        "features": [
+          "5–6 crop types",
+          "Larger weekly harvests",
+          "Seasonal calendar",
+          "Named plot certificate"
+        ]
       },
       {
         "id": "m3",
         "year": "Year 3",
         "size": "15 m²",
         "label": "Your farm",
-        "features": ["Full seasonal rotation", "Guest harvest visits", "Custom crop requests", "Priority new plots"]
+        "features": [
+          "Full seasonal rotation",
+          "Guest harvest visits",
+          "Custom crop requests",
+          "Priority new plots"
+        ]
       }
     ]
   },
@@ -155,28 +179,53 @@
         "name": "Spring",
         "months": "Mar – May",
         "color": "#5A9B50",
-        "crops": ["Lettuce", "Spinach", "Radish", "Spring onion", "Peas", "Herbs"]
+        "crops": [
+          "Lettuce",
+          "Spinach",
+          "Radish",
+          "Spring onion",
+          "Peas",
+          "Herbs"
+        ]
       },
       {
         "id": "s2",
         "name": "Summer",
         "months": "Jun – Aug",
         "color": "#C49A3C",
-        "crops": ["Tomatoes", "Cucumbers", "Peppers", "Eggplant", "Zucchini", "Basil"]
+        "crops": [
+          "Tomatoes",
+          "Cucumbers",
+          "Peppers",
+          "Eggplant",
+          "Zucchini",
+          "Basil"
+        ]
       },
       {
         "id": "s3",
         "name": "Autumn",
         "months": "Sep – Nov",
         "color": "#8B5E3C",
-        "crops": ["Squash", "Pumpkin", "Beets", "Carrots", "Kale", "Leeks"]
+        "crops": [
+          "Squash",
+          "Pumpkin",
+          "Beets",
+          "Carrots",
+          "Kale",
+          "Leeks"
+        ]
       },
       {
         "id": "s4",
         "name": "Winter",
         "months": "Dec – Feb",
         "color": "#4A4A3A",
-        "crops": ["Root vegetables", "Winter greens", "Stored preserves"]
+        "crops": [
+          "Root vegetables",
+          "Winter greens",
+          "Stored preserves"
+        ]
       }
     ]
   },
@@ -245,11 +294,11 @@
   },
   "about": {
     "tag": "Why this exists",
-    "name": "Alex Petrosyan",
+    "name": "Aleksandr Melikyan",
     "role": "Founder",
-    "paragraph1": "I'm a web developer who grew up eating vegetables from my grandmother's garden in Vanadzor. When I moved to Yerevan, I spent years eating supermarket produce and noticing how different — how empty — it tasted.",
-    "paragraph2": "I started renting a small plot myself, but managing it alone was too much alongside a full-time job. I figured if I felt that way, others probably did too. So I started asking around.",
-    "paragraph3": "Own a Piece of Armenia is the result of those conversations. It's built around one belief: that people in Yerevan deserve to know exactly where their food comes from — and to have the time to enjoy it.",
+    "paragraph1": "I started in code. Nine years building websites and platforms — readable, functional, clean. I thought in systems and logic. Then I started hiking. Not once or twice — seriously, repeatedly, deep into Armenian mountains through the Bardzunk movement I co-founded. And somewhere on those trails something shifted.",
+    "paragraph2": "I started understanding Armenia differently. Not as a concept or a heritage word, but as soil, altitude, water, light. I started noticing that every Armenian I met — regardless of where they were born or how far they'd drifted — had this pull toward land. Not metaphorical. Physical. Like something encoded.",
+    "paragraph3": "That's where this idea came from. Not from a business model. From a hike. From watching someone touch Armenian soil and go quiet.\n\nI'm a builder. I know how to start something small, prove it works, and grow it carefully. I've done it with code, with hiking programs, with educational projects. I'm not asking you to trust a pitch — I'm asking you to watch me build this in public, one season at a time. The failures will be documented the same as the successes.\n\n",
     "trustText": "Pre-pilot opening spring 2025 · 20 plots · Armavir region"
   },
   "ctaFooter": {

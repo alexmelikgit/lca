@@ -7,7 +7,6 @@ import { signOut } from 'next-auth/react';
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin', icon: '▤' },
   { label: 'Navigation', href: '/admin/navigation', icon: '≡' },
-  { label: 'How It Works', href: '/admin/how-it-works', icon: '◈' },
   { label: 'Local Page', href: '/admin/local', icon: '◉' },
   { label: 'Diaspora Page', href: '/admin/diaspora', icon: '◎' },
   { label: 'Farmer Profile', href: '/admin/farmer', icon: '◌' },

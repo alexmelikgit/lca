@@ -16,6 +16,7 @@ import AdminSaveButton from '@/components/admin/AdminSaveButton';
 const TABS = [
   { id: 'hero', label: 'Hero' },
   { id: 'problem', label: 'Problem' },
+  { id: 'howItWorks', label: 'How It Works' },
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'health', label: 'Health' },
   { id: 'convenience', label: 'Convenience' },
@@ -301,6 +302,54 @@ export default function LocalPage() {
                     onChange={(val) => {
                       const cards = content.problem.cards.map((c, ci) => ci === i ? { ...c, description: val } : c);
                       update('problem', { ...content.problem, cards });
+                    }}
+                  />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+
+        {/* ── HOW IT WORKS ─────────────────────────────────── */}
+        {activeTab === 'howItWorks' && (
+          <>
+            <AdminCard title="How It Works — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput
+                  label="Tag"
+                  value={content.howItWorks.tag}
+                  onChange={(e) => update('howItWorks', { ...content.howItWorks, tag: e.target.value })}
+                />
+                <AdminInput
+                  label="Heading"
+                  value={content.howItWorks.heading}
+                  onChange={(e) => update('howItWorks', { ...content.howItWorks, heading: e.target.value })}
+                />
+                <TextareaField
+                  label="Intro"
+                  value={content.howItWorks.intro}
+                  onChange={(val) => update('howItWorks', { ...content.howItWorks, intro: val })}
+                />
+              </div>
+            </AdminCard>
+
+            {content.howItWorks.steps.map((step, i) => (
+              <AdminCard key={step.id} title={`Step ${i + 1} — ${step.title}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput
+                    label="Title"
+                    value={step.title}
+                    onChange={(e) => {
+                      const steps = content.howItWorks.steps.map((s, si) => si === i ? { ...s, title: e.target.value } : s);
+                      update('howItWorks', { ...content.howItWorks, steps });
+                    }}
+                  />
+                  <TextareaField
+                    label="Description"
+                    value={step.description}
+                    onChange={(val) => {
+                      const steps = content.howItWorks.steps.map((s, si) => si === i ? { ...s, description: val } : s);
+                      update('howItWorks', { ...content.howItWorks, steps });
                     }}
                   />
                 </div>
