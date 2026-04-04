@@ -44,8 +44,7 @@ export default function Sidebar() {
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
         <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 400, fontSize: '0.95rem', color: 'white', lineHeight: 1.3 }}>
-          Own a Piece of{' '}
-          <span style={{ color: '#C49A3C', fontStyle: 'italic' }}>Armenia</span>
+          Hye<span style={{ color: '#C49A3C', fontStyle: 'italic' }}>land</span>
         </div>
         <div style={{ marginTop: '4px', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
           Admin Panel
@@ -109,7 +108,7 @@ export default function Sidebar() {
           ↪ Sign out
         </button>
         <div style={{ marginTop: '10px', fontSize: '0.65rem', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.06em' }}>
-          Own a Piece of Armenia · Admin
+          Hyeland · Admin
         </div>
       </div>
     </aside>

@@ -1,4 +1,4 @@
-# Own a Piece of Armenia — Admin Panel
+# Hyeland — Admin Panel
 
 ## Overview
 
@@ -325,9 +325,9 @@ openssl rand -base64 32
 
 ```json
 {
-  "siteName": "Own a Piece of Armenia",
+  "siteName": "Hyeland",
   "contactEmail": "hello@armenia.farm",
-  "tagline": "You watched it grow.",
+  "tagline": "Own a piece of the Highland.",
   "pilotStatus": "open",
   "social": {
     "telegram": "",

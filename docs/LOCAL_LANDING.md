@@ -1,8 +1,8 @@
-# Own a Piece of Armenia — Local Residents Landing Page
+# Hyeland — Local Residents Landing Page
 
 ## Project Overview
 
-- **Platform name:** Own a Piece of Armenia (Հայաստանի Մի Կտոր)
+- **Platform name:** Hyeland
 - **Target audience:** People currently living in Armenia
 - **Core value proposition:** "I know exactly what I'm eating. I watched it grow."
 - **Model:** Users own a small, real farming plot. A real local farmer tends it. They receive weekly small deliveries (1–2 kg at a time as crops ripen) and can track everything on a personal dashboard.

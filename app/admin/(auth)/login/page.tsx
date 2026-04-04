@@ -84,8 +84,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <div style={{ fontFamily: 'Playfair Display, Georgia, serif', fontWeight: 400, fontSize: '1.1rem', color: '#1A1A14' }}>
-            Own a Piece of{' '}
-            <span style={{ color: '#3D7A35', fontStyle: 'italic' }}>Armenia</span>
+            Hye<span style={{ color: '#3D7A35', fontStyle: 'italic' }}>land</span>
           </div>
           <div style={{ marginTop: '8px', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#9B9B82' }}>
             Admin Panel

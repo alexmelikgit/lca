@@ -3,7 +3,7 @@
     "tag": "For those living in Armenia",
     "h1Line1": "You know exactly",
     "h1Line2": "what you're eating.",
-    "h1Italic": "You watched it grow.",
+    "h1Italic": "Own a piece of the Highland.",
     "subtitle": "Own a small, real farming plot outside Yerevan. A farmer tends it for you. Your crops come to your door weekly — 1 to 2 kg at a time, as they ripen. You track everything on your own dashboard.",
     "primaryCtaLabel": "Join the pre-pilot",
     "primaryCtaHref": "#join",
@@ -45,6 +45,33 @@
         "vegetable": "greens",
         "title": "Picked before it was ready",
         "description": "Produce is harvested early to survive transit. You're eating food that never had the chance to fully ripen."
+      }
+    ]
+  },
+  "howItWorks": {
+    "tag": "How it works",
+    "heading": "Four steps to your own plot.",
+    "intro": "No farming experience needed. We handle everything from soil to your door.",
+    "steps": [
+      {
+        "id": "step-1",
+        "title": "Choose your plot & crop",
+        "description": "Browse plots in Armenian farming regions. Pick your preferred size, what grows on it — tomatoes, cucumbers, herbs, leafy greens."
+      },
+      {
+        "id": "step-2",
+        "title": "A real farmer tends it",
+        "description": "Our on-the-ground farmer handles everything. You choose the crop and type. Weekly photo updates show exactly what's happening on your plot."
+      },
+      {
+        "id": "step-3",
+        "title": "Weekly small deliveries",
+        "description": "As your crop ripens, you receive a small delivery each week — 1–2 kg at a time. No storage problem. No waste. Just fresh food on schedule."
+      },
+      {
+        "id": "step-4",
+        "title": "Reinvest & grow",
+        "description": "At the end of each season, reinvest to expand your plot. Your soil becomes richer over more. Your personal farm grows with every year."
       }
     ]
   },

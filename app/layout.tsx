@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Own a Piece of Armenia',
-  description: 'You know exactly what you\'re eating. You watched it grow.',
+  title: 'Hyeland',
+  description: 'Own a piece of the Highland.',
 };
 
 export default function RootLayout({

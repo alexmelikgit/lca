@@ -279,7 +279,7 @@ export default function NavigationPage() {
               label="Main text"
               value={content.logoMain}
               onChange={(e) => set('logoMain', e.target.value)}
-              helper='e.g. "Own a Piece of"'
+              helper='e.g. "Hye"'
             />
             <AdminInput
               label="Highlighted text (italic green)"
