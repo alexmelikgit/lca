@@ -1,0 +1,339 @@
+{
+  "hero": {
+    "tag": "For those living in Armenia",
+    "h1Line1": "You know exactly",
+    "h1Line2": "what you're eating.",
+    "h1Italic": "Own a piece of the Highland.",
+    "subtitle": "Own a small, real farming plot outside Yerevan. A farmer tends it for you. Your crops come to your door weekly — 1 to 2 kg at a time, as they ripen. You track everything on your own dashboard.",
+    "primaryCtaLabel": "Join the pre-pilot",
+    "primaryCtaHref": "#join",
+    "secondaryCtaLabel": "See how it works",
+    "secondaryCtaHref": "#how-it-works",
+    "stats": [
+      {
+        "value": "101%",
+        "label": "Traceable"
+      },
+      {
+        "value": "Weekly",
+        "label": "Deliveries"
+      },
+      {
+        "value": "Real",
+        "label": "Your plot"
+      }
+    ]
+  },
+  "problem": {
+    "tag": "The problem with supermarket produce",
+    "heading": "You have no idea what you're actually eating.",
+    "cards": [
+      {
+        "id": "p1",
+        "vegetable": "tomato",
+        "title": "You don't know where it came from",
+        "description": "Most produce travels hundreds of kilometers. By the time it reaches you, it's been in cold storage for weeks."
+      },
+      {
+        "id": "p2",
+        "vegetable": "cucumber",
+        "title": "Pesticides you can't taste or see",
+        "description": "Conventional farming uses chemical inputs you can't detect. There's no way to know what's on your food."
+      },
+      {
+        "id": "p3",
+        "vegetable": "greens",
+        "title": "Picked before it was ready",
+        "description": "Produce is harvested early to survive transit. You're eating food that never had the chance to fully ripen."
+      }
+    ]
+  },
+  "howItWorks": {
+    "tag": "How it works",
+    "heading": "Four steps to your own plot.",
+    "intro": "No farming experience needed. We handle everything from soil to your door.",
+    "steps": [
+      {
+        "id": "step-1",
+        "title": "Choose your plot & crop",
+        "description": "Browse plots in Armenian farming regions. Pick your preferred size, what grows on it — tomatoes, cucumbers, herbs, leafy greens."
+      },
+      {
+        "id": "step-2",
+        "title": "A real farmer tends it",
+        "description": "Our on-the-ground farmer handles everything. You choose the crop and type. Weekly photo updates show exactly what's happening on your plot."
+      },
+      {
+        "id": "step-3",
+        "title": "Weekly small deliveries",
+        "description": "As your crop ripens, you receive a small delivery each week — 1–2 kg at a time. No storage problem. No waste. Just fresh food on schedule."
+      },
+      {
+        "id": "step-4",
+        "title": "Reinvest & grow",
+        "description": "At the end of each season, reinvest to expand your plot. Your soil becomes richer over more. Your personal farm grows with every year."
+      }
+    ]
+  },
+  "dashboardShowcase": {
+    "tag": "Your dashboard",
+    "heading": "Track every stage of your harvest.",
+    "intro": "From the moment seeds go in to the day of delivery — you see everything. No guessing, no uncertainty.",
+    "features": [
+      "Live plot status and current growth stage",
+      "Weekly photo updates from your farmer",
+      "Upcoming delivery day and estimated contents",
+      "Estimated harvest weight per crop type",
+      "Season progress timeline and weather notes"
+    ]
+  },
+  "health": {
+    "tag": "What you gain",
+    "heading": "Food the way it was meant to be.",
+    "intro": "When you know exactly where your food comes from, everything changes.",
+    "items": [
+      {
+        "id": "h1",
+        "icon": "✦",
+        "title": "No pesticides",
+        "description": "Your plot is tended using traditional methods. No chemical inputs, ever."
+      },
+      {
+        "id": "h2",
+        "icon": "◎",
+        "title": "Harvested ripe",
+        "description": "Crops are picked at peak ripeness — not early for transit. The difference in taste is immediate."
+      },
+      {
+        "id": "h3",
+        "icon": "◈",
+        "title": "Seasonal variety",
+        "description": "You eat what's actually in season — tomatoes in summer, squash in autumn, greens in spring."
+      },
+      {
+        "id": "h4",
+        "icon": "◉",
+        "title": "Full traceability",
+        "description": "You know the plot number, the region, the farmer, and the harvest date for everything you eat."
+      }
+    ]
+  },
+  "convenience": {
+    "tag": "No extra effort",
+    "heading": "Your produce, without the market trip.",
+    "intro": "We designed this to fit into your life — not the other way around.",
+    "items": [
+      {
+        "id": "c1",
+        "title": "No market trips",
+        "description": "Your weekly harvest is delivered to your door. You never have to rearrange your week around shopping."
+      },
+      {
+        "id": "c2",
+        "title": "Predictable deliveries",
+        "description": "You know exactly what's coming and when. Plan your meals ahead — no surprises."
+      },
+      {
+        "id": "c3",
+        "title": "Adjust or pause",
+        "description": "Going on holiday? Pause deliveries. Need less this week? Adjust quantity. You're in control."
+      },
+      {
+        "id": "c4",
+        "title": "Grows with you",
+        "description": "Start with 2 m² and expand as you want. Add crop varieties as the seasons change."
+      }
+    ]
+  },
+  "progress": {
+    "tag": "The long view",
+    "heading": "A plot that grows with you.",
+    "intro": "This isn't a subscription you forget about. It's a living piece of land that gets better every year.",
+    "milestones": [
+      {
+        "id": "m1",
+        "year": "Year 1",
+        "size": "2 m²",
+        "label": "Getting started",
+        "features": [
+          "2–3 crop types",
+          "Weekly 1–2 kg deliveries",
+          "Dashboard access",
+          "Farmer updates"
+        ]
+      },
+      {
+        "id": "m2",
+        "year": "Year 2",
+        "size": "6 m²",
+        "label": "Growing roots",
+        "features": [
+          "5–6 crop types",
+          "Larger weekly harvests",
+          "Seasonal calendar",
+          "Named plot certificate"
+        ]
+      },
+      {
+        "id": "m3",
+        "year": "Year 3",
+        "size": "15 m²",
+        "label": "Your farm",
+        "features": [
+          "Full seasonal rotation",
+          "Guest harvest visits",
+          "Custom crop requests",
+          "Priority new plots"
+        ]
+      }
+    ]
+  },
+  "farmer": {
+    "tag": "Who tends your land",
+    "name": "Aram Mkrtchyan",
+    "region": "Armavir region",
+    "experience": "18 years farming",
+    "quote": "Every plot I tend, I treat like my own family's land.",
+    "bio": "Aram has been farming the Armavir valley for 18 years. He grew up watching his father work the same soil. Today he tends over 40 individual plots for families across Yerevan — keeping detailed notes on each one, adjusting for the season, and treating every harvest with care."
+  },
+  "seasonal": {
+    "tag": "What to expect",
+    "heading": "A full year of harvest.",
+    "intro": "Each season brings different crops. Here's what you can expect across the year.",
+    "seasons": [
+      {
+        "id": "s1",
+        "name": "Spring",
+        "months": "Mar – May",
+        "color": "#5A9B50",
+        "crops": [
+          "Lettuce",
+          "Spinach",
+          "Radish",
+          "Spring onion",
+          "Peas",
+          "Herbs"
+        ]
+      },
+      {
+        "id": "s2",
+        "name": "Summer",
+        "months": "Jun – Aug",
+        "color": "#C49A3C",
+        "crops": [
+          "Tomatoes",
+          "Cucumbers",
+          "Peppers",
+          "Eggplant",
+          "Zucchini",
+          "Basil"
+        ]
+      },
+      {
+        "id": "s3",
+        "name": "Autumn",
+        "months": "Sep – Nov",
+        "color": "#8B5E3C",
+        "crops": [
+          "Squash",
+          "Pumpkin",
+          "Beets",
+          "Carrots",
+          "Kale",
+          "Leeks"
+        ]
+      },
+      {
+        "id": "s4",
+        "name": "Winter",
+        "months": "Dec – Feb",
+        "color": "#4A4A3A",
+        "crops": [
+          "Root vegetables",
+          "Winter greens",
+          "Stored preserves"
+        ]
+      }
+    ]
+  },
+  "trust": {
+    "tag": "Honest about where we are",
+    "heading": "We're in pre-pilot. Here's exactly what that means.",
+    "intro": "We believe you deserve the full picture before you sign up.",
+    "points": [
+      {
+        "id": "t1",
+        "title": "Limited to 20 plots",
+        "description": "We're starting small intentionally. The first 20 participants will shape how this works for everyone who comes after."
+      },
+      {
+        "id": "t2",
+        "title": "Launching spring 2026",
+        "description": "The first harvest season begins in September 2026. You'll receive updates as we get closer."
+      },
+      {
+        "id": "t3",
+        "title": "One region first",
+        "description": "We're starting in Armavir, where our farmer partner is based. More regions come in year two."
+      },
+      {
+        "id": "t4",
+        "title": "Your input shapes the product",
+        "description": "Pre-pilot members are invited to regular calls with the founder. Your feedback directly influences what we build."
+      }
+    ]
+  },
+  "faq": {
+    "tag": "Questions",
+    "heading": "Everything you need to know.",
+    "items": [
+      {
+        "id": "f1",
+        "question": "Do I need farming experience?",
+        "answer": "None at all. The farmer handles all planting, watering, and harvesting. Your role is to enjoy what grows on your plot."
+      },
+      {
+        "id": "f2",
+        "question": "How big is a 2 m² plot?",
+        "answer": "About the size of a large dining table. Small enough to tend easily, large enough to produce meaningful harvests each week."
+      },
+      {
+        "id": "f3",
+        "question": "What if I don't like a particular vegetable?",
+        "answer": "During sign-up you'll specify preferences and any vegetables you'd like to avoid. The farmer works within those parameters."
+      },
+      {
+        "id": "f4",
+        "question": "Can I visit my plot?",
+        "answer": "In Year 2 and beyond, plot visits are part of the programme. During the pre-pilot phase, you'll receive photos and updates via your dashboard."
+      },
+      {
+        "id": "f5",
+        "question": "What happens in winter?",
+        "answer": "The growing season in Armavir runs March through November. During winter months, plots rest and we send preserved goods where possible."
+      },
+      {
+        "id": "f6",
+        "question": "Is my plot really mine?",
+        "answer": "Yes. You're assigned a specific, named plot with a unique number. The land itself remains with the farming partner, but the crops grown on your plot are entirely yours."
+      }
+    ]
+  },
+  "about": {
+    "tag": "Why this exists",
+    "name": "Aleksandr Melikyan",
+    "role": "Founder",
+    "paragraph1": "I started in code. Nine years building websites and platforms — readable, functional, clean. I thought in systems and logic. Then I started hiking. Not once or twice — seriously, repeatedly, deep into Armenian mountains through the Bardzunk movement I co-founded. And somewhere on those trails something shifted.",
+    "paragraph2": "I started understanding Armenia differently. Not as a concept or a heritage word, but as soil, altitude, water, light. I started noticing that every Armenian I met — regardless of where they were born or how far they'd drifted — had this pull toward land. Not metaphorical. Physical. Like something encoded.",
+    "paragraph3": "That's where this idea came from. Not from a business model. From a hike. From watching someone touch Armenian soil and go quiet.\n\nI'm a builder. I know how to start something small, prove it works, and grow it carefully. I've done it with code, with hiking programs, with educational projects. I'm not asking you to trust a pitch — I'm asking you to watch me build this in public, one season at a time. The failures will be documented the same as the successes.\n\n",
+    "trustText": "Pre-pilot opening spring 2025 · 20 plots · Armavir region"
+  },
+  "ctaFooter": {
+    "tag": "Join the pre-pilot",
+    "heading": "Be one of the first 20.",
+    "subtitle": "Reserve your plot now. We'll reach out with all the details before the season starts.",
+    "buttonLabel": "Reserve my plot",
+    "buttonHref": "#join",
+    "note": "No payment yet. Just your name and email. We'll contact you directly."
+  }
+}
