@@ -1,4 +1,7 @@
 import { getNavContent, getLocalContent } from '@/lib/content';
+import type { Locale } from '@/lib/i18n';
+import { LOCALES } from '@/lib/i18n';
+import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
 import Problem from '@/components/sections/Problem';
@@ -14,17 +17,31 @@ import FAQ from '@/components/sections/FAQ';
 import About from '@/components/sections/About';
 import CTAFooter from '@/components/sections/CTAFooter';
 
-export const revalidate = false;
+export const revalidate = 60;
 
-export default async function Home() {
+export function generateStaticParams() {
+  return LOCALES.map((locale) => ({ locale }));
+}
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+
+  if (!LOCALES.includes(locale)) {
+    notFound();
+  }
+
   const [nav, local] = await Promise.all([
-    getNavContent(),
-    getLocalContent(),
+    getNavContent(locale),
+    getLocalContent(locale),
   ]);
 
   return (
     <>
-      <Navbar content={nav} page="local" />
+      <Navbar content={nav} page="local" locale={locale} />
       <main>
         <Hero content={local.hero} />
         <Problem content={local.problem} />
