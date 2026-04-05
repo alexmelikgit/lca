@@ -3,13 +3,16 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import type { NavContent } from '@/types/content';
+import type { Locale } from '@/lib/i18n';
+import LocaleSwitcher from '@/components/ui/LocaleSwitcher';
 
 interface NavbarProps {
   content: NavContent;
   page?: 'local' | 'diaspora';
+  locale: Locale;
 }
 
-export default function Navbar({ content, page = 'local' }: NavbarProps) {
+export default function Navbar({ content, page = 'local', locale }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export default function Navbar({ content, page = 'local' }: NavbarProps) {
 
   const links = page === 'diaspora' ? content.diasporaLinks : content.localLinks;
   const ctaText = page === 'diaspora' ? content.diasporaCta : content.localCta;
-  const switchHref = page === 'diaspora' ? '/' : '/diaspora';
+  const switchHref = page === 'diaspora' ? `/${locale}` : `/${locale}/diaspora`;
   const switchText = page === 'diaspora' ? content.localLinkText : content.diasporaLinkText;
 
   return (
@@ -47,7 +50,7 @@ export default function Navbar({ content, page = 'local' }: NavbarProps) {
         justifyContent: 'space-between',
         gap: '24px',
       }}>
-        <Link href="/" style={{ textDecoration: 'none', flexShrink: 0 }}>
+        <Link href={`/${locale}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
           <span style={{
             fontFamily: 'var(--font-playfair)',
             fontWeight: 400,
@@ -81,6 +84,8 @@ export default function Navbar({ content, page = 'local' }: NavbarProps) {
         </nav>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexShrink: 0 }}>
+          <LocaleSwitcher currentLocale={locale} />
+
           <Link
             href={switchHref}
             style={{
