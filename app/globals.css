@@ -36,6 +36,7 @@ html {
 }
 
 body {
+  margin: 0;
   background-color: var(--cream);
   color: var(--ink);
   font-family: var(--font-lato), 'Lato', sans-serif;

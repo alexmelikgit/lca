@@ -17,7 +17,7 @@ import FAQ from '@/components/sections/FAQ';
 import About from '@/components/sections/About';
 import CTAFooter from '@/components/sections/CTAFooter';
 
-export const revalidate = 60;
+export const revalidate = false;
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Locale } from '@/lib/i18n';
 import { LOCALES } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
+import { playfair, lato } from '@/lib/fonts';
 import '@/app/globals.css';
 
 export function generateStaticParams() {
@@ -22,8 +23,8 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale}>
-      <body>{children}</body>
+    <html lang={locale} className={`${playfair.variable} ${lato.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
