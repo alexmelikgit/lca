@@ -24,6 +24,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { NavContent, NavLink } from '@/types/content';
+import type { Locale } from '@/lib/i18n';
 import AdminCard from '@/components/admin/AdminCard';
 import AdminInput from '@/components/admin/AdminInput';
 import AdminSaveButton from '@/components/admin/AdminSaveButton';
@@ -228,13 +229,14 @@ function LinkListEditor({ links, onChange }: LinkListEditorProps) {
 export default function NavigationPage() {
   const [content, setContent] = useState<NavContent | null>(null);
   const [loading, setLoading] = useState(true);
+  const [locale, setLocale] = useState<Locale>('en');
 
   useEffect(() => {
-    fetch('/api/admin/content?file=nav')
+    fetch(`/api/admin/content?file=nav&locale=${locale}`)
       .then((r) => r.json())
       .then((data: NavContent) => { setContent(data); setLoading(false); })
       .catch(() => setLoading(false));
-  }, []);
+  }, [locale]);
 
   const set = useCallback(<K extends keyof NavContent>(key: K, value: NavContent[K]) => {
     setContent((prev) => prev ? { ...prev, [key]: value } : prev);
@@ -244,7 +246,7 @@ export default function NavigationPage() {
     const res = await fetch('/api/admin/save', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ file: 'nav', content, section: 'Navigation' }),
+      body: JSON.stringify({ file: 'nav', locale, content, section: 'Navigation' }),
     });
     if (!res.ok) throw new Error('Save failed');
   };
@@ -259,6 +261,32 @@ export default function NavigationPage() {
 
   return (
     <div>
+      {/* Locale selector */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+        {(['en', 'hy'] as Locale[]).map((l) => (
+          <button
+            key={l}
+            onClick={() => setLocale(l)}
+            style={{
+              padding: '6px 16px',
+              borderRadius: '6px',
+              border: '1px solid',
+              borderColor: locale === l ? 'var(--green)' : '#D8D4C8',
+              background: locale === l ? 'var(--green)' : 'white',
+              color: locale === l ? 'white' : 'var(--ink)',
+              fontFamily: 'Lato, sans-serif',
+              fontWeight: 700,
+              fontSize: '0.75rem',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+            }}
+          >
+            {l.toUpperCase()}
+          </button>
+        ))}
+      </div>
+
       {/* Page header */}
       <div style={{ marginBottom: '28px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
         <div>
