@@ -41,8 +41,8 @@ export default function SectionTag({
 
   return (
     <div
-      className={`flex items-center gap-2 ${className}`}
-      style={{ fontFamily: 'Lato, sans-serif' }}
+      className={className}
+      style={{ fontFamily: 'var(--font-lato)', display: 'flex', alignItems: 'center', gap: '8px' }}
     >
       {/* Short accent line */}
       <span

@@ -191,7 +191,7 @@ export default function Hero({ content }: Props) {
             boxShadow: '0 24px 80px rgba(45,90,39,0.14), 0 4px 16px rgba(45,90,39,0.08)',
             aspectRatio: '4/3',
           }}>
-            <ArmenianLandscape width="100%" height="100%" className="block" />
+            <ArmenianLandscape width="100%" height="100%" style={{ display: 'block' }} />
           </div>
 
           <motion.div

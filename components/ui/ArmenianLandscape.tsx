@@ -10,12 +10,14 @@
 
 interface ArmenianLandscapeProps {
   className?: string;
+  style?: React.CSSProperties;
   width?: number | string;
   height?: number | string;
 }
 
 export default function ArmenianLandscape({
   className = '',
+  style,
   width = '100%',
   height = '100%',
 }: ArmenianLandscapeProps) {
@@ -24,6 +26,7 @@ export default function ArmenianLandscape({
       viewBox="0 0 720 520"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      style={style}
       width={width}
       height={height}
       aria-label="Armenian agricultural landscape with Mount Ararat and crop fields"

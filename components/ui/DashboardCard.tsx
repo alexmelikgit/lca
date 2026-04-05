@@ -45,12 +45,15 @@ export default function DashboardCard({
 }: DashboardCardProps) {
   return (
     <div
-      className={`rounded-2xl overflow-hidden shadow-2xl ${className}`}
+      className={className}
       style={{
         background: 'var(--cream)',
         border: '1px solid rgba(168,212,160,0.3)',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        boxShadow: '0 20px 48px rgba(0,0,0,0.18)',
         width: '280px',
-        fontFamily: 'Lato, sans-serif',
+        fontFamily: 'var(--font-lato)',
         ...style,
       }}
     >
@@ -61,7 +64,7 @@ export default function DashboardCard({
           padding: '12px 16px 10px',
         }}
       >
-        <div className="flex items-center justify-between">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span
             style={{
               color: 'var(--gold-light)',
@@ -92,7 +95,7 @@ export default function DashboardCard({
         <div
           style={{
             color: 'white',
-            fontFamily: 'Playfair Display, Georgia, serif',
+            fontFamily: 'var(--font-playfair)',
             fontWeight: 400,
             fontSize: '1.05rem',
             marginTop: '4px',
@@ -182,8 +185,7 @@ export default function DashboardCard({
       {/* Progress bar */}
       <div style={{ padding: '10px 16px 8px' }}>
         <div
-          className="flex items-center justify-between"
-          style={{ marginBottom: '5px' }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '5px' }}
         >
           <span
             style={{
