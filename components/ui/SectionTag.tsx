@@ -7,17 +7,17 @@
  */
 
 interface SectionTagProps {
-  /** The label text (will be rendered uppercase via CSS) */
   children: React.ReactNode;
-  /** Dot/text color — defaults to green */
   variant?: 'green' | 'gold' | 'cream';
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export default function SectionTag({
   children,
   variant = 'green',
   className = '',
+  style,
 }: SectionTagProps) {
   const colors: Record<string, { dot: string; text: string; line: string }> = {
     green: {
@@ -42,7 +42,7 @@ export default function SectionTag({
   return (
     <div
       className={className}
-      style={{ fontFamily: 'var(--font-lato)', display: 'flex', alignItems: 'center', gap: '8px' }}
+      style={{ fontFamily: 'var(--font-lato)', display: 'flex', alignItems: 'center', gap: '8px', ...style }}
     >
       {/* Short accent line */}
       <span
