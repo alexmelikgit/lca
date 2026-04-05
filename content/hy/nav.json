@@ -1,51 +1,61 @@
 {
   "logoMain": "Hye",
   "logoHighlight": "land",
-  "localCta": "Join the pre-pilot",
-  "diasporaCta": "Get your plot",
-  "diasporaLinkText": "For the diaspora",
-  "localLinkText": "For those living in Armenia",
+  "localCta": "Միանալ նախնական փուլին",
+  "diasporaCta": "Ստանալ հողամաս",
+  "diasporaLinkText": "Սփյուռքի համար",
+  "localLinkText": "Հայաստանում ապրողների համար",
   "localLinks": [
     {
       "id": "ll-1",
-      "label": "How it works",
+      "label": "Ինչպես է աշխատում",
       "href": "#how-it-works"
     },
     {
       "id": "ll-2",
-      "label": "Dashboard",
+      "label": "Վահանակ",
       "href": "#dashboard"
     },
     {
       "id": "ll-3",
-      "label": "Progress",
+      "label": "Առաջընթաց",
       "href": "#progress"
     },
     {
+      "id": "ll-5",
+      "label": "Ֆերմերը",
+      "href": "#farmer"
+    },
+    {
+      "id": "ll-6",
+      "label": "Նախնական փուլ",
+      "href": "#trust"
+    },
+    {
       "id": "ll-4",
-      "label": "FAQ",
+      "label": "Հարցեր",
       "href": "#faq"
     }
   ],
   "diasporaLinks": [
     {
       "id": "dl-1",
-      "label": "How it works",
+      "label": "Ինչպես է աշխատում",
       "href": "#how-it-works"
     },
     {
       "id": "dl-2",
-      "label": "Our farmers",
+      "label": "Մեր ֆերմերները",
       "href": "#farmers"
     },
     {
       "id": "dl-3",
-      "label": "Pricing",
+      "label": "Գներ",
       "href": "#pricing"
     },
     {
       "id": "dl-4",
-      "label": "FAQ",
+      "label": "Հարցեր",
       "href": "#faq"
     }
   ]
