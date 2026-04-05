@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import type { NavContent, HowItWorksContent, LocalContent } from '@/types/content';
+import type { NavContent, LocalContent } from '@/types/content';
 
 const CONTENT_DIR = join(process.cwd(), 'content');
 
@@ -11,10 +11,6 @@ async function readJson<T>(file: string): Promise<T> {
 
 export async function getNavContent(): Promise<NavContent> {
   return readJson<NavContent>('nav');
-}
-
-export async function getHowItWorksContent(): Promise<HowItWorksContent> {
-  return readJson<HowItWorksContent>('how-it-works');
 }
 
 export async function getLocalContent(): Promise<LocalContent> {

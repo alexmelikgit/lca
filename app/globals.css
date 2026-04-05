@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap');
-@import "tailwindcss";
-
 /* ─── Design Tokens ──────────────────────────────────────────── */
 :root {
   /* Greens */
@@ -41,7 +38,7 @@ html {
 body {
   background-color: var(--cream);
   color: var(--ink);
-  font-family: 'Lato', sans-serif;
+  font-family: var(--font-lato), 'Lato', sans-serif;
   font-weight: 300;
   font-size: 1rem;
   line-height: 1.85;
@@ -49,29 +46,141 @@ body {
 
 /* ─── Typography Utilities ───────────────────────────────────── */
 .font-display {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
 }
 
 .text-display {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
   font-weight: 300;
   font-size: clamp(2.6rem, 4.5vw, 4.2rem);
   line-height: 1.15;
 }
 
 .text-h2 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
   font-weight: 300;
   font-size: clamp(1.8rem, 3vw, 2.8rem);
   line-height: 1.25;
 }
 
 .text-label {
-  font-family: 'Lato', sans-serif;
+  font-family: var(--font-lato), 'Lato', sans-serif;
   font-weight: 700;
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+}
+
+/* ─── Hover utilities (replaces JS onMouseEnter/Leave) ───────── */
+
+/* Neutral lift — Problem, Convenience cards */
+.card-lift {
+  box-shadow: 0 2px 16px rgba(26,26,20,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(26,26,20,0.09);
+}
+
+/* Green lift — Health cards */
+.card-lift-green {
+  box-shadow: 0 2px 12px rgba(61,122,53,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(61,122,53,0.12);
+}
+
+/* Seasonal lift — dynamic colors, only transform */
+.card-lift-subtle {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift-subtle:hover {
+  transform: translateY(-3px);
+}
+
+/* Progress milestone cards */
+.milestone-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(196,154,60,0.2);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.milestone-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(196,154,60,0.4);
+}
+
+/* Primary CTA button */
+.btn-primary {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(45,90,39,0.32);
+  background: var(--green) !important;
+}
+
+/* Gold CTA button */
+.btn-gold {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(196,154,60,0.42);
+  background: var(--gold-light) !important;
+}
+
+/* Ghost underline link */
+.btn-ghost {
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.btn-ghost:hover {
+  color: var(--green) !important;
+  border-color: var(--green) !important;
+}
+
+/* Navbar links */
+.nav-link {
+  transition: color 0.2s ease;
+}
+.nav-link:hover {
+  color: var(--green) !important;
+}
+
+/* Navbar CTA */
+.btn-nav {
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.btn-nav:hover {
+  background: var(--green) !important;
+  transform: translateY(-1px);
+}
+
+/* How It Works card hover */
+.hiw-card {
+  transition: box-shadow 0.25s ease;
+}
+.hiw-card:hover {
+  box-shadow: 0 6px 24px rgba(61,122,53,0.1);
+}
+
+/* ─── How It Works responsive grid ──────────────────────────── */
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .how-it-works-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .how-it-works-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ─── Scrollbar ──────────────────────────────────────────────── */

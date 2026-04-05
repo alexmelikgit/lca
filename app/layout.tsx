@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { playfair, lato } from '@/lib/fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="hy">
+    <html lang="hy" className={`${playfair.variable} ${lato.variable}`}>
       <body>{children}</body>
     </html>
   );

@@ -14,7 +14,7 @@ import FAQ from '@/components/sections/FAQ';
 import About from '@/components/sections/About';
 import CTAFooter from '@/components/sections/CTAFooter';
 
-export const revalidate = 60;
+export const revalidate = false;
 
 export default async function Home() {
   const [nav, local] = await Promise.all([
