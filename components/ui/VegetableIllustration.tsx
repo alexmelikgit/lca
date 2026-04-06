@@ -1,5 +1,7 @@
 'use client';
 
+import type { ReactElement } from 'react';
+
 /**
  * VegetableIllustration — inline SVG illustrations for five vegetables
  * used across Problem, Health, and other sections. Each illustration is a
@@ -174,7 +176,7 @@ function Potato({ size }: { size: number }) {
 
 /* ─── Public component ───────────────────────────────────────── */
 
-const illustrations: Record<VegetableType, (size: number) => JSX.Element> = {
+const illustrations: Record<VegetableType, (size: number) => ReactElement> = {
   tomato: (s) => <Tomato size={s} />,
   cucumber: (s) => <Cucumber size={s} />,
   carrot: (s) => <Carrot size={s} />,
