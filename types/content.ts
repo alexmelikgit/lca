@@ -118,6 +118,7 @@ export interface FarmerContent {
   experience: string;
   quote: string;
   bio: string;
+  image?: string;
 }
 
 export interface Season {
@@ -168,6 +169,7 @@ export interface AboutContent {
   paragraph2: string;
   paragraph3: string;
   trustText: string;
+  image?: string;
 }
 
 export interface CtaFooterContent {
@@ -186,7 +188,24 @@ export interface DashboardShowcaseContent {
   features: string[];
 }
 
+export interface SectionVisibility {
+  hero: boolean;
+  problem: boolean;
+  howItWorks: boolean;
+  dashboardShowcase: boolean;
+  health: boolean;
+  convenience: boolean;
+  progress: boolean;
+  farmer: boolean;
+  seasonal: boolean;
+  trust: boolean;
+  faq: boolean;
+  about: boolean;
+  ctaFooter: boolean;
+}
+
 export interface LocalContent {
+  sectionVisibility: SectionVisibility;
   hero: HeroContent;
   problem: ProblemContent;
   howItWorks: HowItWorksContent;

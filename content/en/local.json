@@ -1,4 +1,19 @@
 {
+  "sectionVisibility": {
+    "hero": true,
+    "problem": true,
+    "howItWorks": true,
+    "dashboardShowcase": true,
+    "health": true,
+    "convenience": true,
+    "progress": true,
+    "farmer": true,
+    "seasonal": true,
+    "trust": true,
+    "faq": true,
+    "about": true,
+    "ctaFooter": true
+  },
   "hero": {
     "tag": "For those living in Armenia",
     "h1Line1": "You know exactly",
