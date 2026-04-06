@@ -1,12 +1,15 @@
-import { readFile } from 'fs/promises';
 import { join } from 'path';
+import { readBlobOrFs } from '@/lib/blob-content';
 import type { NavContent, HowItWorksContent, LocalContent, DiasporaContent } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
 
 const CONTENT_DIR = join(process.cwd(), 'content');
 
 async function readJson<T>(locale: Locale, file: string): Promise<T> {
-  const raw = await readFile(join(CONTENT_DIR, locale, `${file}.json`), 'utf-8');
+  const raw = await readBlobOrFs(
+    `content/${locale}/${file}.json`,
+    join(CONTENT_DIR, locale, `${file}.json`),
+  );
   return JSON.parse(raw) as T;
 }
 
@@ -15,8 +18,10 @@ export async function getNavContent(locale: Locale): Promise<NavContent> {
 }
 
 export async function getHowItWorksContent(): Promise<HowItWorksContent> {
-  // How-it-works is not locale-specific yet
-  const raw = await readFile(join(CONTENT_DIR, 'how-it-works.json'), 'utf-8');
+  const raw = await readBlobOrFs(
+    'content/how-it-works.json',
+    join(CONTENT_DIR, 'how-it-works.json'),
+  );
   return JSON.parse(raw) as HowItWorksContent;
 }
 

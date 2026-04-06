@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFile } from 'fs/promises';
 import { join } from 'path';
+import { readBlobOrFs } from '@/lib/blob-content';
 import { requireSession } from '@/lib/session';
 import { LOCALES } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n';
@@ -35,8 +35,15 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid file' }, { status: 400 });
   }
 
+  let blobKey: string;
+  if (ALLOWED_FILES.includes(file)) {
+    blobKey = `content/${locale}/${file}.json`;
+  } else {
+    blobKey = `content/${file}.json`;
+  }
+
   try {
-    const raw = await readFile(filePath, 'utf-8');
+    const raw = await readBlobOrFs(blobKey, filePath);
     return NextResponse.json(JSON.parse(raw));
   } catch {
     return NextResponse.json({ error: 'File not found' }, { status: 404 });

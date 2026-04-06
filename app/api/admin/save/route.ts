@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import { join } from 'path';
+import { put } from '@vercel/blob';
 import { revalidatePath } from 'next/cache';
 import { requireSession } from '@/lib/session';
 import { LOCALES } from '@/lib/i18n';
@@ -37,20 +38,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid content' }, { status: 400 });
   }
 
-  let filePath: string;
+  let blobKey: string;
 
   if (ALLOWED_FILES.includes(file)) {
     if (!locale || !LOCALES.includes(locale)) {
       return NextResponse.json({ error: 'Invalid or missing locale' }, { status: 400 });
     }
-    filePath = join(process.cwd(), 'content', locale, `${file}.json`);
+    blobKey = `content/${locale}/${file}.json`;
   } else if (LOCALE_FREE_FILES.includes(file)) {
-    filePath = join(process.cwd(), 'content', `${file}.json`);
+    blobKey = `content/${file}.json`;
   } else {
     return NextResponse.json({ error: 'Invalid file' }, { status: 400 });
   }
 
-  await writeFile(filePath, JSON.stringify(content, null, 2), 'utf-8');
+  await put(blobKey, JSON.stringify(content, null, 2), {
+    access: 'public',
+    addRandomSuffix: false,
+    contentType: 'application/json',
+  });
 
   // Append to activity log
   try {
@@ -62,7 +67,11 @@ export async function POST(req: NextRequest) {
       section: section ?? file,
       user: 'Admin',
     });
-    await writeFile(logPath, JSON.stringify(log.slice(0, 50), null, 2), 'utf-8');
+    await put('content/activity-log.json', JSON.stringify(log.slice(0, 50), null, 2), {
+      access: 'public',
+      addRandomSuffix: false,
+      contentType: 'application/json',
+    });
   } catch {
     // Non-fatal
   }
