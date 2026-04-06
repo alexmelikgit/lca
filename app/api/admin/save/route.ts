@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
   await put(blobKey, JSON.stringify(content, null, 2), {
     access: 'public',
     addRandomSuffix: false,
+    allowOverwrite: true,
     contentType: 'application/json',
   });
 
@@ -70,6 +71,7 @@ export async function POST(req: NextRequest) {
     await put('content/activity-log.json', JSON.stringify(log.slice(0, 50), null, 2), {
       access: 'public',
       addRandomSuffix: false,
+      allowOverwrite: true,
       contentType: 'application/json',
     });
   } catch {
