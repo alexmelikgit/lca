@@ -1,0 +1,345 @@
+{
+  "sectionVisibility": {
+    "hero": true,
+    "problem": true,
+    "howItWorks": true,
+    "harvestOptions": true,
+    "dashboardShowcase": true,
+    "ownership": true,
+    "giftMechanic": true,
+    "progress": true,
+    "farmer": true,
+    "seasonal": true,
+    "trust": true,
+    "phaseTwo": true,
+    "faq": true,
+    "about": true,
+    "ctaFooter": true
+  },
+  "hero": {
+    "tag": "Հայ սփյուռքի համար",
+    "h1Line1": "Your land is still",
+    "h1Line2": "there. So is",
+    "h1Italic": "your name on it.",
+    "subtitle": "Own a real farming plot in Armenia. A local farmer tends it. Watch it grow from anywhere in the world — and at harvest, decide what happens to it.",
+    "primaryCtaLabel": "Claim your plot",
+    "primaryCtaHref": "#join",
+    "secondaryCtaLabel": "See how it works",
+    "secondaryCtaHref": "#how-it-works",
+    "stats": [
+      { "value": "101%", "label": "Traceable" },
+      { "value": "4", "label": "Harvest Options" },
+      { "value": "Real", "label": "Your plot" }
+    ]
+  },
+  "problem": {
+    "tag": "Հանգիստ հեռավորությունը",
+    "heading": "The land doesn't disappear. The connection does.",
+    "cards": [
+      {
+        "id": "p1",
+        "vegetable": "tomato",
+        "title": "Your children have never seen it",
+        "description": "Growing up abroad means Armenia stays abstract — a word, a story, a photograph. Without something real to point to, the homeland fades with each generation."
+      },
+      {
+        "id": "p2",
+        "vegetable": "greens",
+        "title": "Every visit feels like the first time",
+        "description": "You love it but you don't belong to it. There's no anchor — no plot of land, no corner of Armenia that is yours to return to every season."
+      },
+      {
+        "id": "p3",
+        "vegetable": "cucumber",
+        "title": "You can't give roots you don't hold",
+        "description": "You want to pass something real to the next generation. But without a living, tangible tie to the land, there's nothing concrete to hand down."
+      }
+    ]
+  },
+  "howItWorks": {
+    "tag": "How it works",
+    "heading": "Four steps to owning a piece of Armenia.",
+    "intro": "No travel required. No farming experience. Just a real plot with your name on it.",
+    "steps": [
+      {
+        "id": "step-1",
+        "title": "Choose your plot in Armenia",
+        "description": "Browse plots in Armenian farming regions. Pick your preferred size and what grows on it — tomatoes, cucumbers, herbs, leafy greens."
+      },
+      {
+        "id": "step-2",
+        "title": "Your farmer tends it",
+        "description": "A real on-the-ground farmer handles everything — soil, planting, irrigation, care. Weekly photo updates show exactly what's happening on your plot."
+      },
+      {
+        "id": "step-3",
+        "title": "Watch your plot grow",
+        "description": "Live status, farmer diary updates, harvest notifications. Follow every stage of the season from anywhere in the world on your personal dashboard."
+      },
+      {
+        "id": "step-4",
+        "title": "Decide what happens at harvest",
+        "description": "Reinvest it into next season, donate to a local Armenian family, convert to account credit, or gift the value to someone who deserves a piece of the Highland."
+      }
+    ]
+  },
+  "harvestOptions": {
+    "tag": "Your harvest",
+    "heading": "What happens at harvest time.",
+    "intro": "Diaspora plots don't ship physically in Phase 1. Four options let you put your harvest to meaningful use.",
+    "options": [
+      {
+        "id": "ho-1",
+        "icon": "↺",
+        "title": "Reinvest",
+        "description": "Put the harvest value back into your plot. Expand it, add a new crop variety, or grow it toward next season."
+      },
+      {
+        "id": "ho-2",
+        "icon": "♥",
+        "title": "Donate",
+        "description": "Your harvest goes to a local Armenian family in need. You receive a photo of the delivery as proof of impact."
+      },
+      {
+        "id": "ho-3",
+        "icon": "◎",
+        "title": "Sell & Hold Credit",
+        "description": "We convert your harvest to account credit. Use it next season, upgrade your plot, or carry it forward indefinitely."
+      },
+      {
+        "id": "ho-4",
+        "icon": "✦",
+        "title": "Gift Card",
+        "description": "Turn your harvest value into a Hyeland gift. A plot for a family member, a friend — anyone who deserves a piece of the Highland."
+      }
+    ]
+  },
+  "dashboardShowcase": {
+    "tag": "Your dashboard",
+    "heading": "Your plot, in your pocket.",
+    "intro": "Watch every stage of your season from wherever you are. Your farmer updates it. You follow along.",
+    "features": [
+      "Live photos from your plot, posted by your farmer",
+      "Farmer diary — seasonal notes, weather reports, growth milestones",
+      "Harvest notifications when your crops are ready",
+      "One-tap harvest option selection — reinvest, donate, gift, or hold credit",
+      "Season timeline and estimated harvest weight"
+    ]
+  },
+  "ownership": {
+    "tag": "Real ownership",
+    "heading": "Your name. Your plot. Your Armenia.",
+    "intro": "This isn't symbolic. Your plot has coordinates, a farmer, and a record. You own a specific piece of land — not a share of a basket.",
+    "items": [
+      {
+        "id": "do-1",
+        "title": "Named and registered",
+        "description": "Your plot is registered to you by name. You receive the exact GPS coordinates and a plot reference number."
+      },
+      {
+        "id": "do-2",
+        "title": "Photo evidence every week",
+        "description": "Your farmer documents every stage — planting, first shoots, flowering, harvest. You see it as it happens."
+      },
+      {
+        "id": "do-3",
+        "title": "Legal accountability",
+        "description": "Your farmer agreement covers the full season. If something goes wrong, we tell you first — no surprises."
+      },
+      {
+        "id": "do-4",
+        "title": "Transferable legacy",
+        "description": "A Hyeland plot can be gifted, passed down, or extended into a family holding across multiple seasons."
+      }
+    ]
+  },
+  "giftMechanic": {
+    "tag": "The gift",
+    "heading": "Give someone roots.",
+    "intro": "A Hyeland plot is the only gift that keeps a living connection to Armenia. Give one to a parent in Yerevan, a child growing up abroad, or a friend who misses home.",
+    "features": [
+      "Choose a plot and crop type on their behalf",
+      "A personalised gift confirmation sent to them by email",
+      "They get their own dashboard to watch the plot grow",
+      "At harvest, they choose what happens to it"
+    ],
+    "ctaLabel": "Gift a plot",
+    "ctaHref": "#join",
+    "note": "Use your harvest credit, or purchase a gift plot directly."
+  },
+  "progress": {
+    "tag": "The roadmap",
+    "heading": "We're building this in public.",
+    "intro": "We're at the beginning. Here's where we are, and where we're going.",
+    "milestones": [
+      {
+        "id": "m1",
+        "year": "2025",
+        "size": "20 plots",
+        "label": "Phase 1 — Now",
+        "features": [
+          "Diaspora pre-pilot launch",
+          "20 diaspora plots in Armavir",
+          "All 4 harvest options available",
+          "Weekly farmer updates via dashboard",
+          "Pre-pilot members shape the roadmap"
+        ]
+      },
+      {
+        "id": "m2",
+        "year": "2026",
+        "size": "100 plots",
+        "label": "Phase 2 — Coming",
+        "features": [
+          "Physical shipping to diaspora countries",
+          "100 diaspora plots across multiple regions",
+          "Multi-season plot holdings",
+          "Family plot packages",
+          "Expanded harvest options"
+        ]
+      },
+      {
+        "id": "m3",
+        "year": "2027",
+        "size": "500+ plots",
+        "label": "Phase 3 — Vision",
+        "features": [
+          "500+ plots across Armenia",
+          "Full diaspora shipping network",
+          "Custom crop requests",
+          "Plot gifting marketplace",
+          "Generational transfer system"
+        ]
+      }
+    ]
+  },
+  "farmer": {
+    "tag": "Your farmer",
+    "name": "Aram Mkrtchyan",
+    "region": "Armavir",
+    "experience": "18 years growing",
+    "quote": "Every plot I tend has a name behind it. Someone far away is watching. I take that seriously.",
+    "bio": "Aram manages plots in the Armavir region — one of Armenia's most fertile valleys. He tends dozens of individual plots and treats each one as his own. When you're across the world wondering about your land, it's Aram who's there — planting, watering, documenting, and caring for it season after season."
+  },
+  "seasonal": {
+    "tag": "What grows on your plot",
+    "heading": "Four seasons of real Armenian produce.",
+    "intro": "These are the crops growing on your plot across the year. You'll see them at every stage — from first shoots to full harvest.",
+    "seasons": [
+      {
+        "id": "s1",
+        "name": "Spring",
+        "months": "Mar — May",
+        "color": "#5A9B50",
+        "crops": ["Spinach", "Lettuce", "Radishes", "Spring onion", "Parsley"]
+      },
+      {
+        "id": "s2",
+        "name": "Summer",
+        "months": "Jun — Aug",
+        "color": "#C49A3C",
+        "crops": ["Tomatoes", "Cucumbers", "Bell peppers", "Zucchini", "Basil"]
+      },
+      {
+        "id": "s3",
+        "name": "Autumn",
+        "months": "Sep — Nov",
+        "color": "#8B5E3C",
+        "crops": ["Eggplant", "Pumpkin", "Beetroot", "Cabbage", "Carrots"]
+      },
+      {
+        "id": "s4",
+        "name": "Winter",
+        "months": "Dec — Feb",
+        "color": "#4A6FA5",
+        "crops": ["Preserved goods", "Dried herbs", "Root cellar stock", "Winter greens"]
+      }
+    ]
+  },
+  "trust": {
+    "tag": "Նախափուլ",
+    "heading": "What Phase 1 means for diaspora.",
+    "intro": "We're being clear about what this is. Phase 1 diaspora plots come with honest constraints — and real value.",
+    "points": [
+      {
+        "id": "tp-1",
+        "title": "No physical shipping in Phase 1",
+        "description": "Diaspora plots don't ship produce during Phase 1. All harvest value is handled through our four digital options: reinvest, donate, sell & hold credit, or gift."
+      },
+      {
+        "id": "tp-2",
+        "title": "Limited to 20 diaspora plots",
+        "description": "The pre-pilot is capped at 20 diaspora plots globally. Early members directly shape what Phase 2 looks like."
+      },
+      {
+        "id": "tp-3",
+        "title": "Armavir region only",
+        "description": "All Phase 1 plots are in the Armavir valley. Additional regions open in Phase 2 as we grow the farmer network."
+      },
+      {
+        "id": "tp-4",
+        "title": "You're a founding member, not a customer",
+        "description": "Pre-pilot members have direct access to us. Your feedback on the product, the harvest options, and the experience shapes every decision we make."
+      }
+    ]
+  },
+  "phaseTwo": {
+    "tag": "Phase 2 — Coming Later",
+    "heading": "Physical shipping is on the roadmap.",
+    "body": "We're building toward direct delivery from your plot to your door — wherever you are in the world. This isn't available yet in Phase 1, but it's the direction we're heading. Pre-pilot diaspora members will be first in line.",
+    "note": "Expected: 2026"
+  },
+  "faq": {
+    "tag": "ՀՏՀ",
+    "heading": "Questions from the diaspora.",
+    "items": [
+      {
+        "id": "faq-d1",
+        "question": "Can I visit my plot in Armenia?",
+        "answer": "Yes. Your plot has exact GPS coordinates. You're welcome to visit during any of your trips to Armenia — just let us know in advance and Aram will show you around. We'd love for you to see it in person."
+      },
+      {
+        "id": "faq-d2",
+        "question": "What happens to my harvest — do I have to decide in advance?",
+        "answer": "No. We notify you when your harvest is ready and give you time to choose. You pick one of the four options — reinvest, donate, sell & hold credit, or gift — directly from your dashboard. You can change your mind up until the harvest date."
+      },
+      {
+        "id": "faq-d3",
+        "question": "Can I gift a plot to someone as a present?",
+        "answer": "Yes — and it's one of our favourite use cases. You can gift a plot to anyone: a parent in Armenia, a sibling abroad, or a friend who wants a living connection to the land. They get their own dashboard and choose what happens to their harvest."
+      },
+      {
+        "id": "faq-d4",
+        "question": "Is this a one-time purchase or a subscription?",
+        "answer": "It's seasonal. You pay per growing season. At the end of each season you can renew, expand, or let the plot go. There's no automatic renewal — we ask you each time."
+      },
+      {
+        "id": "faq-d5",
+        "question": "Will physical delivery to my country ever be available?",
+        "answer": "Yes — that's Phase 2. We're working toward it but it's not available yet. We won't promise a date, but diaspora pre-pilot members will be first to access it when it launches."
+      },
+      {
+        "id": "faq-d6",
+        "question": "Can I own more than one plot?",
+        "answer": "In Phase 1 we're limiting it to one plot per person to keep the pre-pilot manageable. Once we expand in Phase 2, you'll be able to hold multiple plots or build a family holding."
+      }
+    ]
+  },
+  "about": {
+    "tag": "Հիմնադիրը",
+    "name": "Aleksandr Melikyan",
+    "role": "Founder",
+    "paragraph1": "I've spent nine years building software products. In 2022 I started hiking in the Armenian mountains — Aragats, Geghama, Khustup. Something shifted.",
+    "paragraph2": "I kept thinking about the gap between the land I was walking on and the people who should feel connected to it — both those living in Armenia and those living far from it. Hyeland is my attempt to close that gap.",
+    "paragraph3": "I'm building this publicly, slowly, and honestly. The pre-pilot is how I test whether the idea is real. If you're reading this, you're early — and that matters.",
+    "trustText": "Building in public since 2024"
+  },
+  "ctaFooter": {
+    "tag": "Միացեք նախափուլին",
+    "heading": "Own a piece of the Highland.",
+    "subtitle": "Phase 1 is limited to 20 diaspora plots. No payment yet — just register your interest and we'll reach out directly.",
+    "buttonLabel": "Claim your plot",
+    "buttonHref": "#",
+    "note": "No payment required to register. We'll contact you personally."
+  }
+}
