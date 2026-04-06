@@ -119,6 +119,7 @@ export interface FarmerContent {
   quote: string;
   bio: string;
   image?: string;
+  imagePosition?: string;
 }
 
 export interface Season {
@@ -170,6 +171,7 @@ export interface AboutContent {
   paragraph3: string;
   trustText: string;
   image?: string;
+  imagePosition?: string;
 }
 
 export interface CtaFooterContent {

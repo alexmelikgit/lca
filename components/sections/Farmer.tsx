@@ -100,7 +100,7 @@ export default function Farmer({ content }: Props) {
                   <img
                     src={content.image}
                     alt={content.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: content.imagePosition ?? 'center center', display: 'block' }}
                   />
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.35 }}>

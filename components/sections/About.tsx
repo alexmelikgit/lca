@@ -61,7 +61,7 @@ export default function About({ content }: Props) {
                   <img
                     src={content.image}
                     alt={content.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: content.imagePosition ?? 'center top', display: 'block' }}
                   />
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.3 }}>
