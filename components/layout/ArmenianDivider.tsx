@@ -8,7 +8,7 @@
  */
 
 interface ArmenianDividerProps {
-  variant?: 'green' | 'gold';
+  variant?: 'green' | 'gold' | 'ink';
   className?: string;
 }
 
@@ -16,8 +16,8 @@ export default function ArmenianDivider({
   variant = 'green',
   className = '',
 }: ArmenianDividerProps) {
-  const color = variant === 'gold' ? 'var(--gold)' : 'var(--green-mid)';
-  const opacity = variant === 'gold' ? 0.75 : 0.55;
+  const color = variant === 'gold' ? 'var(--gold)' : variant === 'ink' ? 'var(--ink2)' : 'var(--green-mid)';
+  const opacity = variant === 'gold' ? 0.75 : variant === 'ink' ? 0.35 : 0.55;
 
   return (
     <div
