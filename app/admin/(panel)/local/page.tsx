@@ -14,6 +14,7 @@ import AdminCard from '@/components/admin/AdminCard';
 import AdminInput from '@/components/admin/AdminInput';
 import AdminSaveButton from '@/components/admin/AdminSaveButton';
 import ImageUpload from '@/components/admin/ImageUpload';
+import ImagePositionPicker from '@/components/admin/ImagePositionPicker';
 
 const TABS = [
   { id: 'hero', label: 'Hero' },
@@ -684,48 +685,112 @@ export default function LocalPage() {
 
         {/* ── FARMER ───────────────────────────────────────── */}
         {activeTab === 'farmer' && (
-          <AdminCard title="Farmer — Profile">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <ImageUpload
-                label="Photo"
-                value={content.farmer.image ?? ''}
-                onChange={(url) => update('farmer', { ...content.farmer, image: url })}
-                aspectHint="Recommended: 3:4 portrait, min 600×800 px"
-              />
-              <AdminInput
-                label="Tag"
-                value={content.farmer.tag}
-                onChange={(e) => update('farmer', { ...content.farmer, tag: e.target.value })}
-              />
-              <AdminInput
-                label="Name"
-                value={content.farmer.name}
-                onChange={(e) => update('farmer', { ...content.farmer, name: e.target.value })}
-              />
-              <AdminInput
-                label="Region"
-                value={content.farmer.region}
-                onChange={(e) => update('farmer', { ...content.farmer, region: e.target.value })}
-              />
-              <AdminInput
-                label="Experience"
-                value={content.farmer.experience}
-                onChange={(e) => update('farmer', { ...content.farmer, experience: e.target.value })}
-              />
-              <TextareaField
-                label="Quote"
-                value={content.farmer.quote}
-                onChange={(val) => update('farmer', { ...content.farmer, quote: val })}
-                rows={2}
-              />
-              <TextareaField
-                label="Bio"
-                value={content.farmer.bio}
-                onChange={(val) => update('farmer', { ...content.farmer, bio: val })}
-                rows={5}
-              />
-            </div>
-          </AdminCard>
+          <>
+            {/* ── Photo + live card preview ── */}
+            <AdminCard title="Farmer — Photo" subtitle="Drag on the image to reposition the focal point">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }}>
+
+                {/* Left: card preview — mirrors the frontend exactly */}
+                <div>
+                  <div style={labelStyle}>Preview (as shown on site)</div>
+                  <div style={{
+                    background: 'var(--cream, #FBF8F2)',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(139,94,60,0.1)',
+                    boxShadow: '0 4px 20px rgba(26,26,20,0.07)',
+                  }}>
+                    <ImagePositionPicker
+                      src={content.farmer.image ?? ''}
+                      position={content.farmer.imagePosition ?? 'center center'}
+                      onPositionChange={(pos) => update('farmer', { ...content.farmer, imagePosition: pos })}
+                      containerStyle={{ height: '220px', background: 'linear-gradient(135deg, #E8F5E4 0%, #F5EBE0 100%)' }}
+                    >
+                      {/* Region badge overlay */}
+                      {content.farmer.region && (
+                        <div style={{
+                          position: 'absolute', bottom: '14px', left: '18px', zIndex: 3,
+                          fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem',
+                          letterSpacing: '0.12em', textTransform: 'uppercase',
+                          color: '#8B5E3C', background: 'rgba(255,255,255,0.88)',
+                          padding: '3px 10px', borderRadius: '100px',
+                        }}>
+                          {content.farmer.region}
+                        </div>
+                      )}
+                    </ImagePositionPicker>
+
+                    {/* Quote block below image */}
+                    <div style={{ padding: '20px 24px 24px' }}>
+                      <div style={{ fontFamily: 'Georgia, serif', fontSize: '2.8rem', lineHeight: 0.8, color: '#C49A3C', opacity: 0.45, marginBottom: '8px', userSelect: 'none' }}>&ldquo;</div>
+                      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '0.9rem', lineHeight: 1.6, color: '#1A1A14', marginBottom: '12px', minHeight: '40px' }}>
+                        {content.farmer.quote || <span style={{ opacity: 0.3 }}>Quote will appear here…</span>}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div style={{ width: '20px', height: '1px', background: '#8B5E3C', opacity: 0.35 }} />
+                        <span style={{ fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8B5E3C', opacity: 0.7 }}>
+                          {content.farmer.name || 'Name'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  {content.farmer.image && (
+                    <div style={{ marginTop: '8px', fontFamily: 'Lato, sans-serif', fontSize: '0.7rem', color: '#9B9B82' }}>
+                      Position: {content.farmer.imagePosition ?? 'center center'}
+                    </div>
+                  )}
+                </div>
+
+                {/* Right: upload */}
+                <div>
+                  <ImageUpload
+                    label="Photo"
+                    value={content.farmer.image ?? ''}
+                    onChange={(url) => update('farmer', { ...content.farmer, image: url })}
+                    aspectHint="Recommended: 3:2 landscape, min 800×500 px"
+                  />
+                </div>
+              </div>
+            </AdminCard>
+
+            {/* ── Text fields ── */}
+            <AdminCard title="Farmer — Profile">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput
+                  label="Tag"
+                  value={content.farmer.tag}
+                  onChange={(e) => update('farmer', { ...content.farmer, tag: e.target.value })}
+                />
+                <AdminInput
+                  label="Name"
+                  value={content.farmer.name}
+                  onChange={(e) => update('farmer', { ...content.farmer, name: e.target.value })}
+                />
+                <AdminInput
+                  label="Region"
+                  value={content.farmer.region}
+                  onChange={(e) => update('farmer', { ...content.farmer, region: e.target.value })}
+                />
+                <AdminInput
+                  label="Experience"
+                  value={content.farmer.experience}
+                  onChange={(e) => update('farmer', { ...content.farmer, experience: e.target.value })}
+                />
+                <TextareaField
+                  label="Quote"
+                  value={content.farmer.quote}
+                  onChange={(val) => update('farmer', { ...content.farmer, quote: val })}
+                  rows={2}
+                />
+                <TextareaField
+                  label="Bio"
+                  value={content.farmer.bio}
+                  onChange={(val) => update('farmer', { ...content.farmer, bio: val })}
+                  rows={5}
+                />
+              </div>
+            </AdminCard>
+          </>
         )}
 
         {/* ── SEASONAL ─────────────────────────────────────── */}
@@ -931,55 +996,116 @@ export default function LocalPage() {
 
         {/* ── ABOUT ────────────────────────────────────────── */}
         {activeTab === 'about' && (
-          <AdminCard title="About — Founder">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <ImageUpload
-                label="Photo"
-                value={content.about.image ?? ''}
-                onChange={(url) => update('about', { ...content.about, image: url })}
-                aspectHint="Recommended: 1:1 square, min 600×600 px"
-              />
-              <AdminInput
-                label="Tag"
-                value={content.about.tag}
-                onChange={(e) => update('about', { ...content.about, tag: e.target.value })}
-              />
-              <AdminInput
-                label="Name"
-                value={content.about.name}
-                onChange={(e) => update('about', { ...content.about, name: e.target.value })}
-              />
-              <AdminInput
-                label="Role"
-                value={content.about.role}
-                onChange={(e) => update('about', { ...content.about, role: e.target.value })}
-              />
-              <TextareaField
-                label="Paragraph 1"
-                value={content.about.paragraph1}
-                onChange={(val) => update('about', { ...content.about, paragraph1: val })}
-                rows={4}
-              />
-              <TextareaField
-                label="Paragraph 2"
-                value={content.about.paragraph2}
-                onChange={(val) => update('about', { ...content.about, paragraph2: val })}
-                rows={4}
-              />
-              <TextareaField
-                label="Paragraph 3"
-                value={content.about.paragraph3}
-                onChange={(val) => update('about', { ...content.about, paragraph3: val })}
-                rows={4}
-              />
-              <AdminInput
-                label="Trust text"
-                value={content.about.trustText}
-                onChange={(e) => update('about', { ...content.about, trustText: e.target.value })}
-                helper='Short meta line shown below the paragraphs'
-              />
-            </div>
-          </AdminCard>
+          <>
+            {/* ── Photo + live card preview ── */}
+            <AdminCard title="About — Photo" subtitle="Drag on the image to reposition the focal point">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }}>
+
+                {/* Left: card preview — mirrors the frontend exactly */}
+                <div>
+                  <div style={labelStyle}>Preview (as shown on site)</div>
+                  <div style={{
+                    background: 'white',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(90,155,80,0.15)',
+                    boxShadow: '0 4px 20px rgba(45,90,39,0.07)',
+                    maxWidth: '260px',
+                  }}>
+                    <ImagePositionPicker
+                      src={content.about.image ?? ''}
+                      position={content.about.imagePosition ?? 'center top'}
+                      onPositionChange={(pos) => update('about', { ...content.about, imagePosition: pos })}
+                      containerStyle={{ aspectRatio: '1 / 1', background: 'linear-gradient(135deg, #E8F5E4 0%, #FBF8F2 100%)' }}
+                    >
+                      {/* Role badge overlay */}
+                      {content.about.role && (
+                        <div style={{
+                          position: 'absolute', bottom: '12px', left: '16px', zIndex: 3,
+                          fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem',
+                          letterSpacing: '0.1em', textTransform: 'uppercase',
+                          color: '#2D5A27', background: 'rgba(255,255,255,0.92)',
+                          padding: '3px 10px', borderRadius: '100px',
+                        }}>
+                          {content.about.role}
+                        </div>
+                      )}
+                    </ImagePositionPicker>
+
+                    {/* Name + role below image */}
+                    <div style={{ padding: '16px 20px 20px' }}>
+                      <div style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', color: '#1A1A14', marginBottom: '3px' }}>
+                        {content.about.name || <span style={{ opacity: 0.3 }}>Name</span>}
+                      </div>
+                      <div style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.72rem', fontWeight: 400, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#3D7A35' }}>
+                        {content.about.role || <span style={{ opacity: 0.3 }}>Role</span>}
+                      </div>
+                    </div>
+                  </div>
+                  {content.about.image && (
+                    <div style={{ marginTop: '8px', fontFamily: 'Lato, sans-serif', fontSize: '0.7rem', color: '#9B9B82' }}>
+                      Position: {content.about.imagePosition ?? 'center top'}
+                    </div>
+                  )}
+                </div>
+
+                {/* Right: upload */}
+                <div>
+                  <ImageUpload
+                    label="Photo"
+                    value={content.about.image ?? ''}
+                    onChange={(url) => update('about', { ...content.about, image: url })}
+                    aspectHint="Recommended: 1:1 square, min 600×600 px"
+                  />
+                </div>
+              </div>
+            </AdminCard>
+
+            {/* ── Text fields ── */}
+            <AdminCard title="About — Founder">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput
+                  label="Tag"
+                  value={content.about.tag}
+                  onChange={(e) => update('about', { ...content.about, tag: e.target.value })}
+                />
+                <AdminInput
+                  label="Name"
+                  value={content.about.name}
+                  onChange={(e) => update('about', { ...content.about, name: e.target.value })}
+                />
+                <AdminInput
+                  label="Role"
+                  value={content.about.role}
+                  onChange={(e) => update('about', { ...content.about, role: e.target.value })}
+                />
+                <TextareaField
+                  label="Paragraph 1"
+                  value={content.about.paragraph1}
+                  onChange={(val) => update('about', { ...content.about, paragraph1: val })}
+                  rows={4}
+                />
+                <TextareaField
+                  label="Paragraph 2"
+                  value={content.about.paragraph2}
+                  onChange={(val) => update('about', { ...content.about, paragraph2: val })}
+                  rows={4}
+                />
+                <TextareaField
+                  label="Paragraph 3"
+                  value={content.about.paragraph3}
+                  onChange={(val) => update('about', { ...content.about, paragraph3: val })}
+                  rows={4}
+                />
+                <AdminInput
+                  label="Trust text"
+                  value={content.about.trustText}
+                  onChange={(e) => update('about', { ...content.about, trustText: e.target.value })}
+                  helper='Short meta line shown below the paragraphs'
+                />
+              </div>
+            </AdminCard>
+          </>
         )}
 
         {/* ── CTA FOOTER ───────────────────────────────────── */}
