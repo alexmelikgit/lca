@@ -9,7 +9,7 @@ export async function readBlobOrFs(blobKey: string, fsPath: string): Promise<str
     const { blobs } = await list({ prefix: blobKey, limit: 1 });
     const match = blobs.find((b) => b.pathname === blobKey);
     if (match) {
-      const res = await fetch(match.url);
+      const res = await fetch(match.url, { cache: 'no-store' });
       return res.text();
     }
   } catch {
