@@ -222,3 +222,86 @@ export interface LocalContent {
   about: AboutContent;
   ctaFooter: CtaFooterContent;
 }
+
+/* ─── Diaspora page ──────────────────────────────────────────── */
+
+export interface HarvestOption {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface HarvestOptionsContent {
+  tag: string;
+  heading: string;
+  intro: string;
+  options: HarvestOption[];
+}
+
+export interface OwnershipItem {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface DiasporaOwnershipContent {
+  tag: string;
+  heading: string;
+  intro: string;
+  items: OwnershipItem[];
+}
+
+export interface GiftMechanicContent {
+  tag: string;
+  heading: string;
+  intro: string;
+  features: string[];
+  ctaLabel: string;
+  ctaHref: string;
+  note: string;
+}
+
+export interface PhaseTwoContent {
+  tag: string;
+  heading: string;
+  body: string;
+  note: string;
+}
+
+export interface DiasporaSectionVisibility {
+  hero: boolean;
+  problem: boolean;
+  howItWorks: boolean;
+  harvestOptions: boolean;
+  dashboardShowcase: boolean;
+  ownership: boolean;
+  giftMechanic: boolean;
+  progress: boolean;
+  farmer: boolean;
+  seasonal: boolean;
+  trust: boolean;
+  phaseTwo: boolean;
+  faq: boolean;
+  about: boolean;
+  ctaFooter: boolean;
+}
+
+export interface DiasporaContent {
+  sectionVisibility: DiasporaSectionVisibility;
+  hero: HeroContent;
+  problem: ProblemContent;
+  howItWorks: HowItWorksContent;
+  harvestOptions: HarvestOptionsContent;
+  dashboardShowcase: DashboardShowcaseContent;
+  ownership: DiasporaOwnershipContent;
+  giftMechanic: GiftMechanicContent;
+  progress: ProgressContent;
+  farmer: FarmerContent;
+  seasonal: SeasonalContent;
+  trust: TrustContent;
+  phaseTwo: PhaseTwoContent;
+  faq: FaqContent;
+  about: AboutContent;
+  ctaFooter: CtaFooterContent;
+}
