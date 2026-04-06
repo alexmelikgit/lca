@@ -25,8 +25,12 @@ export interface DashboardCardProps {
     label: string;
     percentage: number;
   };
-  nextDelivery: {
+  nextDelivery?: {
     day: string;
+    description: string;
+  };
+  harvestOption?: {
+    label: string;
     description: string;
   };
   className?: string;
@@ -40,6 +44,7 @@ export default function DashboardCard({
   stats,
   progress,
   nextDelivery,
+  harvestOption,
   className = '',
   style,
 }: DashboardCardProps) {
@@ -229,43 +234,82 @@ export default function DashboardCard({
         </div>
       </div>
 
-      {/* Next delivery */}
-      <div
-        style={{
-          padding: '8px 16px 12px',
-          background: 'var(--gold-pale)',
-          borderTop: '1px solid rgba(196,154,60,0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-        }}
-      >
-        <span style={{ fontSize: '0.9rem' }}>📦</span>
-        <div>
-          <div
-            style={{
-              fontSize: '0.6rem',
-              fontWeight: 700,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: 'var(--soil)',
-              marginBottom: '1px',
-            }}
-          >
-            Next delivery
-          </div>
-          <div
-            style={{
-              fontSize: '0.75rem',
-              fontWeight: 400,
-              color: 'var(--ink2)',
-            }}
-          >
-            <strong style={{ fontWeight: 700 }}>{nextDelivery.day}</strong>{' '}
-            · {nextDelivery.description}
+      {/* Bottom row — delivery or harvest option */}
+      {harvestOption ? (
+        <div
+          style={{
+            padding: '8px 16px 12px',
+            background: 'var(--pomegranate-pale)',
+            borderTop: '1px solid rgba(139,37,53,0.15)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+        >
+          <span style={{ fontSize: '0.9rem' }}>✦</span>
+          <div>
+            <div
+              style={{
+                fontSize: '0.6rem',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--pomegranate)',
+                marginBottom: '1px',
+              }}
+            >
+              Harvest option
+            </div>
+            <div
+              style={{
+                fontSize: '0.75rem',
+                fontWeight: 400,
+                color: 'var(--ink2)',
+              }}
+            >
+              <strong style={{ fontWeight: 700 }}>{harvestOption.label}</strong>{' '}
+              · {harvestOption.description}
+            </div>
           </div>
         </div>
-      </div>
+      ) : nextDelivery ? (
+        <div
+          style={{
+            padding: '8px 16px 12px',
+            background: 'var(--gold-pale)',
+            borderTop: '1px solid rgba(196,154,60,0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+        >
+          <span style={{ fontSize: '0.9rem' }}>📦</span>
+          <div>
+            <div
+              style={{
+                fontSize: '0.6rem',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--soil)',
+                marginBottom: '1px',
+              }}
+            >
+              Next delivery
+            </div>
+            <div
+              style={{
+                fontSize: '0.75rem',
+                fontWeight: 400,
+                color: 'var(--ink2)',
+              }}
+            >
+              <strong style={{ fontWeight: 700 }}>{nextDelivery.day}</strong>{' '}
+              · {nextDelivery.description}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
