@@ -123,7 +123,6 @@ export default function DashboardShowcase({ content }: Props) {
         </div>
       </section>
 
-      <ArmenianDivider variant="gold" />
     </>
   );
 }

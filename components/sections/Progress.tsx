@@ -206,7 +206,6 @@ export default function Progress({ content }: Props) {
         }
       `}</style>
 
-      <ArmenianDivider variant="gold" />
     </>
   );
 }
