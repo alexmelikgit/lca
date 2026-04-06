@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { NavContent } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
 import LocaleSwitcher from '@/components/ui/LocaleSwitcher';
@@ -14,6 +15,7 @@ interface NavbarProps {
 
 export default function Navbar({ content, page = 'local', locale }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -21,74 +23,76 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
   const links = page === 'diaspora' ? content.diasporaLinks : content.localLinks;
   const ctaText = page === 'diaspora' ? content.diasporaCta : content.localCta;
   const switchHref = page === 'diaspora' ? `/${locale}` : `/${locale}/diaspora`;
   const switchText = page === 'diaspora' ? content.localLinkText : content.diasporaLinkText;
 
   return (
-    <header style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 100,
-      backdropFilter: 'blur(12px)',
-      WebkitBackdropFilter: 'blur(12px)',
-      background: scrolled ? 'rgba(251,248,242,0.88)' : 'rgba(251,248,242,0.72)',
-      borderBottom: '1px solid rgba(168,212,160,0.25)',
-      boxShadow: scrolled ? '0 2px 20px rgba(45,90,39,0.08)' : 'none',
-      transition: 'box-shadow 0.3s ease, background 0.3s ease',
-    }}>
-      <div style={{
-        maxWidth: '1280px',
-        margin: '0 auto',
-        padding: '0 24px',
-        height: '64px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '24px',
+    <>
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        background: scrolled || open ? 'rgba(251,248,242,0.97)' : 'rgba(251,248,242,0.72)',
+        borderBottom: '1px solid rgba(168,212,160,0.25)',
+        boxShadow: scrolled ? '0 2px 20px rgba(45,90,39,0.08)' : 'none',
+        transition: 'box-shadow 0.3s ease, background 0.3s ease',
       }}>
-        <Link href={`/${locale}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
-          <span style={{
-            fontFamily: 'var(--font-playfair)',
-            fontWeight: 400,
-            fontSize: '1rem',
-            color: 'var(--ink)',
-            letterSpacing: '0.01em',
-          }}>
-            {content.logoMain}
-            <span style={{ color: 'var(--green)', fontStyle: 'italic' }}>{content.logoHighlight}</span>
-          </span>
-        </Link>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 24px',
+          height: '64px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '24px',
+        }}>
+          {/* Logo */}
+          <Link href={`/${locale}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
+            <span style={{
+              fontFamily: 'var(--font-playfair)',
+              fontWeight: 400,
+              fontSize: '1rem',
+              color: 'var(--ink)',
+              letterSpacing: '0.01em',
+            }}>
+              {content.logoMain}
+              <span style={{ color: 'var(--green)', fontStyle: 'italic' }}>{content.logoHighlight}</span>
+            </span>
+          </Link>
 
-        <nav style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-          {links.map((link) => (
-            <a
-              key={link.id}
-              href={link.href}
-              className="nav-link"
-              style={{
+          {/* Desktop nav */}
+          <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+            {links.map((link) => (
+              <a key={link.id} href={link.href} className="nav-link" style={{
                 fontFamily: 'var(--font-lato)',
                 fontWeight: 400,
                 fontSize: '0.875rem',
                 color: 'var(--ink2)',
                 textDecoration: 'none',
                 letterSpacing: '0.02em',
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+              }}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexShrink: 0 }}>
-          <LocaleSwitcher currentLocale={locale} />
-
-          <Link
-            href={switchHref}
-            style={{
+          {/* Desktop right */}
+          <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexShrink: 0 }}>
+            <LocaleSwitcher currentLocale={locale} />
+            <Link href={switchHref} style={{
               fontFamily: 'var(--font-lato)',
               fontWeight: 400,
               fontSize: '0.8rem',
@@ -96,15 +100,10 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
               textDecoration: 'none',
               letterSpacing: '0.04em',
               whiteSpace: 'nowrap',
-            }}
-          >
-            {switchText} →
-          </Link>
-
-          <a
-            href="#join"
-            className="btn-nav"
-            style={{
+            }}>
+              {switchText} →
+            </Link>
+            <a href="#join" className="btn-nav" style={{
               fontFamily: 'var(--font-lato)',
               fontWeight: 700,
               fontSize: '0.78rem',
@@ -117,12 +116,184 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
               textDecoration: 'none',
               whiteSpace: 'nowrap',
               display: 'inline-block',
+            }}>
+              {ctaText}
+            </a>
+          </div>
+
+          {/* Hamburger button — mobile only */}
+          <button
+            className="hamburger"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            style={{
+              display: 'none',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px',
+              marginRight: '-8px',
+              flexShrink: 0,
+              zIndex: 110,
             }}
           >
-            {ctaText}
-          </a>
+            {/* Three-line / X icon */}
+            <div style={{ width: '22px', height: '16px', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <span style={{
+                display: 'block',
+                height: '1.5px',
+                background: 'var(--ink)',
+                borderRadius: '2px',
+                transformOrigin: 'center',
+                transition: 'transform 0.3s ease, opacity 0.3s ease',
+                transform: open ? 'translateY(7.25px) rotate(45deg)' : 'none',
+              }} />
+              <span style={{
+                display: 'block',
+                height: '1.5px',
+                background: 'var(--ink)',
+                borderRadius: '2px',
+                transition: 'opacity 0.2s ease',
+                opacity: open ? 0 : 1,
+              }} />
+              <span style={{
+                display: 'block',
+                height: '1.5px',
+                background: 'var(--ink)',
+                borderRadius: '2px',
+                transformOrigin: 'center',
+                transition: 'transform 0.3s ease, opacity 0.3s ease',
+                transform: open ? 'translateY(-7.25px) rotate(-45deg)' : 'none',
+              }} />
+            </div>
+          </button>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Full-screen mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 99,
+              background: 'var(--cream)',
+              display: 'flex',
+              flexDirection: 'column',
+              paddingTop: '64px',
+            }}
+          >
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              padding: '40px 32px 60px',
+              gap: '0',
+            }}>
+              {/* Nav links */}
+              {links.map((link, i) => (
+                <motion.a
+                  key={link.id}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1], delay: 0.05 + i * 0.06 }}
+                  style={{
+                    fontFamily: 'var(--font-playfair)',
+                    fontWeight: 300,
+                    fontSize: 'clamp(2rem, 8vw, 2.8rem)',
+                    lineHeight: 1.2,
+                    color: 'var(--ink)',
+                    textDecoration: 'none',
+                    display: 'block',
+                    padding: '14px 0',
+                    borderBottom: '1px solid rgba(26,26,20,0.07)',
+                  }}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+
+              {/* CTA */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1], delay: 0.05 + links.length * 0.06 }}
+                style={{ marginTop: '40px' }}
+              >
+                <a
+                  href="#join"
+                  onClick={() => setOpen(false)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontFamily: 'var(--font-lato)',
+                    fontWeight: 700,
+                    fontSize: '0.85rem',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    color: 'white',
+                    background: 'var(--green-deep)',
+                    padding: '14px 32px',
+                    borderRadius: '100px',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {ctaText} →
+                </a>
+              </motion.div>
+
+              {/* Bottom: locale + switch */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.3 }}
+                style={{
+                  marginTop: 'auto',
+                  paddingTop: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '24px',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <LocaleSwitcher currentLocale={locale} />
+                <Link
+                  href={switchHref}
+                  onClick={() => setOpen(false)}
+                  style={{
+                    fontFamily: 'var(--font-lato)',
+                    fontSize: '0.8rem',
+                    color: 'var(--ink3)',
+                    textDecoration: 'none',
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  {switchText} →
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Responsive styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .hamburger { display: flex !important; }
+        }
+      `}</style>
+    </>
   );
 }

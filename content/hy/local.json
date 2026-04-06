@@ -1,339 +1,353 @@
 {
+  "sectionVisibility": {
+    "hero": true,
+    "problem": true,
+    "howItWorks": true,
+    "dashboardShowcase": true,
+    "health": true,
+    "convenience": true,
+    "progress": true,
+    "farmer": true,
+    "seasonal": true,
+    "trust": true,
+    "faq": true,
+    "about": true,
+    "ctaFooter": true
+  },
   "hero": {
-    "tag": "For those living in Armenia",
-    "h1Line1": "You know exactly",
-    "h1Line2": "what you're eating.",
-    "h1Italic": "Own a piece of the Highland.",
-    "subtitle": "Own a small, real farming plot outside Yerevan. A farmer tends it for you. Your crops come to your door weekly — 1 to 2 kg at a time, as they ripen. You track everything on your own dashboard.",
-    "primaryCtaLabel": "Join the pre-pilot",
+    "tag": "Հայաստանում ապրողների համար",
+    "h1Line1": "Դու գիտես,",
+    "h1Line2": "ինչ ես ուտում։",
+    "h1Italic": "Ունեցիր քո հողակտորը։",
+    "subtitle": "Ունեցիր փոքր, իրական հողամաս Երևանից դուրս։ Ֆերմերը հոգ է տանում դրա մասին։ Բերքը շաբաթական գալիս է քո դուռը — 1-ից 2 կիլոգրամ, ինչպես հասունանում է։ Ամեն ինչ հետևիր քո վահանակից։",
+    "primaryCtaLabel": "Միանալ նախնական փուլին",
     "primaryCtaHref": "#join",
-    "secondaryCtaLabel": "See how it works",
+    "secondaryCtaLabel": "Տեսնել, թե ինչպես է աշխատում",
     "secondaryCtaHref": "#how-it-works",
     "stats": [
       {
         "value": "101%",
-        "label": "Traceable"
+        "label": "Հետևելի"
       },
       {
-        "value": "Weekly",
-        "label": "Deliveries"
+        "value": "Շաբաթական",
+        "label": "Առաքումներ"
       },
       {
-        "value": "Real",
-        "label": "Your plot"
+        "value": "Իրական",
+        "label": "Բերք"
       }
     ]
   },
   "problem": {
-    "tag": "The problem with supermarket produce",
-    "heading": "You have no idea what you're actually eating.",
+    "tag": "Սուպերմարկետի ապրանքի խնդիրը",
+    "heading": "Չգիտես, թե ինչ ես իրականում ուտում։",
     "cards": [
       {
         "id": "p1",
         "vegetable": "tomato",
-        "title": "You don't know where it came from",
-        "description": "Most produce travels hundreds of kilometers. By the time it reaches you, it's been in cold storage for weeks."
+        "title": "Չգիտես, թե որտեղից է եկել",
+        "description": "Ապրանքների մեծ մասը հարյուրավոր կիլոմետրեր է անցնում։ Երբ հասնում է քեզ, արդեն շաբաթներ շարունակ սառը պահեստում է եղել։"
       },
       {
         "id": "p2",
         "vegetable": "cucumber",
-        "title": "Pesticides you can't taste or see",
-        "description": "Conventional farming uses chemical inputs you can't detect. There's no way to know what's on your food."
+        "title": "Թունաքիմիկատներ, որ չես կարող զգալ կամ տեսնել",
+        "description": "Արտադրական գյուղատնտեսությունն օգտագործում է քիմիական նյութեր, որոնք հնարավոր չէ հայտնաբերել։"
       },
       {
         "id": "p3",
         "vegetable": "greens",
-        "title": "Picked before it was ready",
-        "description": "Produce is harvested early to survive transit. You're eating food that never had the chance to fully ripen."
+        "title": "Հավաքված է մինչ հասունանալը",
+        "description": "Բերքը հավաքվում է վաղ, որպեսզի դիմանա տեղափոխությանը։ Ուտում ես սնունդ, որն ամբողջությամբ հասունանալու հնարավորություն չի ունեցել։"
       }
     ]
   },
   "howItWorks": {
-    "tag": "How it works",
-    "heading": "Four steps to your own plot.",
-    "intro": "No farming experience needed. We handle everything from soil to your door.",
+    "tag": "Ինչպես է աշխատում",
+    "heading": "Չորս քայլ դեպի քո հողամաս։",
+    "intro": "Գյուղատնտեսական փորձ պետք չէ։ Հողից մինչ քո դուռ — ամեն ինչ մենք ենք կառավարում։",
     "steps": [
       {
         "id": "step-1",
-        "title": "Choose your plot & crop",
-        "description": "Browse plots in Armenian farming regions. Pick your preferred size, what grows on it — tomatoes, cucumbers, herbs, leafy greens."
+        "title": "Ընտրիր քո հողամասը և բերքի տեսակը",
+        "description": "Ընտրիր ցանկալի հողամասի չափը և այն, ինչ կաճի դրա վրա — լոլիկ, վարունգ, կանաչեղեն։\nԿունենաս հնարավորություն ինքնուրույն ընտրելու, թե որ հողակտորի վրա, ինչ բերք աճի"
       },
       {
         "id": "step-2",
-        "title": "A real farmer tends it",
-        "description": "Our on-the-ground farmer handles everything. You choose the crop and type. Weekly photo updates show exactly what's happening on your plot."
+        "title": "Իրական ֆերմեր և իրական կառավարում",
+        "description": "Մեր ֆերմերն ամեն ինչ կառավարում է։ Դու ընտրում ես հողամասի չափը և բերքի տեսակը։ Լուսանկարային թարմացումները ցույց են տալիս, թե ինչ է կատարվում քո հողամասում։"
       },
       {
         "id": "step-3",
-        "title": "Weekly small deliveries",
-        "description": "As your crop ripens, you receive a small delivery each week — 1–2 kg at a time. No storage problem. No waste. Just fresh food on schedule."
+        "title": "Շաբաթական փոքր առաքումներ",
+        "description": "Երբ բերքը հասունանում է, ամեն շաբաթ ստանում ես փոքր առաքում — 1–2 կգ մեկ անգամ։ Պահեստավորման խնդիր չկա։ Վատնում չկա։ Միայն թարմ սնունդ՝ ճիշտ ժամանակին։"
       },
       {
         "id": "step-4",
-        "title": "Reinvest & grow",
-        "description": "At the end of each season, reinvest to expand your plot. Your soil becomes richer over more. Your personal farm grows with every year."
+        "title": "Ներդրիր նորից, ընդլայնիր հողամասդ",
+        "description": "Յուրաքանչյուր սեզոնի վերջում ներդրիր նորից՝ հողամասդ ընդլայնելու համար։ Հողն ավելի հարուստ է դառնում ամեն տարի։ Քո անձնական ֆերման աճում է ամեն տարի։"
       }
     ]
   },
   "dashboardShowcase": {
-    "tag": "Your dashboard",
-    "heading": "Track every stage of your harvest.",
-    "intro": "From the moment seeds go in to the day of delivery — you see everything. No guessing, no uncertainty.",
+    "tag": "Քո վահանակը",
+    "heading": "Հետևիր բերքի յուրաքանչյուր փուլին։",
+    "intro": "Սերմի ցանումից մինչ առաքման օրը — ամեն ինչ տեսնում ես։ Կռահելու կամ անորոշության համար տեղ չկա։",
     "features": [
-      "Live plot status and current growth stage",
-      "Weekly photo updates from your farmer",
-      "Upcoming delivery day and estimated contents",
-      "Estimated harvest weight per crop type",
-      "Season progress timeline and weather notes"
+      "Հողամասի ներկա կարգավիճակ և աճի փուլ",
+      "Շաբաթական լուսանկարային թարմացումներ ֆերմերից",
+      "Հաջորդ առաքման օրն ու ակնկալվող բերքը",
+      "Բերքի ակնկալվող կշիռն ըստ տեսակի",
+      "Սեզոնի ժամանակացույց և եղանակային նշումներ"
     ]
   },
   "health": {
-    "tag": "What you gain",
-    "heading": "Food the way it was meant to be.",
-    "intro": "When you know exactly where your food comes from, everything changes.",
+    "tag": "Ինչ ես ստանում",
+    "heading": "Այնպիսի սնունդ, ինչպեսին պետք է լինի։",
+    "intro": "Երբ հստակ գիտես, թե ուտելիքդ որտեղից է, ամեն ինչ փոխվում է։",
     "items": [
       {
         "id": "h1",
         "icon": "✦",
-        "title": "No pesticides",
-        "description": "Your plot is tended using traditional methods. No chemical inputs, ever."
+        "title": "Առանց թունաքիմիկատների",
+        "description": "Քո հողամասը խնամվում է ավանդական մեթոդներով։ Քիմիական նյութեր՝ բացառվում է։"
       },
       {
         "id": "h2",
         "icon": "◎",
-        "title": "Harvested ripe",
-        "description": "Crops are picked at peak ripeness — not early for transit. The difference in taste is immediate."
+        "title": "Բերքահավաքը ճիշտ ժամանակին",
+        "description": "Բերքը հավաքվում է լիակատար հասունության պահին — ոչ թե վաղ, տեղափոխության համար։ Համի տարբերությունն անմիջապես նկատելի է։"
       },
       {
         "id": "h3",
         "icon": "◈",
-        "title": "Seasonal variety",
-        "description": "You eat what's actually in season — tomatoes in summer, squash in autumn, greens in spring."
+        "title": "Սեզոնային բազմազանություն",
+        "description": "Ուտում ես այն, ինչ իրականում սեզոնային է — ամռանը լոլիկ, աշնանը դդում, գարնանը կանաչեղեն։"
       },
       {
         "id": "h4",
         "icon": "◉",
-        "title": "Full traceability",
-        "description": "You know the plot number, the region, the farmer, and the harvest date for everything you eat."
+        "title": "Պարզ և տեսանելի",
+        "description": "Գիտես հողամասի համարը, շրջանը, ֆերմերին և բերքահավաքի ամսաթիվն ամեն ուտելիքի համար։"
       }
     ]
   },
   "convenience": {
-    "tag": "No extra effort",
-    "heading": "Your produce, without the market trip.",
-    "intro": "We designed this to fit into your life — not the other way around.",
+    "tag": "Լրացուցիչ ջանք չի պահանջվում",
+    "heading": "Քո բերքը՝ առանց շուկա գնալու։",
+    "intro": "Նախագծել ենք, որ համապատասխանի քո կյանքին — ոչ հակառակը։",
     "items": [
       {
         "id": "c1",
-        "title": "No market trips",
-        "description": "Your weekly harvest is delivered to your door. You never have to rearrange your week around shopping."
+        "title": "Շուկա գնալ պետք չէ",
+        "description": "Շաբաթական բերքը հասնում է քո դուռը։ Կարիք չկա գնումների համար ժամանակ հատկացնել։"
       },
       {
         "id": "c2",
-        "title": "Predictable deliveries",
-        "description": "You know exactly what's coming and when. Plan your meals ahead — no surprises."
+        "title": "Կանխատեսելի առաքումներ",
+        "description": "Հստակ գիտես՝ ինչ է գալու և երբ։ Նախօրոք պլանավորիր ճաշը — անակնկալ չկա։"
       },
       {
         "id": "c3",
-        "title": "Adjust or pause",
-        "description": "Going on holiday? Pause deliveries. Need less this week? Adjust quantity. You're in control."
+        "title": "Կարգավորիր կամ դադարեցրու",
+        "description": "Արձակու՞րդ ես գնում՝ դադարեցրու առաքումները։ Այս շաբաթ ավելի քի՞չ ես ուզում՝  կարգավորիր քանակը։ Վերահսկողությունն ամբողջությամբ քո ձեռքում է։"
       },
       {
         "id": "c4",
-        "title": "Grows with you",
-        "description": "Start with 2 m² and expand as you want. Add crop varieties as the seasons change."
+        "title": "Աճում է քեզ հետ",
+        "description": "Սկսիր 2 մ²-ից և ցանկության դեպքում ընդլայնիր։ Ավելացրու բույսերի տեսակներ։"
       }
     ]
   },
   "progress": {
-    "tag": "The long view",
-    "heading": "A plot that grows with you.",
-    "intro": "This isn't a subscription you forget about. It's a living piece of land that gets better every year.",
+    "tag": "Երկարաժամկետ հեռանկար",
+    "heading": "Հողամաս, որ զարգանում է քեզ հետ։",
+    "intro": "Սա կենդանի հողատարածք է, որն ամեն տարի ավելի լավն է դառնում։",
     "milestones": [
       {
         "id": "m1",
-        "year": "Year 1",
-        "size": "2 m²",
-        "label": "Getting started",
+        "year": "1-ին տարի",
+        "size": "2 մ²",
+        "label": "Սկիզբ",
         "features": [
-          "2–3 crop types",
-          "Weekly 1–2 kg deliveries",
-          "Dashboard access",
-          "Farmer updates"
+          "2–3 տեսակ բույս",
+          "Շաբաթական 1–2 կգ առաքում",
+          "Վահանակի հասանելիություն",
+          "Ֆերմերի թարմացումներ"
         ]
       },
       {
         "id": "m2",
-        "year": "Year 2",
-        "size": "6 m²",
-        "label": "Growing roots",
+        "year": "2-րդ տարի",
+        "size": "6 մ²",
+        "label": "Զարգացում",
         "features": [
-          "5–6 crop types",
-          "Larger weekly harvests",
-          "Seasonal calendar",
-          "Named plot certificate"
+          "5–6 տեսակ բույս",
+          "Ավելի մեծ շաբաթական բերք",
+          "Սեզոնային օրացույց",
+          "Անվանական հողամասի վկայական"
         ]
       },
       {
         "id": "m3",
-        "year": "Year 3",
-        "size": "15 m²",
-        "label": "Your farm",
+        "year": "3-րդ տարի",
+        "size": "15 մ²",
+        "label": "Քո ֆերման",
         "features": [
-          "Full seasonal rotation",
-          "Guest harvest visits",
-          "Custom crop requests",
-          "Priority new plots"
+          "Ամբողջական սեզոնային շրջանառություն",
+          "Հյուրի բերքահավաք այցելություններ",
+          "Անհատական բույսերի պատվերներ",
+          "Նոր հողամասերի առաջնահերթություն"
         ]
       }
     ]
   },
   "farmer": {
-    "tag": "Who tends your land",
-    "name": "Aram Mkrtchyan",
-    "region": "Armavir region",
-    "experience": "18 years farming",
-    "quote": "Every plot I tend, I treat like my own family's land.",
-    "bio": "Aram has been farming the Armavir valley for 18 years. He grew up watching his father work the same soil. Today he tends over 40 individual plots for families across Yerevan — keeping detailed notes on each one, adjusting for the season, and treating every harvest with care."
+    "tag": "Ով է խնամում քո հողը",
+    "name": "Արամ Մկրտչյան",
+    "region": "Արմավիրի մարզ",
+    "experience": "18 տարվա ֆերմերային փորձ",
+    "quote": "Ամեն հողամաս, որ խնամում եմ, վերաբերվում եմ ինչպես իմ ընտանիքի հողին։",
+    "bio": "Արամն Արմավիրի հովտում ֆերմերությամբ է զբաղվում 18 տարի։ Մանկությունից դիտել է, թե ինչպես է հայրը աշխատում նույն հողի վրա։ Այսօր Երևանի ընտանիքների համար 40-ից ավելի անհատական հողամաս է խնամում — ամեն մեկի մասին մանրամասն գրառումներ անելով, սեզոնին համապատասխան հարմարեցնելով, և ամեն բերք մեծ հոգածությամբ մոտեցնելով։",
+    "image": "/uploads/1775469635049-nolatn.jpg"
   },
   "seasonal": {
-    "tag": "What to expect",
-    "heading": "A full year of harvest.",
-    "intro": "Each season brings different crops. Here's what you can expect across the year.",
+    "tag": "Ինչ ակնկալել",
+    "heading": "Ամբողջ տարվա բերք",
+    "intro": "Ամեն սեզոն ունի իր հնարավորությունները։ Ահա ինչ կարող ես ակնկալել ամբողջ տարվա ընթացքում։",
     "seasons": [
       {
         "id": "s1",
-        "name": "Spring",
-        "months": "Mar – May",
+        "name": "Գարուն",
+        "months": "Մարտ – Մայիս",
         "color": "#5A9B50",
         "crops": [
-          "Lettuce",
-          "Spinach",
-          "Radish",
-          "Spring onion",
-          "Peas",
-          "Herbs"
+          "Սպանախ",
+          "Բողկ",
+          "Գարնանյա սոխ",
+          "Ոլոռ",
+          "Խոտաբույսեր"
         ]
       },
       {
         "id": "s2",
-        "name": "Summer",
-        "months": "Jun – Aug",
+        "name": "Ամառ",
+        "months": "Հունիս – Օգոստոս",
         "color": "#C49A3C",
         "crops": [
-          "Tomatoes",
-          "Cucumbers",
-          "Peppers",
-          "Eggplant",
-          "Zucchini",
-          "Basil"
+          "Լոլիկ",
+          "Վարունգ",
+          "Բիբար",
+          "Սմբուկ",
+          "Ցուկինի",
+          "Ռեհան"
         ]
       },
       {
         "id": "s3",
-        "name": "Autumn",
-        "months": "Sep – Nov",
+        "name": "Աշուն",
+        "months": "Սեպտեմբեր – Նոյեմբեր",
         "color": "#8B5E3C",
         "crops": [
-          "Squash",
-          "Pumpkin",
-          "Beets",
-          "Carrots",
-          "Kale",
-          "Leeks"
+          "Դդում",
+          "Կաղամբ",
+          "Ճակնդեղ",
+          "Գազար"
         ]
       },
       {
         "id": "s4",
-        "name": "Winter",
-        "months": "Dec – Feb",
+        "name": "Ձմեռ",
+        "months": "Դեկտեմբեր – Փետրվար",
         "color": "#4A4A3A",
         "crops": [
-          "Root vegetables",
-          "Winter greens",
-          "Stored preserves"
+          "Արմատային բանջարեղեն",
+          "Ձմեռային կանաչեղեն",
+          "Պահածոյացված պաշարներ"
         ]
       }
     ]
   },
   "trust": {
-    "tag": "Honest about where we are",
-    "heading": "We're in pre-pilot. Here's exactly what that means.",
-    "intro": "We believe you deserve the full picture before you sign up.",
+    "tag": "Ազնիվ ենք, թե որտեղ ենք",
+    "heading": "Նախնական փուլում ենք։ Ահա ինչ է դա նշանակում։",
+    "intro": "Հավատում ենք, որ դու արժանի ես ամբողջ պատկերը տեսնել, նախքան գրանցվելը։",
     "points": [
       {
         "id": "t1",
-        "title": "Limited to 20 plots",
-        "description": "We're starting small intentionally. The first 20 participants will shape how this works for everyone who comes after."
+        "title": "Սահմանափակ 50 հողամաս",
+        "description": "Փոքրից ենք սկսում՝ դիտավորյալ։ Առաջին 50 մասնակիցները կձևավորեն, թե ինչպես է սա աշխատելու բոլոր հաջորդ մասնակիցների համար։"
       },
       {
         "id": "t2",
-        "title": "Launching spring 2026",
-        "description": "The first harvest season begins in September 2026. You'll receive updates as we get closer."
+        "title": "Մեկնարկ՝ 2026 թ. գարուն",
+        "description": "Առաջին բերքահավաքի սեզոնն սկսվում է 2026 թ. սեպտեմբերին։ Ավելի մոտ լինելիս կստանաս թարմացումներ։"
       },
       {
         "id": "t3",
-        "title": "One region first",
-        "description": "We're starting in Armavir, where our farmer partner is based. More regions come in year two."
+        "title": "Առաջին փուլ՝ մեկ շրջան",
+        "description": "Սկսում ենք Արմավիրից, որտեղ գտնվում է մեր ֆերմեր-գործընկերը։ Ավելի շատ շրջաններ կավելանան երկրորդ տարում։"
       },
       {
         "id": "t4",
-        "title": "Your input shapes the product",
-        "description": "Pre-pilot members are invited to regular calls with the founder. Your feedback directly influences what we build."
+        "title": "Քո կարծիքն ազդում է",
+        "description": "Նախնական փուլի անդամները հրավիրվում են հիմնադրի հետ պարբերական զրույցների։ Քո կարծիքն ուղղակիորեն ազդում է գաղափարի զարգացման վրա"
       }
     ]
   },
   "faq": {
-    "tag": "Questions",
-    "heading": "Everything you need to know.",
+    "tag": "Հարցեր",
+    "heading": "Ամեն ինչ, ինչ պետք է իմանալ",
     "items": [
       {
         "id": "f1",
-        "question": "Do I need farming experience?",
-        "answer": "None at all. The farmer handles all planting, watering, and harvesting. Your role is to enjoy what grows on your plot."
+        "question": "Գյուղատնտեսական փորձ անհրաժե՞շտ է։",
+        "answer": "Բնավ։ Ցանելը, ջրելը և հավաքելն ամբողջությամբ կառավարում է ֆերմերը։ Քո դերն է վայելել այն, ինչ աճում է քո հողամասում։"
       },
       {
         "id": "f2",
-        "question": "How big is a 2 m² plot?",
-        "answer": "About the size of a large dining table. Small enough to tend easily, large enough to produce meaningful harvests each week."
+        "question": "Ի՞նչ չափ է 2 մ² հողամասը։",
+        "answer": "Մոտ մեծ ճաշասեղանի չափ։ Բավականաչափ փոքր, որ հեշտ կառավարվի, բավականաչափ մեծ, որ ամեն շաբաթ իմաստալից բերք տա։"
       },
       {
         "id": "f3",
-        "question": "What if I don't like a particular vegetable?",
-        "answer": "During sign-up you'll specify preferences and any vegetables you'd like to avoid. The farmer works within those parameters."
+        "question": "Ի՞նչ, եթե որոշ բանջարեղեն չեմ սիրում։",
+        "answer": "Հենց դու էս ընտրում, թե քո հողամասերում ինչ է ցանվելու"
       },
       {
         "id": "f4",
-        "question": "Can I visit my plot?",
-        "answer": "In Year 2 and beyond, plot visits are part of the programme. During the pre-pilot phase, you'll receive photos and updates via your dashboard."
+        "question": "Կարո՞ղ եմ այցելել իմ հողամաս։",
+        "answer": "2-րդ տարում և դրանից հետո, հողամաս այցելությունները ծրագրի մաս են կազմում։ Նախնական փուլի ընթացքում կստանաս լուսանկարներ և թարմացումներ վահանակի միջոցով։"
       },
       {
         "id": "f5",
-        "question": "What happens in winter?",
-        "answer": "The growing season in Armavir runs March through November. During winter months, plots rest and we send preserved goods where possible."
+        "question": "Ի՞նչ կլինի ձմռան։",
+        "answer": "Արմավիրում բերքահավաքի սեզոնն ընթանում է մարտից նոյեմբեր։ Ձմեռային ամիսներին հողամասերն հանգստանում են, հնարավոր դեպքերում ուղարկվում են պահածոյացված ապրանքներ։"
       },
       {
         "id": "f6",
-        "question": "Is my plot really mine?",
-        "answer": "Yes. You're assigned a specific, named plot with a unique number. The land itself remains with the farming partner, but the crops grown on your plot are entirely yours."
+        "question": "Հողամասը իսկապես իմն է՞",
+        "answer": "Հողը պատկանում է ֆերմեր-գործընկերոջը, բայց քո հողամասում աճած բերքն ամբողջությամբ քոնն է։"
       }
     ]
   },
   "about": {
-    "tag": "Why this exists",
-    "name": "Aleksandr Melikyan",
-    "role": "Founder",
-    "paragraph1": "I started in code. Nine years building websites and platforms — readable, functional, clean. I thought in systems and logic. Then I started hiking. Not once or twice — seriously, repeatedly, deep into Armenian mountains through the Bardzunk movement I co-founded. And somewhere on those trails something shifted.",
-    "paragraph2": "I started understanding Armenia differently. Not as a concept or a heritage word, but as soil, altitude, water, light. I started noticing that every Armenian I met — regardless of where they were born or how far they'd drifted — had this pull toward land. Not metaphorical. Physical. Like something encoded.",
-    "paragraph3": "That's where this idea came from. Not from a business model. From a hike. From watching someone touch Armenian soil and go quiet.\n\nI'm a builder. I know how to start something small, prove it works, and grow it carefully. I've done it with code, with hiking programs, with educational projects. I'm not asking you to trust a pitch — I'm asking you to watch me build this in public, one season at a time. The failures will be documented the same as the successes.\n\n",
-    "trustText": "Pre-pilot opening spring 2025 · 20 plots · Armavir region"
+    "tag": "Ինչպե՞ս ստացվեց",
+    "name": "Ալեքսանդր Մելիքյան",
+    "role": "Հիմնադիր",
+    "paragraph1": "Ծրագրավորումով եմ սկսել։ Ինն տարի կառուցել եմ կայքեր ու թվային հարթակներ — ընթեռնելի, ֆունկցիոնալ, մաքուր։\nՀետո սկսեցի արշավել։ Ոչ մեկ-երկու անգամ, այլ լրջորեն՝ բազմիցս խորանալով հայկական լեռներում: Եվ ինչ-որ պահից այդ արահետներում ինչ-որ բան փոխվեց։",
+    "paragraph2": "Հայաստանը սկսեցի ընկալել այլ կերպ...\nՆկատեցի մի հետաքրքիր բան․ բոլոր հայերը, ում հանդիպում էի — անկախ նրանից որտեղ են ծնվել կամ որքան հեռու են ապրում — ունեն նույն ձգողությունը դեպի հող։ Ոչ փոխաբերական։ Ֆիզիկական։ Կարծես ներսում ինչ-որ բան է արձագանքում։\nԱյդտեղից էլ ծնվեց այս գաղափարը։ Ոչ բիզնես մոդելից։ Արշավից։\nՀայ մարդուն դիտելուց, ով դիպչում է հայկական հողին… ու լռում։",
+    "paragraph3": "Ես կառուցող եմ։ Գիտեմ՝ ինչպես սկսել փոքրից, ապացուցել, որ աշխատում է, ու հետո զգուշությամբ մեծացնել։ Դա արել եմ թե՛ ծրագրավորման մեջ, թե՛ արշավային նախաձեռնություններում, թե՛ կրթական նախագծերում։\n\nՉեմ խնդրում, որ ուղղակի վստահես։\nԽնդրում եմ՝ հետևել, թե ինչպես եմ կառուցում սա՝ բաց, հրապարակային, սեզոն առ սեզոն։\nՁախողումները նույնպես կներկայացվեն — նույն ազնվությամբ, ինչ հաջողությունները։",
+    "trustText": "Նախնական փուլ՝ 2026 թ. գարուն · 50 հողամաս · Արմավիրի մարզ",
+    "image": "/uploads/1775468769788-79w89m.jpg"
   },
   "ctaFooter": {
-    "tag": "Join the pre-pilot",
-    "heading": "Be one of the first 20.",
-    "subtitle": "Reserve your plot now. We'll reach out with all the details before the season starts.",
-    "buttonLabel": "Reserve my plot",
+    "tag": "Միանալ նախնական փուլին",
+    "heading": "Եղիր առաջին 20-ի մեջ։",
+    "subtitle": "Հիմա ամրագրիր հողամասդ։ Սեզոնի մեկնարկից առաջ կտեղեկացնենք բոլոր մանրամասների մասին։",
+    "buttonLabel": "Ամրագրել հողամասս",
     "buttonHref": "#join",
-    "note": "No payment yet. Just your name and email. We'll contact you directly."
+    "note": "Վճարում դեռ չկա։ Միայն անուն ու էլ-փոստ։ Ուղղակիորեն կկապվենք քեզ հետ։"
   }
 }
