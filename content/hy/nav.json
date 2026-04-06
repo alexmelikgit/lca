@@ -38,25 +38,10 @@
     }
   ],
   "diasporaLinks": [
-    {
-      "id": "dl-1",
-      "label": "Ինչպես է աշխատում",
-      "href": "#how-it-works"
-    },
-    {
-      "id": "dl-2",
-      "label": "Մեր ֆերմերները",
-      "href": "#farmers"
-    },
-    {
-      "id": "dl-3",
-      "label": "Գներ",
-      "href": "#pricing"
-    },
-    {
-      "id": "dl-4",
-      "label": "Հարցեր",
-      "href": "#faq"
-    }
+    { "id": "dl-1", "label": "Ինչպես է աշխատում", "href": "#how-it-works" },
+    { "id": "dl-2", "label": "Ձեր բերքը", "href": "#harvest-options" },
+    { "id": "dl-3", "label": "Նվերը", "href": "#gift" },
+    { "id": "dl-4", "label": "Ճանապարհային քարտ", "href": "#progress" },
+    { "id": "dl-5", "label": "ՀՏՀ", "href": "#faq" }
   ]
 }

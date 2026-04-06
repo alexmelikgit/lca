@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import type { NavContent, HowItWorksContent, LocalContent } from '@/types/content';
+import type { NavContent, HowItWorksContent, LocalContent, DiasporaContent } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
 
 const CONTENT_DIR = join(process.cwd(), 'content');
@@ -22,4 +22,8 @@ export async function getHowItWorksContent(): Promise<HowItWorksContent> {
 
 export async function getLocalContent(locale: Locale): Promise<LocalContent> {
   return readJson<LocalContent>(locale, 'local');
+}
+
+export async function getDiasporaContent(locale: Locale): Promise<DiasporaContent> {
+  return readJson<DiasporaContent>(locale, 'diaspora');
 }
