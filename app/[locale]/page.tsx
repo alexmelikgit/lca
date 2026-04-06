@@ -43,19 +43,19 @@ export default async function Home({
     <>
       <Navbar content={nav} page="local" locale={locale} />
       <main>
-        <Hero content={local.hero} />
-        <Problem content={local.problem} />
-        <HowItWorks content={local.howItWorks} />
-        <DashboardShowcase content={local.dashboardShowcase} />
-        <Health content={local.health} />
-        <Convenience content={local.convenience} />
-        <Progress content={local.progress} />
-        <Farmer content={local.farmer} />
-        <Seasonal content={local.seasonal} />
-        <Trust content={local.trust} />
-        <FAQ content={local.faq} />
-        <About content={local.about} />
-        <CTAFooter content={local.ctaFooter} />
+        {local.sectionVisibility?.hero !== false && <Hero content={local.hero} />}
+        {local.sectionVisibility?.problem !== false && <Problem content={local.problem} />}
+        {local.sectionVisibility?.howItWorks !== false && <HowItWorks content={local.howItWorks} />}
+        {local.sectionVisibility?.dashboardShowcase !== false && <DashboardShowcase content={local.dashboardShowcase} />}
+        {local.sectionVisibility?.health !== false && <Health content={local.health} />}
+        {local.sectionVisibility?.convenience !== false && <Convenience content={local.convenience} />}
+        {local.sectionVisibility?.progress !== false && <Progress content={local.progress} />}
+        {local.sectionVisibility?.farmer !== false && <Farmer content={local.farmer} />}
+        {local.sectionVisibility?.seasonal !== false && <Seasonal content={local.seasonal} />}
+        {local.sectionVisibility?.trust !== false && <Trust content={local.trust} />}
+        {local.sectionVisibility?.faq !== false && <FAQ content={local.faq} />}
+        {local.sectionVisibility?.about !== false && <About content={local.about} />}
+        {local.sectionVisibility?.ctaFooter !== false && <CTAFooter content={local.ctaFooter} />}
       </main>
     </>
   );

@@ -16,23 +16,30 @@ export default function About({ content }: Props) {
       <ArmenianDivider variant="ink" />
 
       <section id="about" style={{ background: 'var(--green-pale)', padding: '96px 24px' }}>
-        <div style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-          gap: '48px 80px',
-          alignItems: 'start',
-        }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 0.6, ease: EASE }}
+          >
+            <SectionTag variant="green" style={{ marginBottom: '32px' }}>
+              {content.tag}
+            </SectionTag>
+          </motion.div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+            gap: '48px 80px',
+            alignItems: 'start',
+          }}>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={VIEWPORT}
             transition={{ duration: 0.65, ease: EASE }}
           >
-            <SectionTag variant="green" style={{ marginBottom: '32px' }}>
-              {content.tag}
-            </SectionTag>
             <div style={{
               background: 'white',
               borderRadius: '20px',
@@ -41,17 +48,27 @@ export default function About({ content }: Props) {
               boxShadow: '0 8px 40px rgba(45,90,39,0.08)',
             }}>
               <div style={{
-                height: '200px',
+                aspectRatio: '1 / 1',
                 background: 'linear-gradient(135deg, var(--green-pale) 0%, var(--cream) 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'relative',
+                overflow: 'hidden',
               }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.3 }}>
-                  <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'var(--green)' }} />
-                  <div style={{ width: '72px', height: '24px', borderRadius: '6px', background: 'var(--green)', opacity: 0.5 }} />
-                </div>
+                {content.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={content.image}
+                    alt={content.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+                  />
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.3 }}>
+                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'var(--green)' }} />
+                    <div style={{ width: '72px', height: '24px', borderRadius: '6px', background: 'var(--green)', opacity: 0.5 }} />
+                  </div>
+                )}
                 <div style={{
                   position: 'absolute',
                   bottom: '14px',
@@ -126,6 +143,7 @@ export default function About({ content }: Props) {
               </span>
             </div>
           </motion.div>
+          </div>
         </div>
       </section>
     </>

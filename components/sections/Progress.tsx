@@ -60,7 +60,7 @@ export default function Progress({ content }: Props) {
             {/* Connecting line (desktop) */}
             <div style={{
               position: 'absolute',
-              top: '28px',
+              top: '32px',
               left: 'calc(16.66% + 12px)',
               right: 'calc(16.66% + 12px)',
               height: '1px',
@@ -88,36 +88,43 @@ export default function Progress({ content }: Props) {
                   {/* Step indicator */}
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '24px' }}>
                     <div style={{
-                      width: '56px',
-                      height: '56px',
+                      width: '64px',
+                      height: '64px',
                       borderRadius: '50%',
                       border: '1px solid rgba(196,154,60,0.4)',
                       background: i === content.milestones.length - 1
-                        ? 'rgba(196,154,60,0.18)'
-                        : 'rgba(255,255,255,0.04)',
+                        ? '#48662b'
+                        : 'var(--green-deep)',
+                      position: 'relative',
+                      zIndex: 2,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       flexDirection: 'column',
-                      gap: '1px',
+                      gap: '2px',
+                      textAlign: 'center',
+                      padding: '6px',
+                      boxSizing: 'border-box',
                     }}>
                       <span style={{
                         fontFamily: 'var(--font-lato)',
                         fontWeight: 700,
-                        fontSize: '0.6rem',
-                        letterSpacing: '0.1em',
+                        fontSize: '0.55rem',
+                        letterSpacing: '0.08em',
                         textTransform: 'uppercase',
                         color: 'var(--gold)',
                         opacity: 0.8,
+                        lineHeight: 1,
                       }}>
                         {milestone.year}
                       </span>
                       <span style={{
-                        fontFamily: 'var(--font-playfair)',
-                        fontWeight: 400,
-                        fontSize: '0.95rem',
+                        fontFamily: 'var(--font-lato)',
+                        fontWeight: 600,
+                        fontSize: '0.82rem',
                         color: 'var(--gold)',
                         lineHeight: 1,
+                        whiteSpace: 'nowrap',
                       }}>
                         {milestone.size}
                       </span>

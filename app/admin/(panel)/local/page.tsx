@@ -8,11 +8,12 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import type { LocalContent } from '@/types/content';
+import type { LocalContent, SectionVisibility } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
 import AdminCard from '@/components/admin/AdminCard';
 import AdminInput from '@/components/admin/AdminInput';
 import AdminSaveButton from '@/components/admin/AdminSaveButton';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 const TABS = [
   { id: 'hero', label: 'Hero' },
@@ -31,6 +32,22 @@ const TABS = [
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
+
+const TAB_VIS: Record<TabId, keyof SectionVisibility> = {
+  hero: 'hero',
+  problem: 'problem',
+  howItWorks: 'howItWorks',
+  dashboard: 'dashboardShowcase',
+  health: 'health',
+  convenience: 'convenience',
+  progress: 'progress',
+  farmer: 'farmer',
+  seasonal: 'seasonal',
+  trust: 'trust',
+  faq: 'faq',
+  about: 'about',
+  cta: 'ctaFooter',
+};
 
 /* ── Shared textarea style matching AdminInput ──────────────── */
 const textareaStyle: React.CSSProperties = {
@@ -60,6 +77,56 @@ const labelStyle: React.CSSProperties = {
   marginBottom: '6px',
   fontFamily: 'Lato, sans-serif',
 };
+
+function VisibilityBanner({ visible, onToggle }: { visible: boolean; onToggle: () => void }) {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '12px 16px',
+      borderRadius: '10px',
+      background: visible ? 'rgba(61,122,53,0.06)' : 'rgba(139,94,60,0.06)',
+      border: `1px solid ${visible ? 'rgba(61,122,53,0.2)' : 'rgba(139,94,60,0.2)'}`,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <span style={{
+          width: '8px', height: '8px', borderRadius: '50%',
+          background: visible ? '#3D7A35' : '#9B9B82',
+          display: 'inline-block', flexShrink: 0,
+        }} />
+        <div>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: visible ? '#3D7A35' : '#8B5E3C', fontFamily: 'Lato, sans-serif' }}>
+            {visible ? 'Section is visible' : 'Section is hidden'}
+          </div>
+          <div style={{ fontSize: '0.72rem', color: '#9B9B82', fontFamily: 'Lato, sans-serif' }}>
+            {visible ? 'Showing on the live page' : 'Not shown on the live page'}
+          </div>
+        </div>
+      </div>
+      <button
+        onClick={onToggle}
+        style={{
+          padding: '6px 16px',
+          borderRadius: '6px',
+          border: '1px solid',
+          borderColor: visible ? '#DC2626' : '#3D7A35',
+          background: 'white',
+          color: visible ? '#DC2626' : '#3D7A35',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          fontFamily: 'Lato, sans-serif',
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {visible ? 'Hide section' : 'Show section'}
+      </button>
+    </div>
+  );
+}
 
 function TextareaField({
   label,
@@ -112,6 +179,13 @@ export default function LocalPage() {
 
   const update = useCallback(<K extends keyof LocalContent>(section: K, value: LocalContent[K]) => {
     setContent((prev) => prev ? { ...prev, [section]: value } : prev);
+  }, []);
+
+  const toggleVisibility = useCallback((key: keyof SectionVisibility) => {
+    setContent((prev) => prev ? {
+      ...prev,
+      sectionVisibility: { ...prev.sectionVisibility, [key]: !prev.sectionVisibility[key] },
+    } : prev);
   }, []);
 
   if (loading) {
@@ -171,28 +245,49 @@ export default function LocalPage() {
           borderBottom: '1px solid #E8E4DC',
         }}
       >
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            style={{
-              flexShrink: 0,
-              padding: '8px 18px',
-              background: activeTab === tab.id ? '#C49A3C' : 'transparent',
-              color: activeTab === tab.id ? 'white' : '#6B6B58',
-              border: activeTab === tab.id ? '1px solid #C49A3C' : '1px solid #D8D4C8',
-              borderRadius: '100px',
-              fontSize: '0.8rem',
-              fontWeight: activeTab === tab.id ? 700 : 400,
-              fontFamily: 'Lato, sans-serif',
-              letterSpacing: '0.04em',
-              cursor: 'pointer',
-              transition: 'background 0.15s ease, color 0.15s ease, border-color 0.15s ease',
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
+        {TABS.map((tab) => {
+          const visKey = TAB_VIS[tab.id];
+          const isVisible = content.sectionVisibility[visKey];
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                flexShrink: 0,
+                padding: '8px 18px',
+                background: activeTab === tab.id ? '#C49A3C' : 'transparent',
+                color: activeTab === tab.id ? 'white' : '#6B6B58',
+                border: activeTab === tab.id ? '1px solid #C49A3C' : '1px solid #D8D4C8',
+                borderRadius: '100px',
+                fontSize: '0.8rem',
+                fontWeight: activeTab === tab.id ? 700 : 400,
+                fontFamily: 'Lato, sans-serif',
+                letterSpacing: '0.04em',
+                cursor: 'pointer',
+                transition: 'background 0.15s ease, color 0.15s ease, border-color 0.15s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '7px',
+              }}
+            >
+              {tab.label}
+              <span style={{
+                width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
+                background: isVisible
+                  ? (activeTab === tab.id ? 'rgba(255,255,255,0.75)' : '#3D7A35')
+                  : (activeTab === tab.id ? 'rgba(255,255,255,0.4)' : '#C4B89A'),
+              }} />
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Visibility toggle for active section */}
+      <div style={{ marginBottom: '20px' }}>
+        <VisibilityBanner
+          visible={content.sectionVisibility[TAB_VIS[activeTab]]}
+          onToggle={() => toggleVisibility(TAB_VIS[activeTab])}
+        />
       </div>
 
       {/* Tab content */}
@@ -591,6 +686,12 @@ export default function LocalPage() {
         {activeTab === 'farmer' && (
           <AdminCard title="Farmer — Profile">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <ImageUpload
+                label="Photo"
+                value={content.farmer.image ?? ''}
+                onChange={(url) => update('farmer', { ...content.farmer, image: url })}
+                aspectHint="Recommended: 3:4 portrait, min 600×800 px"
+              />
               <AdminInput
                 label="Tag"
                 value={content.farmer.tag}
@@ -832,6 +933,12 @@ export default function LocalPage() {
         {activeTab === 'about' && (
           <AdminCard title="About — Founder">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <ImageUpload
+                label="Photo"
+                value={content.about.image ?? ''}
+                onChange={(url) => update('about', { ...content.about, image: url })}
+                aspectHint="Recommended: 1:1 square, min 600×600 px"
+              />
               <AdminInput
                 label="Tag"
                 value={content.about.tag}

@@ -95,10 +95,19 @@ export default function Farmer({ content }: Props) {
                 position: 'relative',
                 overflow: 'hidden',
               }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.35 }}>
-                  <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--soil)' }} />
-                  <div style={{ width: '80px', height: '32px', borderRadius: '8px', background: 'var(--soil)', opacity: 0.5 }} />
-                </div>
+                {content.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={content.image}
+                    alt={content.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.35 }}>
+                    <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--soil)' }} />
+                    <div style={{ width: '80px', height: '32px', borderRadius: '8px', background: 'var(--soil)', opacity: 0.5 }} />
+                  </div>
+                )}
                 <div style={{
                   position: 'absolute',
                   bottom: '16px',
