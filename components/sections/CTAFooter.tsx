@@ -8,9 +8,10 @@ import type { CtaFooterContent } from '@/types/content';
 
 interface Props {
   content: CtaFooterContent;
+  variant?: 'gold' | 'pomegranate';
 }
 
-export default function CTAFooter({ content }: Props) {
+export default function CTAFooter({ content, variant = 'gold' }: Props) {
   return (
     <>
       <ArmenianDivider variant="gold" />
@@ -77,7 +78,7 @@ export default function CTAFooter({ content }: Props) {
           >
             <a
               href={content.buttonHref}
-              className="btn-gold"
+              className={variant === 'pomegranate' ? 'btn-pomegranate' : 'btn-gold'}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -87,12 +88,14 @@ export default function CTAFooter({ content }: Props) {
                 fontSize: '0.85rem',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color: 'var(--green-deep)',
-                background: 'var(--gold)',
+                color: variant === 'pomegranate' ? 'white' : 'var(--green-deep)',
+                background: variant === 'pomegranate' ? 'var(--pomegranate)' : 'var(--gold)',
                 padding: '16px 40px',
                 borderRadius: '100px',
                 textDecoration: 'none',
-                boxShadow: '0 4px 24px rgba(196,154,60,0.3)',
+                boxShadow: variant === 'pomegranate'
+                  ? '0 4px 24px rgba(139,37,53,0.3)'
+                  : '0 4px 24px rgba(196,154,60,0.3)',
               }}
             >
               {content.buttonLabel}
