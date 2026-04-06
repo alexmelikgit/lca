@@ -8,7 +8,7 @@
 
 interface SectionTagProps {
   children: React.ReactNode;
-  variant?: 'green' | 'gold' | 'cream';
+  variant?: 'green' | 'gold' | 'cream' | 'pomegranate';
   className?: string;
   style?: React.CSSProperties;
 }
@@ -34,6 +34,11 @@ export default function SectionTag({
       dot: 'var(--green-light)',
       text: 'rgba(251,248,242,0.8)',
       line: 'rgba(168,212,160,0.4)',
+    },
+    pomegranate: {
+      dot: 'var(--pomegranate)',
+      text: 'var(--pomegranate)',
+      line: 'var(--pomegranate-light)',
     },
   };
 

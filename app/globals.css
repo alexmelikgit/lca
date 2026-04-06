@@ -12,6 +12,11 @@
   --gold-light:   #F0D98A;
   --gold-pale:    #FBF3DC;
 
+  /* Pomegranate — diaspora accent */
+  --pomegranate:      #8B2535;
+  --pomegranate-light:#D4748A;
+  --pomegranate-pale: #F9EDF0;
+
   /* Earths */
   --soil:         #8B5E3C;
   --soil-pale:    #F5EBE0;
@@ -140,6 +145,16 @@ body {
 .btn-ghost:hover {
   color: var(--green) !important;
   border-color: var(--green) !important;
+}
+
+/* Pomegranate CTA button */
+.btn-pomegranate {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn-pomegranate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(139,37,53,0.42);
+  background: var(--pomegranate-light) !important;
 }
 
 /* Navbar links */
