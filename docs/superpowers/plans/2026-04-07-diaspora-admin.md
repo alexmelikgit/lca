@@ -1,0 +1,1371 @@
+# Diaspora Admin Page Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Build the `/admin/diaspora` editor page with 15 tabs, isDirty warning, emoji picker, and add/remove arrays — and backport isDirty to `/admin/local`.
+
+**Architecture:** Single `page.tsx` client component mirroring `local/page.tsx`. All helpers (EmojiPicker, TextareaField, VisibilityBanner) defined inline. No new shared components, no new API routes — uses existing `GET /api/admin/content?file=diaspora` and `POST /api/admin/save`.
+
+**Tech Stack:** Next.js 15, React 19, TypeScript, inline styles (no Tailwind in admin), existing admin components (AdminCard, AdminInput, AdminSaveButton, ImageUpload, ImagePositionPicker).
+
+---
+
+## Files
+
+| File | Action |
+|---|---|
+| `app/admin/(panel)/layout.tsx` | Modify — add "View diaspora ↗" link |
+| `app/admin/(panel)/local/page.tsx` | Modify — add isDirty state + unsaved banner |
+| `app/admin/(panel)/diaspora/page.tsx` | **Create** — full 15-tab diaspora editor |
+
+---
+
+## Task 1: Add "View diaspora" preview link to admin layout
+
+**Files:**
+- Modify: `app/admin/(panel)/layout.tsx`
+
+- [ ] **Step 1: Add the second preview link**
+
+In `app/admin/(panel)/layout.tsx`, find the existing `<a href="/" ...>View site ↗</a>` and add a second link after it:
+
+```tsx
+<a
+  href="/"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ fontSize: '0.8rem', color: '#6B6B58', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}
+>
+  View site ↗
+</a>
+<a
+  href="/en/diaspora"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ fontSize: '0.8rem', color: '#8B2535', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}
+>
+  View diaspora ↗
+</a>
+```
+
+- [ ] **Step 2: Commit**
+
+```bash
+git add app/admin/\(panel\)/layout.tsx
+git commit -m "feat: add view diaspora preview link to admin topbar"
+```
+
+---
+
+## Task 2: Backport isDirty / unsaved warning to local/page.tsx
+
+**Files:**
+- Modify: `app/admin/(panel)/local/page.tsx`
+
+- [ ] **Step 1: Add isDirty state**
+
+After the existing `const [activeTab, setActiveTab] = useState<TabId>('hero')` line, add:
+
+```tsx
+const [isDirty, setIsDirty] = useState(false);
+```
+
+- [ ] **Step 2: Set isDirty=false on content load**
+
+In the existing `useEffect` that calls `fetch(...)`, change the `.then` handler:
+
+```tsx
+// Before:
+.then((data: LocalContent) => { setContent(data); setLoading(false); })
+
+// After:
+.then((data: LocalContent) => { setContent(data); setLoading(false); setIsDirty(false); })
+```
+
+- [ ] **Step 3: Set isDirty=false on successful save**
+
+In `handleSave`, after `if (!res.ok) throw new Error('Save failed')`, add:
+
+```tsx
+setIsDirty(false);
+```
+
+Full updated `handleSave`:
+
+```tsx
+const handleSave = async () => {
+  const res = await fetch('/api/admin/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ file: 'local', locale, content, section: 'Local Page' }),
+  });
+  if (!res.ok) throw new Error('Save failed');
+  setIsDirty(false);
+};
+```
+
+- [ ] **Step 4: Set isDirty=true in update and toggleVisibility**
+
+Replace both callbacks:
+
+```tsx
+const update = useCallback(<K extends keyof LocalContent>(section: K, value: LocalContent[K]) => {
+  setContent((prev) => prev ? { ...prev, [section]: value } : prev);
+  setIsDirty(true);
+}, []);
+
+const toggleVisibility = useCallback((key: keyof SectionVisibility) => {
+  setContent((prev) => prev ? {
+    ...prev,
+    sectionVisibility: { ...prev.sectionVisibility, [key]: !prev.sectionVisibility[key] },
+  } : prev);
+  setIsDirty(true);
+}, []);
+```
+
+- [ ] **Step 5: Add beforeunload listener**
+
+After the scroll lock `useEffect`, add:
+
+```tsx
+useEffect(() => {
+  const handler = (e: BeforeUnloadEvent) => {
+    if (isDirty) e.preventDefault();
+  };
+  window.addEventListener('beforeunload', handler);
+  return () => window.removeEventListener('beforeunload', handler);
+}, [isDirty]);
+```
+
+- [ ] **Step 6: Add unsaved changes banner**
+
+In the JSX, find the tab bar `<div style={{ display: 'flex', gap: '6px', overflowX: 'auto', ...` and insert the banner **above** it:
+
+```tsx
+{/* Unsaved changes banner */}
+{isDirty && (
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '10px 16px',
+    marginBottom: '16px',
+    borderRadius: '8px',
+    background: 'rgba(196,154,60,0.1)',
+    border: '1px solid rgba(196,154,60,0.3)',
+  }}>
+    <span style={{ fontSize: '0.8rem', color: '#8B6914', fontFamily: 'Lato, sans-serif' }}>
+      ⚠ You have unsaved changes
+    </span>
+    <AdminSaveButton onClick={handleSave} />
+  </div>
+)}
+```
+
+- [ ] **Step 7: Verify manually**
+
+Start dev server (`npm run dev`), go to `/admin/local`, edit any field — yellow banner should appear. Save — banner disappears. Try navigating away with unsaved changes — browser dialog appears.
+
+- [ ] **Step 8: Commit**
+
+```bash
+git add app/admin/\(panel\)/local/page.tsx
+git commit -m "feat: add unsaved changes warning to local admin page"
+```
+
+---
+
+## Task 3: Create diaspora/page.tsx — scaffold, helpers, and tabs Hero through Dashboard
+
+**Files:**
+- Create: `app/admin/(panel)/diaspora/page.tsx`
+
+- [ ] **Step 1: Create the file with all imports, constants, helpers, and state**
+
+Create `app/admin/(panel)/diaspora/page.tsx` with the following content:
+
+```tsx
+'use client';
+
+import { useState, useEffect, useCallback, useRef } from 'react';
+import type { DiasporaContent, DiasporaSectionVisibility } from '@/types/content';
+import type { Locale } from '@/lib/i18n';
+import AdminCard from '@/components/admin/AdminCard';
+import AdminInput from '@/components/admin/AdminInput';
+import AdminSaveButton from '@/components/admin/AdminSaveButton';
+import ImageUpload from '@/components/admin/ImageUpload';
+import ImagePositionPicker from '@/components/admin/ImagePositionPicker';
+
+const TABS = [
+  { id: 'hero', label: 'Hero' },
+  { id: 'problem', label: 'Problem' },
+  { id: 'howItWorks', label: 'How It Works' },
+  { id: 'harvestOptions', label: 'Harvest Options' },
+  { id: 'dashboard', label: 'Dashboard' },
+  { id: 'ownership', label: 'Ownership' },
+  { id: 'gift', label: 'Gift' },
+  { id: 'phaseTwo', label: 'Phase Two' },
+  { id: 'progress', label: 'Progress' },
+  { id: 'farmer', label: 'Farmer' },
+  { id: 'seasonal', label: 'Seasonal' },
+  { id: 'trust', label: 'Trust' },
+  { id: 'faq', label: 'FAQ' },
+  { id: 'about', label: 'About' },
+  { id: 'cta', label: 'CTA' },
+] as const;
+
+type TabId = (typeof TABS)[number]['id'];
+
+const TAB_VIS: Record<TabId, keyof DiasporaSectionVisibility> = {
+  hero: 'hero',
+  problem: 'problem',
+  howItWorks: 'howItWorks',
+  harvestOptions: 'harvestOptions',
+  dashboard: 'dashboardShowcase',
+  ownership: 'ownership',
+  gift: 'giftMechanic',
+  phaseTwo: 'phaseTwo',
+  progress: 'progress',
+  farmer: 'farmer',
+  seasonal: 'seasonal',
+  trust: 'trust',
+  faq: 'faq',
+  about: 'about',
+  cta: 'ctaFooter',
+};
+
+const textareaStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '10px 12px',
+  fontSize: '0.875rem',
+  fontFamily: 'Lato, sans-serif',
+  fontWeight: 300,
+  color: '#1A1A14',
+  border: '1px solid #D8D4C8',
+  borderRadius: '8px',
+  lineHeight: 1.6,
+  resize: 'vertical',
+  outline: 'none',
+  boxSizing: 'border-box',
+  transition: 'border-color 0.15s',
+  background: 'white',
+};
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: '0.75rem',
+  fontWeight: 700,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  color: '#6B6B58',
+  marginBottom: '6px',
+  fontFamily: 'Lato, sans-serif',
+};
+
+const addBtnStyle: React.CSSProperties = {
+  padding: '10px 24px',
+  background: 'transparent',
+  color: '#8B2535',
+  border: '1px dashed #8B2535',
+  borderRadius: '8px',
+  fontSize: '0.85rem',
+  fontFamily: 'Lato, sans-serif',
+  cursor: 'pointer',
+  width: '100%',
+};
+
+const removeBtnStyle: React.CSSProperties = {
+  padding: '6px 16px',
+  background: 'transparent',
+  color: '#DC2626',
+  border: '1px solid #FCA5A5',
+  borderRadius: '6px',
+  fontSize: '0.78rem',
+  fontFamily: 'Lato, sans-serif',
+  cursor: 'pointer',
+};
+
+function VisibilityBanner({ visible, onToggle }: { visible: boolean; onToggle: () => void }) {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '12px 16px',
+      borderRadius: '10px',
+      background: visible ? 'rgba(61,122,53,0.06)' : 'rgba(139,94,60,0.06)',
+      border: `1px solid ${visible ? 'rgba(61,122,53,0.2)' : 'rgba(139,94,60,0.2)'}`,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <span style={{
+          width: '8px', height: '8px', borderRadius: '50%',
+          background: visible ? '#3D7A35' : '#9B9B82',
+          display: 'inline-block', flexShrink: 0,
+        }} />
+        <div>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: visible ? '#3D7A35' : '#8B5E3C', fontFamily: 'Lato, sans-serif' }}>
+            {visible ? 'Section is visible' : 'Section is hidden'}
+          </div>
+          <div style={{ fontSize: '0.72rem', color: '#9B9B82', fontFamily: 'Lato, sans-serif' }}>
+            {visible ? 'Showing on the live page' : 'Not shown on the live page'}
+          </div>
+        </div>
+      </div>
+      <button
+        onClick={onToggle}
+        style={{
+          padding: '6px 16px',
+          borderRadius: '6px',
+          border: '1px solid',
+          borderColor: visible ? '#DC2626' : '#3D7A35',
+          background: 'white',
+          color: visible ? '#DC2626' : '#3D7A35',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          fontFamily: 'Lato, sans-serif',
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {visible ? 'Hide section' : 'Show section'}
+      </button>
+    </div>
+  );
+}
+
+function TextareaField({
+  label, value, onChange, rows = 3,
+}: {
+  label: string; value: string; onChange: (val: string) => void; rows?: number;
+}) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <label style={labelStyle}>{label}</label>
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={rows}
+        style={textareaStyle}
+        onFocus={(e) => { e.target.style.borderColor = '#8B2535'; e.target.style.boxShadow = '0 0 0 3px rgba(139,37,53,0.1)'; }}
+        onBlur={(e) => { e.target.style.borderColor = '#D8D4C8'; e.target.style.boxShadow = 'none'; }}
+      />
+    </div>
+  );
+}
+
+const EMOJI_PRESETS = [
+  '🌾','🌿','🍅','🥕','🫙','📦','✈️','🎁','🏔️','🌱',
+  '🍇','🌻','🥦','🍋','🫐','🍓','🧅','🌽','🥒','🧄',
+  '🍎','🥝','🍊','🫒','🌰','🫚','🧺','🚜','🌍','💌',
+];
+
+function EmojiPicker({ value, onChange }: { value: string; onChange: (emoji: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  return (
+    <div style={{ position: 'relative', display: 'inline-block' }} ref={ref}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          style={{
+            width: '40px', height: '40px', borderRadius: '8px',
+            border: '1px solid #D8D4C8', background: 'white',
+            fontSize: '1.2rem', cursor: 'pointer', display: 'flex',
+            alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          {value || '🌾'}
+        </button>
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="or type"
+          style={{
+            width: '80px', padding: '8px 10px', fontSize: '0.875rem',
+            fontFamily: 'Lato, sans-serif', border: '1px solid #D8D4C8',
+            borderRadius: '8px', outline: 'none',
+          }}
+        />
+      </div>
+      {open && (
+        <div style={{
+          position: 'absolute', top: '48px', left: 0, zIndex: 50,
+          background: 'white', border: '1px solid #E8E4DC',
+          borderRadius: '12px', padding: '12px',
+          boxShadow: '0 8px 32px rgba(26,26,20,0.12)',
+          display: 'grid', gridTemplateColumns: 'repeat(10, 32px)',
+          gap: '4px',
+        }}>
+          {EMOJI_PRESETS.map((emoji) => (
+            <button
+              key={emoji}
+              type="button"
+              onClick={() => { onChange(emoji); setOpen(false); }}
+              style={{
+                width: '32px', height: '32px', fontSize: '1.1rem',
+                background: value === emoji ? 'rgba(139,37,53,0.08)' : 'transparent',
+                border: value === emoji ? '1px solid rgba(139,37,53,0.3)' : '1px solid transparent',
+                borderRadius: '6px', cursor: 'pointer', display: 'flex',
+                alignItems: 'center', justifyContent: 'center',
+              }}
+            >
+              {emoji}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function DiasporaPage() {
+  const [locale, setLocale] = useState<Locale>('en');
+  const [content, setContent] = useState<DiasporaContent | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<TabId>('hero');
+  const [isDirty, setIsDirty] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`/api/admin/content?file=diaspora&locale=${locale}`)
+      .then((r) => r.json())
+      .then((data: DiasporaContent) => { setContent(data); setLoading(false); setIsDirty(false); })
+      .catch(() => setLoading(false));
+  }, [locale]);
+
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => { if (isDirty) e.preventDefault(); };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [isDirty]);
+
+  const handleSave = async () => {
+    const res = await fetch('/api/admin/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ file: 'diaspora', locale, content, section: 'Diaspora Page' }),
+    });
+    if (!res.ok) throw new Error('Save failed');
+    setIsDirty(false);
+  };
+
+  const update = useCallback(<K extends keyof DiasporaContent>(section: K, value: DiasporaContent[K]) => {
+    setContent((prev) => prev ? { ...prev, [section]: value } : prev);
+    setIsDirty(true);
+  }, []);
+
+  const toggleVisibility = useCallback((key: keyof DiasporaSectionVisibility) => {
+    setContent((prev) => prev ? {
+      ...prev,
+      sectionVisibility: { ...prev.sectionVisibility, [key]: !prev.sectionVisibility[key] },
+    } : prev);
+    setIsDirty(true);
+  }, []);
+
+  if (loading) return <div style={{ color: '#9B9B82', fontSize: '0.9rem', padding: '40px 0' }}>Loading…</div>;
+  if (!content) return <div style={{ color: '#DC2626', fontSize: '0.9rem', padding: '40px 0' }}>Failed to load content.</div>;
+
+  return (
+    <div>
+      {/* Locale selector */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+        {(['en', 'hy'] as Locale[]).map((l) => (
+          <button
+            key={l}
+            onClick={() => setLocale(l)}
+            style={{
+              padding: '6px 16px', borderRadius: '6px', border: '1px solid',
+              borderColor: locale === l ? '#8B2535' : '#D8D4C8',
+              background: locale === l ? '#8B2535' : 'white',
+              color: locale === l ? 'white' : '#1A1A14',
+              fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.75rem',
+              letterSpacing: '0.06em', textTransform: 'uppercase', cursor: 'pointer',
+            }}
+          >
+            {l.toUpperCase()}
+          </button>
+        ))}
+      </div>
+
+      {/* Page header */}
+      <div style={{ marginBottom: '24px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#1A1A14' }}>Diaspora Page</h1>
+          <p style={{ margin: '6px 0 0', fontSize: '0.875rem', color: '#9B9B82' }}>
+            All sections of the diaspora landing page.
+          </p>
+        </div>
+        <AdminSaveButton onClick={handleSave} />
+      </div>
+
+      {/* Unsaved changes banner */}
+      {isDirty && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '10px 16px', marginBottom: '16px', borderRadius: '8px',
+          background: 'rgba(196,154,60,0.1)', border: '1px solid rgba(196,154,60,0.3)',
+        }}>
+          <span style={{ fontSize: '0.8rem', color: '#8B6914', fontFamily: 'Lato, sans-serif' }}>
+            ⚠ You have unsaved changes
+          </span>
+          <AdminSaveButton onClick={handleSave} />
+        </div>
+      )}
+
+      {/* Tab bar */}
+      <div style={{
+        display: 'flex', gap: '6px', overflowX: 'auto', padding: '0 0 16px',
+        scrollbarWidth: 'none', marginBottom: '24px', borderBottom: '1px solid #E8E4DC',
+      }}>
+        {TABS.map((tab) => {
+          const visKey = TAB_VIS[tab.id];
+          const isVisible = content.sectionVisibility[visKey];
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                flexShrink: 0, padding: '8px 18px',
+                background: activeTab === tab.id ? '#8B2535' : 'transparent',
+                color: activeTab === tab.id ? 'white' : '#6B6B58',
+                border: activeTab === tab.id ? '1px solid #8B2535' : '1px solid #D8D4C8',
+                borderRadius: '100px', fontSize: '0.8rem',
+                fontWeight: activeTab === tab.id ? 700 : 400,
+                fontFamily: 'Lato, sans-serif', letterSpacing: '0.04em',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '7px',
+                transition: 'background 0.15s ease, color 0.15s ease, border-color 0.15s ease',
+              }}
+            >
+              {tab.label}
+              <span style={{
+                width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
+                background: isVisible
+                  ? (activeTab === tab.id ? 'rgba(255,255,255,0.75)' : '#3D7A35')
+                  : (activeTab === tab.id ? 'rgba(255,255,255,0.4)' : '#C4B89A'),
+              }} />
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Visibility toggle */}
+      <div style={{ marginBottom: '20px' }}>
+        <VisibilityBanner
+          visible={content.sectionVisibility[TAB_VIS[activeTab]]}
+          onToggle={() => toggleVisibility(TAB_VIS[activeTab])}
+        />
+      </div>
+
+      {/* Tab content */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+        {/* ── HERO ─────────────────────────────────────────── */}
+        {activeTab === 'hero' && (
+          <>
+            <AdminCard title="Hero — Text content" subtitle="Tag, headline, subtitle">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.hero.tag}
+                  onChange={(e) => update('hero', { ...content.hero, tag: e.target.value })} />
+                <AdminInput label="H1 Line 1" value={content.hero.h1Line1}
+                  onChange={(e) => update('hero', { ...content.hero, h1Line1: e.target.value })} />
+                <AdminInput label="H1 Line 2" value={content.hero.h1Line2}
+                  onChange={(e) => update('hero', { ...content.hero, h1Line2: e.target.value })} />
+                <AdminInput label="H1 Italic line" value={content.hero.h1Italic}
+                  onChange={(e) => update('hero', { ...content.hero, h1Italic: e.target.value })} />
+                <TextareaField label="Subtitle" value={content.hero.subtitle} rows={4}
+                  onChange={(val) => update('hero', { ...content.hero, subtitle: val })} />
+              </div>
+            </AdminCard>
+            <AdminCard title="Hero — CTAs">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Primary CTA label" value={content.hero.primaryCtaLabel}
+                  onChange={(e) => update('hero', { ...content.hero, primaryCtaLabel: e.target.value })} />
+                <AdminInput label="Primary CTA href" value={content.hero.primaryCtaHref}
+                  onChange={(e) => update('hero', { ...content.hero, primaryCtaHref: e.target.value })} />
+                <AdminInput label="Secondary CTA label" value={content.hero.secondaryCtaLabel}
+                  onChange={(e) => update('hero', { ...content.hero, secondaryCtaLabel: e.target.value })} />
+                <AdminInput label="Secondary CTA href" value={content.hero.secondaryCtaHref}
+                  onChange={(e) => update('hero', { ...content.hero, secondaryCtaHref: e.target.value })} />
+              </div>
+            </AdminCard>
+            <AdminCard title="Hero — Stats">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {content.hero.stats.map((stat, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '12px' }}>
+                    <AdminInput label={`Stat ${i + 1} value`} value={stat.value} style={{ flex: 1 }}
+                      onChange={(e) => {
+                        const stats = content.hero.stats.map((s, si) => si === i ? { ...s, value: e.target.value } : s);
+                        update('hero', { ...content.hero, stats });
+                      }} />
+                    <AdminInput label={`Stat ${i + 1} label`} value={stat.label} style={{ flex: 2 }}
+                      onChange={(e) => {
+                        const stats = content.hero.stats.map((s, si) => si === i ? { ...s, label: e.target.value } : s);
+                        update('hero', { ...content.hero, stats });
+                      }} />
+                  </div>
+                ))}
+              </div>
+            </AdminCard>
+          </>
+        )}
+
+        {/* ── PROBLEM ──────────────────────────────────────── */}
+        {activeTab === 'problem' && (
+          <>
+            <AdminCard title="Problem — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.problem.tag}
+                  onChange={(e) => update('problem', { ...content.problem, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.problem.heading}
+                  onChange={(e) => update('problem', { ...content.problem, heading: e.target.value })} />
+              </div>
+            </AdminCard>
+            {content.problem.cards.map((card, i) => (
+              <AdminCard key={card.id} title={`Problem card ${i + 1}`} subtitle={`Vegetable: ${card.vegetable}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Vegetable type" value={card.vegetable} helper="tomato | cucumber | greens"
+                    onChange={(e) => {
+                      const cards = content.problem.cards.map((c, ci) => ci === i ? { ...c, vegetable: e.target.value } : c);
+                      update('problem', { ...content.problem, cards });
+                    }} />
+                  <AdminInput label="Title" value={card.title}
+                    onChange={(e) => {
+                      const cards = content.problem.cards.map((c, ci) => ci === i ? { ...c, title: e.target.value } : c);
+                      update('problem', { ...content.problem, cards });
+                    }} />
+                  <TextareaField label="Description" value={card.description}
+                    onChange={(val) => {
+                      const cards = content.problem.cards.map((c, ci) => ci === i ? { ...c, description: val } : c);
+                      update('problem', { ...content.problem, cards });
+                    }} />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+
+        {/* ── HOW IT WORKS ─────────────────────────────────── */}
+        {activeTab === 'howItWorks' && (
+          <>
+            <AdminCard title="How It Works — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.howItWorks.tag}
+                  onChange={(e) => update('howItWorks', { ...content.howItWorks, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.howItWorks.heading}
+                  onChange={(e) => update('howItWorks', { ...content.howItWorks, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.howItWorks.intro}
+                  onChange={(val) => update('howItWorks', { ...content.howItWorks, intro: val })} />
+              </div>
+            </AdminCard>
+            {content.howItWorks.steps.map((step, i) => (
+              <AdminCard key={step.id} title={`Step ${i + 1} — ${step.title}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Title" value={step.title}
+                    onChange={(e) => {
+                      const steps = content.howItWorks.steps.map((s, si) => si === i ? { ...s, title: e.target.value } : s);
+                      update('howItWorks', { ...content.howItWorks, steps });
+                    }} />
+                  <TextareaField label="Description" value={step.description}
+                    onChange={(val) => {
+                      const steps = content.howItWorks.steps.map((s, si) => si === i ? { ...s, description: val } : s);
+                      update('howItWorks', { ...content.howItWorks, steps });
+                    }} />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+
+        {/* ── DASHBOARD ────────────────────────────────────── */}
+        {activeTab === 'dashboard' && (
+          <AdminCard title="Dashboard — Showcase section">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <AdminInput label="Tag" value={content.dashboardShowcase.tag}
+                onChange={(e) => update('dashboardShowcase', { ...content.dashboardShowcase, tag: e.target.value })} />
+              <AdminInput label="Heading" value={content.dashboardShowcase.heading}
+                onChange={(e) => update('dashboardShowcase', { ...content.dashboardShowcase, heading: e.target.value })} />
+              <TextareaField label="Intro" value={content.dashboardShowcase.intro} rows={3}
+                onChange={(val) => update('dashboardShowcase', { ...content.dashboardShowcase, intro: val })} />
+              <TextareaField
+                label="Features (one per line)"
+                value={content.dashboardShowcase.features.join('\n')}
+                rows={content.dashboardShowcase.features.length + 1}
+                onChange={(val) => update('dashboardShowcase', { ...content.dashboardShowcase, features: val.split('\n') })}
+              />
+            </div>
+          </AdminCard>
+        )}
+```
+
+- [ ] **Step 2: Verify file compiles (no red underlines in editor)**
+
+The file is not complete yet — tabs harvestOptions through cta are missing. This is expected. The `export default` function body is not closed. Proceed to Task 4.
+
+---
+
+## Task 4: Add HarvestOptions tab (emoji picker + add/remove)
+
+**Files:**
+- Modify: `app/admin/(panel)/diaspora/page.tsx` — append inside the `<div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>` block
+
+- [ ] **Step 1: Add the HarvestOptions tab content**
+
+After the `{activeTab === 'dashboard' && (...)}` block, add:
+
+```tsx
+        {/* ── HARVEST OPTIONS ──────────────────────────────── */}
+        {activeTab === 'harvestOptions' && (
+          <>
+            <AdminCard title="Harvest Options — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.harvestOptions.tag}
+                  onChange={(e) => update('harvestOptions', { ...content.harvestOptions, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.harvestOptions.heading}
+                  onChange={(e) => update('harvestOptions', { ...content.harvestOptions, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.harvestOptions.intro}
+                  onChange={(val) => update('harvestOptions', { ...content.harvestOptions, intro: val })} />
+              </div>
+            </AdminCard>
+
+            {content.harvestOptions.options.map((option, i) => (
+              <AdminCard key={option.id} title={`Option ${i + 1} — ${option.title || 'untitled'}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={labelStyle}>Icon</label>
+                    <EmojiPicker
+                      value={option.icon}
+                      onChange={(emoji) => {
+                        const options = content.harvestOptions.options.map((o, oi) => oi === i ? { ...o, icon: emoji } : o);
+                        update('harvestOptions', { ...content.harvestOptions, options });
+                      }}
+                    />
+                  </div>
+                  <AdminInput label="Title" value={option.title}
+                    onChange={(e) => {
+                      const options = content.harvestOptions.options.map((o, oi) => oi === i ? { ...o, title: e.target.value } : o);
+                      update('harvestOptions', { ...content.harvestOptions, options });
+                    }} />
+                  <TextareaField label="Description" value={option.description}
+                    onChange={(val) => {
+                      const options = content.harvestOptions.options.map((o, oi) => oi === i ? { ...o, description: val } : o);
+                      update('harvestOptions', { ...content.harvestOptions, options });
+                    }} />
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button
+                      style={removeBtnStyle}
+                      onClick={() => {
+                        const options = content.harvestOptions.options.filter((_, oi) => oi !== i);
+                        update('harvestOptions', { ...content.harvestOptions, options });
+                      }}
+                    >
+                      Remove option
+                    </button>
+                  </div>
+                </div>
+              </AdminCard>
+            ))}
+
+            <button
+              style={addBtnStyle}
+              onClick={() => {
+                const newOption = { id: crypto.randomUUID(), icon: '🌾', title: '', description: '' };
+                update('harvestOptions', { ...content.harvestOptions, options: [...content.harvestOptions.options, newOption] });
+              }}
+            >
+              + Add harvest option
+            </button>
+          </>
+        )}
+```
+
+---
+
+## Task 5: Add Ownership, GiftMechanic, and PhaseTwo tabs
+
+**Files:**
+- Modify: `app/admin/(panel)/diaspora/page.tsx`
+
+- [ ] **Step 1: Add Ownership tab**
+
+After the harvestOptions block, add:
+
+```tsx
+        {/* ── OWNERSHIP ────────────────────────────────────── */}
+        {activeTab === 'ownership' && (
+          <>
+            <AdminCard title="Ownership — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.ownership.tag}
+                  onChange={(e) => update('ownership', { ...content.ownership, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.ownership.heading}
+                  onChange={(e) => update('ownership', { ...content.ownership, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.ownership.intro}
+                  onChange={(val) => update('ownership', { ...content.ownership, intro: val })} />
+              </div>
+            </AdminCard>
+
+            {content.ownership.items.map((item, i) => (
+              <AdminCard key={item.id} title={`Item ${i + 1} — ${item.title || 'untitled'}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Title" value={item.title}
+                    onChange={(e) => {
+                      const items = content.ownership.items.map((it, ii) => ii === i ? { ...it, title: e.target.value } : it);
+                      update('ownership', { ...content.ownership, items });
+                    }} />
+                  <TextareaField label="Description" value={item.description}
+                    onChange={(val) => {
+                      const items = content.ownership.items.map((it, ii) => ii === i ? { ...it, description: val } : it);
+                      update('ownership', { ...content.ownership, items });
+                    }} />
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button
+                      style={removeBtnStyle}
+                      onClick={() => {
+                        const items = content.ownership.items.filter((_, ii) => ii !== i);
+                        update('ownership', { ...content.ownership, items });
+                      }}
+                    >
+                      Remove item
+                    </button>
+                  </div>
+                </div>
+              </AdminCard>
+            ))}
+
+            <button
+              style={addBtnStyle}
+              onClick={() => {
+                const newItem = { id: crypto.randomUUID(), title: '', description: '' };
+                update('ownership', { ...content.ownership, items: [...content.ownership.items, newItem] });
+              }}
+            >
+              + Add ownership item
+            </button>
+          </>
+        )}
+```
+
+- [ ] **Step 2: Add GiftMechanic tab**
+
+```tsx
+        {/* ── GIFT MECHANIC ────────────────────────────────── */}
+        {activeTab === 'gift' && (
+          <>
+            <AdminCard title="Gift Mechanic — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.giftMechanic.tag}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.giftMechanic.heading}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.giftMechanic.intro}
+                  onChange={(val) => update('giftMechanic', { ...content.giftMechanic, intro: val })} />
+              </div>
+            </AdminCard>
+
+            <AdminCard title="Gift Mechanic — Features list">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {content.giftMechanic.features.map((feature, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <input
+                      value={feature}
+                      onChange={(e) => {
+                        const features = content.giftMechanic.features.map((f, fi) => fi === i ? e.target.value : f);
+                        update('giftMechanic', { ...content.giftMechanic, features });
+                      }}
+                      style={{
+                        flex: 1, padding: '8px 12px', fontSize: '0.875rem',
+                        fontFamily: 'Lato, sans-serif', border: '1px solid #D8D4C8',
+                        borderRadius: '8px', outline: 'none', background: 'white',
+                      }}
+                    />
+                    <button
+                      style={{ ...removeBtnStyle, padding: '8px 12px', whiteSpace: 'nowrap' }}
+                      onClick={() => {
+                        const features = content.giftMechanic.features.filter((_, fi) => fi !== i);
+                        update('giftMechanic', { ...content.giftMechanic, features });
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+                <button
+                  style={{ ...addBtnStyle, marginTop: '4px' }}
+                  onClick={() => {
+                    update('giftMechanic', { ...content.giftMechanic, features: [...content.giftMechanic.features, ''] });
+                  }}
+                >
+                  + Add feature
+                </button>
+              </div>
+            </AdminCard>
+
+            <AdminCard title="Gift Mechanic — CTA">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="CTA label" value={content.giftMechanic.ctaLabel}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, ctaLabel: e.target.value })} />
+                <AdminInput label="CTA href" value={content.giftMechanic.ctaHref}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, ctaHref: e.target.value })} />
+                <AdminInput label="Note" value={content.giftMechanic.note}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, note: e.target.value })} />
+              </div>
+            </AdminCard>
+          </>
+        )}
+```
+
+- [ ] **Step 3: Add PhaseTwo tab**
+
+```tsx
+        {/* ── PHASE TWO ────────────────────────────────────── */}
+        {activeTab === 'phaseTwo' && (
+          <AdminCard title="Phase Two — Coming soon banner">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <AdminInput label="Tag" value={content.phaseTwo.tag}
+                onChange={(e) => update('phaseTwo', { ...content.phaseTwo, tag: e.target.value })} />
+              <AdminInput label="Heading" value={content.phaseTwo.heading}
+                onChange={(e) => update('phaseTwo', { ...content.phaseTwo, heading: e.target.value })} />
+              <TextareaField label="Body" value={content.phaseTwo.body} rows={4}
+                onChange={(val) => update('phaseTwo', { ...content.phaseTwo, body: val })} />
+              <AdminInput label="Note" value={content.phaseTwo.note}
+                onChange={(e) => update('phaseTwo', { ...content.phaseTwo, note: e.target.value })} />
+            </div>
+          </AdminCard>
+        )}
+```
+
+---
+
+## Task 6: Add remaining shared tabs (Progress through CTA) and close the file
+
+**Files:**
+- Modify: `app/admin/(panel)/diaspora/page.tsx`
+
+- [ ] **Step 1: Add Progress tab**
+
+```tsx
+        {/* ── PROGRESS ─────────────────────────────────────── */}
+        {activeTab === 'progress' && (
+          <>
+            <AdminCard title="Progress — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.progress.tag}
+                  onChange={(e) => update('progress', { ...content.progress, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.progress.heading}
+                  onChange={(e) => update('progress', { ...content.progress, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.progress.intro}
+                  onChange={(val) => update('progress', { ...content.progress, intro: val })} />
+              </div>
+            </AdminCard>
+            {content.progress.milestones.map((milestone, i) => (
+              <AdminCard key={milestone.id} title={`Milestone — ${milestone.year}`} subtitle={milestone.label}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Year" value={milestone.year}
+                    onChange={(e) => {
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, year: e.target.value } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }} />
+                  <AdminInput label="Plot size" value={milestone.size}
+                    onChange={(e) => {
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, size: e.target.value } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }} />
+                  <AdminInput label="Label" value={milestone.label}
+                    onChange={(e) => {
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, label: e.target.value } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }} />
+                  <TextareaField
+                    label="Features (one per line)"
+                    value={milestone.features.join('\n')}
+                    rows={milestone.features.length + 1}
+                    onChange={(val) => {
+                      const features = val.split('\n');
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, features } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }}
+                  />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+```
+
+- [ ] **Step 2: Add Farmer tab**
+
+```tsx
+        {/* ── FARMER ───────────────────────────────────────── */}
+        {activeTab === 'farmer' && (
+          <>
+            <AdminCard title="Farmer — Photo" subtitle="Drag on the image to reposition the focal point">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }}>
+                <div>
+                  <div style={labelStyle}>Preview (as shown on site)</div>
+                  <div style={{
+                    background: 'var(--cream, #FBF8F2)', borderRadius: '16px', overflow: 'hidden',
+                    border: '1px solid rgba(139,94,60,0.1)', boxShadow: '0 4px 20px rgba(26,26,20,0.07)',
+                  }}>
+                    <ImagePositionPicker
+                      src={content.farmer.image ?? ''}
+                      position={content.farmer.imagePosition ?? 'center center'}
+                      onPositionChange={(pos) => update('farmer', { ...content.farmer, imagePosition: pos })}
+                      containerStyle={{ height: '220px', background: 'linear-gradient(135deg, #E8F5E4 0%, #F5EBE0 100%)' }}
+                    >
+                      {content.farmer.region && (
+                        <div style={{
+                          position: 'absolute', bottom: '14px', left: '18px', zIndex: 3,
+                          fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem',
+                          letterSpacing: '0.12em', textTransform: 'uppercase',
+                          color: '#8B5E3C', background: 'rgba(255,255,255,0.88)',
+                          padding: '3px 10px', borderRadius: '100px',
+                        }}>
+                          {content.farmer.region}
+                        </div>
+                      )}
+                    </ImagePositionPicker>
+                    <div style={{ padding: '20px 24px 24px' }}>
+                      <div style={{ fontFamily: 'Georgia, serif', fontSize: '2.8rem', lineHeight: 0.8, color: '#C49A3C', opacity: 0.45, marginBottom: '8px', userSelect: 'none' }}>&ldquo;</div>
+                      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '0.9rem', lineHeight: 1.6, color: '#1A1A14', marginBottom: '12px', minHeight: '40px' }}>
+                        {content.farmer.quote || <span style={{ opacity: 0.3 }}>Quote will appear here…</span>}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div style={{ width: '20px', height: '1px', background: '#8B5E3C', opacity: 0.35 }} />
+                        <span style={{ fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8B5E3C', opacity: 0.7 }}>
+                          {content.farmer.name || 'Name'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  {content.farmer.image && (
+                    <div style={{ marginTop: '8px', fontFamily: 'Lato, sans-serif', fontSize: '0.7rem', color: '#9B9B82' }}>
+                      Position: {content.farmer.imagePosition ?? 'center center'}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <ImageUpload
+                    label="Photo"
+                    value={content.farmer.image ?? ''}
+                    onChange={(url) => update('farmer', { ...content.farmer, image: url })}
+                    aspectHint="Recommended: 3:2 landscape, min 800×500 px"
+                  />
+                </div>
+              </div>
+            </AdminCard>
+            <AdminCard title="Farmer — Profile">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.farmer.tag}
+                  onChange={(e) => update('farmer', { ...content.farmer, tag: e.target.value })} />
+                <AdminInput label="Name" value={content.farmer.name}
+                  onChange={(e) => update('farmer', { ...content.farmer, name: e.target.value })} />
+                <AdminInput label="Region" value={content.farmer.region}
+                  onChange={(e) => update('farmer', { ...content.farmer, region: e.target.value })} />
+                <AdminInput label="Experience" value={content.farmer.experience}
+                  onChange={(e) => update('farmer', { ...content.farmer, experience: e.target.value })} />
+                <TextareaField label="Quote" value={content.farmer.quote} rows={2}
+                  onChange={(val) => update('farmer', { ...content.farmer, quote: val })} />
+                <TextareaField label="Bio" value={content.farmer.bio} rows={5}
+                  onChange={(val) => update('farmer', { ...content.farmer, bio: val })} />
+              </div>
+            </AdminCard>
+          </>
+        )}
+```
+
+- [ ] **Step 3: Add Seasonal tab**
+
+```tsx
+        {/* ── SEASONAL ─────────────────────────────────────── */}
+        {activeTab === 'seasonal' && (
+          <>
+            <AdminCard title="Seasonal — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.seasonal.tag}
+                  onChange={(e) => update('seasonal', { ...content.seasonal, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.seasonal.heading}
+                  onChange={(e) => update('seasonal', { ...content.seasonal, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.seasonal.intro}
+                  onChange={(val) => update('seasonal', { ...content.seasonal, intro: val })} />
+              </div>
+            </AdminCard>
+            {content.seasonal.seasons.map((season, i) => (
+              <AdminCard key={season.id} title={`Season — ${season.name}`} subtitle={season.months}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Season name" value={season.name}
+                    onChange={(e) => {
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, name: e.target.value } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }} />
+                  <AdminInput label="Months" value={season.months} helper="e.g. Mar – May"
+                    onChange={(e) => {
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, months: e.target.value } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }} />
+                  <AdminInput label="Accent color" value={season.color} helper="Hex color code, e.g. #5A9B50"
+                    onChange={(e) => {
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, color: e.target.value } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }} />
+                  <TextareaField
+                    label="Crops (one per line)"
+                    value={season.crops.join('\n')}
+                    rows={season.crops.length + 1}
+                    onChange={(val) => {
+                      const crops = val.split('\n');
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, crops } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }}
+                  />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+```
+
+- [ ] **Step 4: Add Trust, FAQ, About, CTA tabs and close the JSX**
+
+```tsx
+        {/* ── TRUST ────────────────────────────────────────── */}
+        {activeTab === 'trust' && (
+          <>
+            <AdminCard title="Trust — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.trust.tag}
+                  onChange={(e) => update('trust', { ...content.trust, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.trust.heading}
+                  onChange={(e) => update('trust', { ...content.trust, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.trust.intro}
+                  onChange={(val) => update('trust', { ...content.trust, intro: val })} />
+              </div>
+            </AdminCard>
+            {content.trust.points.map((point, i) => (
+              <AdminCard key={point.id} title={`Trust point ${i + 1} — ${point.title}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Title" value={point.title}
+                    onChange={(e) => {
+                      const points = content.trust.points.map((p, pi) => pi === i ? { ...p, title: e.target.value } : p);
+                      update('trust', { ...content.trust, points });
+                    }} />
+                  <TextareaField label="Description" value={point.description}
+                    onChange={(val) => {
+                      const points = content.trust.points.map((p, pi) => pi === i ? { ...p, description: val } : p);
+                      update('trust', { ...content.trust, points });
+                    }} />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+
+        {/* ── FAQ ──────────────────────────────────────────── */}
+        {activeTab === 'faq' && (
+          <>
+            <AdminCard title="FAQ — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.faq.tag}
+                  onChange={(e) => update('faq', { ...content.faq, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.faq.heading}
+                  onChange={(e) => update('faq', { ...content.faq, heading: e.target.value })} />
+              </div>
+            </AdminCard>
+            {content.faq.items.map((item, i) => (
+              <AdminCard key={item.id} title={`FAQ item ${i + 1}`} subtitle={item.question}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Question" value={item.question}
+                    onChange={(e) => {
+                      const items = content.faq.items.map((it, ii) => ii === i ? { ...it, question: e.target.value } : it);
+                      update('faq', { ...content.faq, items });
+                    }} />
+                  <TextareaField label="Answer" value={item.answer} rows={3}
+                    onChange={(val) => {
+                      const items = content.faq.items.map((it, ii) => ii === i ? { ...it, answer: val } : it);
+                      update('faq', { ...content.faq, items });
+                    }} />
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button style={removeBtnStyle}
+                      onClick={() => {
+                        const items = content.faq.items.filter((_, ii) => ii !== i);
+                        update('faq', { ...content.faq, items });
+                      }}
+                    >
+                      Remove item
+                    </button>
+                  </div>
+                </div>
+              </AdminCard>
+            ))}
+            <button style={addBtnStyle}
+              onClick={() => {
+                const newItem = { id: crypto.randomUUID(), question: '', answer: '' };
+                update('faq', { ...content.faq, items: [...content.faq.items, newItem] });
+              }}
+            >
+              + Add FAQ item
+            </button>
+          </>
+        )}
+
+        {/* ── ABOUT ────────────────────────────────────────── */}
+        {activeTab === 'about' && (
+          <>
+            <AdminCard title="About — Photo" subtitle="Drag on the image to reposition the focal point">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }}>
+                <div>
+                  <div style={labelStyle}>Preview (as shown on site)</div>
+                  <div style={{
+                    background: 'white', borderRadius: '16px', overflow: 'hidden',
+                    border: '1px solid rgba(90,155,80,0.15)', boxShadow: '0 4px 20px rgba(45,90,39,0.07)',
+                    maxWidth: '260px',
+                  }}>
+                    <ImagePositionPicker
+                      src={content.about.image ?? ''}
+                      position={content.about.imagePosition ?? 'center top'}
+                      onPositionChange={(pos) => update('about', { ...content.about, imagePosition: pos })}
+                      containerStyle={{ aspectRatio: '1 / 1', background: 'linear-gradient(135deg, #E8F5E4 0%, #FBF8F2 100%)' }}
+                    >
+                      {content.about.role && (
+                        <div style={{
+                          position: 'absolute', bottom: '12px', left: '16px', zIndex: 3,
+                          fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem',
+                          letterSpacing: '0.1em', textTransform: 'uppercase',
+                          color: '#2D5A27', background: 'rgba(255,255,255,0.92)',
+                          padding: '3px 10px', borderRadius: '100px',
+                        }}>
+                          {content.about.role}
+                        </div>
+                      )}
+                    </ImagePositionPicker>
+                    <div style={{ padding: '16px 20px 20px' }}>
+                      <div style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', color: '#1A1A14', marginBottom: '3px' }}>
+                        {content.about.name || <span style={{ opacity: 0.3 }}>Name</span>}
+                      </div>
+                      <div style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.72rem', fontWeight: 400, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#3D7A35' }}>
+                        {content.about.role || <span style={{ opacity: 0.3 }}>Role</span>}
+                      </div>
+                    </div>
+                  </div>
+                  {content.about.image && (
+                    <div style={{ marginTop: '8px', fontFamily: 'Lato, sans-serif', fontSize: '0.7rem', color: '#9B9B82' }}>
+                      Position: {content.about.imagePosition ?? 'center top'}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <ImageUpload
+                    label="Photo"
+                    value={content.about.image ?? ''}
+                    onChange={(url) => update('about', { ...content.about, image: url })}
+                    aspectHint="Recommended: 1:1 square, min 600×600 px"
+                  />
+                </div>
+              </div>
+            </AdminCard>
+            <AdminCard title="About — Founder">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.about.tag}
+                  onChange={(e) => update('about', { ...content.about, tag: e.target.value })} />
+                <AdminInput label="Name" value={content.about.name}
+                  onChange={(e) => update('about', { ...content.about, name: e.target.value })} />
+                <AdminInput label="Role" value={content.about.role}
+                  onChange={(e) => update('about', { ...content.about, role: e.target.value })} />
+                <TextareaField label="Paragraph 1" value={content.about.paragraph1} rows={4}
+                  onChange={(val) => update('about', { ...content.about, paragraph1: val })} />
+                <TextareaField label="Paragraph 2" value={content.about.paragraph2} rows={4}
+                  onChange={(val) => update('about', { ...content.about, paragraph2: val })} />
+                <TextareaField label="Paragraph 3" value={content.about.paragraph3} rows={4}
+                  onChange={(val) => update('about', { ...content.about, paragraph3: val })} />
+                <AdminInput label="Trust text" value={content.about.trustText} helper="Short meta line shown below the paragraphs"
+                  onChange={(e) => update('about', { ...content.about, trustText: e.target.value })} />
+              </div>
+            </AdminCard>
+          </>
+        )}
+
+        {/* ── CTA FOOTER ───────────────────────────────────── */}
+        {activeTab === 'cta' && (
+          <AdminCard title="CTA Footer — Final call to action">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <AdminInput label="Tag" value={content.ctaFooter.tag}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, tag: e.target.value })} />
+              <AdminInput label="Heading" value={content.ctaFooter.heading}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, heading: e.target.value })} />
+              <TextareaField label="Subtitle" value={content.ctaFooter.subtitle} rows={3}
+                onChange={(val) => update('ctaFooter', { ...content.ctaFooter, subtitle: val })} />
+              <AdminInput label="Button label" value={content.ctaFooter.buttonLabel}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, buttonLabel: e.target.value })} />
+              <AdminInput label="Button href" value={content.ctaFooter.buttonHref}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, buttonHref: e.target.value })} />
+              <AdminInput label="Note" value={content.ctaFooter.note}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, note: e.target.value })} />
+            </div>
+          </AdminCard>
+        )}
+
+      </div>
+    </div>
+  );
+}
+```
+
+- [ ] **Step 5: Verify the file compiles**
+
+```bash
+cd /home/victus/dev/armenia
+npx tsc --noEmit 2>&1 | head -30
+```
+
+Expected: no errors related to `diaspora/page.tsx`. Fix any type errors before committing.
+
+- [ ] **Step 6: Start dev server and manually verify**
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:3000/admin/diaspora` in the browser.
+
+Check:
+- All 15 tabs render without errors
+- Locale switcher switches between EN/HY
+- Editing any field shows yellow "unsaved changes" banner
+- Save button works (check Network tab — POST to `/api/admin/save` returns 200)
+- HarvestOptions: emoji picker opens on click, click selects emoji and closes
+- HarvestOptions: "+ Add harvest option" adds a card, "Remove option" removes it
+- Ownership: "+ Add ownership item" and "Remove item" work
+- GiftMechanic: "+ Add feature" adds a row, "×" removes it
+- Visibility toggle works per tab
+- Topbar shows "View diaspora ↗" link
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add app/admin/\(panel\)/diaspora/page.tsx app/admin/\(panel\)/layout.tsx
+git commit -m "feat: add diaspora admin page with 15 tabs, emoji picker, and add/remove arrays"
+```
+
+---
+
+## Task 7: Final commit and push
+
+- [ ] **Step 1: Push to live**
+
+```bash
+git push origin main
+```
+
+Expected: Vercel picks up the push and deploys.
