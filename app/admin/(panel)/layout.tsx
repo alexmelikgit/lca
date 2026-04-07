@@ -35,6 +35,14 @@ export default async function AdminPanelLayout({ children }: { children: React.R
           >
             View site ↗
           </a>
+          <a
+            href="/en/diaspora"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: '0.8rem', color: '#8B2535', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}
+          >
+            View diaspora ↗
+          </a>
         </header>
 
         {/* Page content */}
