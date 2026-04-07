@@ -502,6 +502,70 @@ export default function DiasporaPage() {
           </>
         )}
 
+        {/* ── HARVEST OPTIONS ──────────────────────────────── */}
+        {activeTab === 'harvestOptions' && (
+          <>
+            <AdminCard title="Harvest Options — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.harvestOptions.tag}
+                  onChange={(e) => update('harvestOptions', { ...content.harvestOptions, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.harvestOptions.heading}
+                  onChange={(e) => update('harvestOptions', { ...content.harvestOptions, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.harvestOptions.intro}
+                  onChange={(val) => update('harvestOptions', { ...content.harvestOptions, intro: val })} />
+              </div>
+            </AdminCard>
+
+            {content.harvestOptions.options.map((option, i) => (
+              <AdminCard key={option.id} title={`Option ${i + 1} — ${option.title || 'untitled'}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label style={labelStyle}>Icon</label>
+                    <EmojiPicker
+                      value={option.icon}
+                      onChange={(emoji) => {
+                        const options = content.harvestOptions.options.map((o, oi) => oi === i ? { ...o, icon: emoji } : o);
+                        update('harvestOptions', { ...content.harvestOptions, options });
+                      }}
+                    />
+                  </div>
+                  <AdminInput label="Title" value={option.title}
+                    onChange={(e) => {
+                      const options = content.harvestOptions.options.map((o, oi) => oi === i ? { ...o, title: e.target.value } : o);
+                      update('harvestOptions', { ...content.harvestOptions, options });
+                    }} />
+                  <TextareaField label="Description" value={option.description}
+                    onChange={(val) => {
+                      const options = content.harvestOptions.options.map((o, oi) => oi === i ? { ...o, description: val } : o);
+                      update('harvestOptions', { ...content.harvestOptions, options });
+                    }} />
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button
+                      style={removeBtnStyle}
+                      onClick={() => {
+                        const options = content.harvestOptions.options.filter((_, oi) => oi !== i);
+                        update('harvestOptions', { ...content.harvestOptions, options });
+                      }}
+                    >
+                      Remove option
+                    </button>
+                  </div>
+                </div>
+              </AdminCard>
+            ))}
+
+            <button
+              style={addBtnStyle}
+              onClick={() => {
+                const newOption = { id: crypto.randomUUID(), icon: '🌾', title: '', description: '' };
+                update('harvestOptions', { ...content.harvestOptions, options: [...content.harvestOptions.options, newOption] });
+              }}
+            >
+              + Add harvest option
+            </button>
+          </>
+        )}
+
         {/* ── DASHBOARD ────────────────────────────────────── */}
         {activeTab === 'dashboard' && (
           <AdminCard title="Dashboard — Showcase section">
