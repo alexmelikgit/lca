@@ -1,5 +1,13 @@
 'use client';
 
+/**
+ * Diaspora Page editor — tabbed admin for all sections of diaspora.json.
+ * Tabs: Hero | Problem | How It Works | Harvest Options | Dashboard |
+ *       Ownership | Gift | Phase Two | Progress | Farmer |
+ *       Seasonal | Trust | FAQ | About | CTA
+ * All content loaded and saved as a single diaspora.json file.
+ */
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { DiasporaContent, DiasporaSectionVisibility } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
@@ -260,7 +268,7 @@ export default function DiasporaPage() {
   }, [locale]);
 
   useEffect(() => {
-    const handler = (e: BeforeUnloadEvent) => { if (isDirty) e.preventDefault(); };
+    const handler = (e: BeforeUnloadEvent) => { if (isDirty) { e.preventDefault(); e.returnValue = ''; } };
     window.addEventListener('beforeunload', handler);
     return () => window.removeEventListener('beforeunload', handler);
   }, [isDirty]);
