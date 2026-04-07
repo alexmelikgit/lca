@@ -160,12 +160,13 @@ export default function LocalPage() {
   const [content, setContent] = useState<LocalContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabId>('hero');
+  const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     fetch(`/api/admin/content?file=local&locale=${locale}`)
       .then((r) => r.json())
-      .then((data: LocalContent) => { setContent(data); setLoading(false); })
+      .then((data: LocalContent) => { setContent(data); setLoading(false); setIsDirty(false); })
       .catch(() => setLoading(false));
   }, [locale]);
 
@@ -176,10 +177,12 @@ export default function LocalPage() {
       body: JSON.stringify({ file: 'local', locale, content, section: 'Local Page' }),
     });
     if (!res.ok) throw new Error('Save failed');
+    setIsDirty(false);
   };
 
   const update = useCallback(<K extends keyof LocalContent>(section: K, value: LocalContent[K]) => {
     setContent((prev) => prev ? { ...prev, [section]: value } : prev);
+    setIsDirty(true);
   }, []);
 
   const toggleVisibility = useCallback((key: keyof SectionVisibility) => {
@@ -187,7 +190,16 @@ export default function LocalPage() {
       ...prev,
       sectionVisibility: { ...prev.sectionVisibility, [key]: !prev.sectionVisibility[key] },
     } : prev);
+    setIsDirty(true);
   }, []);
+
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (isDirty) e.preventDefault();
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [isDirty]);
 
   if (loading) {
     return <div style={{ color: '#9B9B82', fontSize: '0.9rem', padding: '40px 0' }}>Loading…</div>;
@@ -233,6 +245,25 @@ export default function LocalPage() {
         </div>
         <AdminSaveButton onClick={handleSave} />
       </div>
+
+      {/* Unsaved changes banner */}
+      {isDirty && (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '10px 16px',
+          marginBottom: '16px',
+          borderRadius: '8px',
+          background: 'rgba(196,154,60,0.1)',
+          border: '1px solid rgba(196,154,60,0.3)',
+        }}>
+          <span style={{ fontSize: '0.8rem', color: '#8B6914', fontFamily: 'Lato, sans-serif' }}>
+            ⚠ You have unsaved changes
+          </span>
+          <AdminSaveButton onClick={handleSave} />
+        </div>
+      )}
 
       {/* Tab bar */}
       <div
