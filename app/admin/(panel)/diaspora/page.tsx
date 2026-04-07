@@ -566,6 +566,141 @@ export default function DiasporaPage() {
           </>
         )}
 
+        {/* ── OWNERSHIP ────────────────────────────────────── */}
+        {activeTab === 'ownership' && (
+          <>
+            <AdminCard title="Ownership — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.ownership.tag}
+                  onChange={(e) => update('ownership', { ...content.ownership, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.ownership.heading}
+                  onChange={(e) => update('ownership', { ...content.ownership, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.ownership.intro}
+                  onChange={(val) => update('ownership', { ...content.ownership, intro: val })} />
+              </div>
+            </AdminCard>
+
+            {content.ownership.items.map((item, i) => (
+              <AdminCard key={item.id} title={`Item ${i + 1} — ${item.title || 'untitled'}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Title" value={item.title}
+                    onChange={(e) => {
+                      const items = content.ownership.items.map((it, ii) => ii === i ? { ...it, title: e.target.value } : it);
+                      update('ownership', { ...content.ownership, items });
+                    }} />
+                  <TextareaField label="Description" value={item.description}
+                    onChange={(val) => {
+                      const items = content.ownership.items.map((it, ii) => ii === i ? { ...it, description: val } : it);
+                      update('ownership', { ...content.ownership, items });
+                    }} />
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button
+                      style={removeBtnStyle}
+                      onClick={() => {
+                        const items = content.ownership.items.filter((_, ii) => ii !== i);
+                        update('ownership', { ...content.ownership, items });
+                      }}
+                    >
+                      Remove item
+                    </button>
+                  </div>
+                </div>
+              </AdminCard>
+            ))}
+
+            <button
+              style={addBtnStyle}
+              onClick={() => {
+                const newItem = { id: crypto.randomUUID(), title: '', description: '' };
+                update('ownership', { ...content.ownership, items: [...content.ownership.items, newItem] });
+              }}
+            >
+              + Add ownership item
+            </button>
+          </>
+        )}
+
+        {/* ── GIFT MECHANIC ────────────────────────────────── */}
+        {activeTab === 'gift' && (
+          <>
+            <AdminCard title="Gift Mechanic — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.giftMechanic.tag}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.giftMechanic.heading}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.giftMechanic.intro}
+                  onChange={(val) => update('giftMechanic', { ...content.giftMechanic, intro: val })} />
+              </div>
+            </AdminCard>
+
+            <AdminCard title="Gift Mechanic — Features list">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {content.giftMechanic.features.map((feature, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <input
+                      value={feature}
+                      onChange={(e) => {
+                        const features = content.giftMechanic.features.map((f, fi) => fi === i ? e.target.value : f);
+                        update('giftMechanic', { ...content.giftMechanic, features });
+                      }}
+                      style={{
+                        flex: 1, padding: '8px 12px', fontSize: '0.875rem',
+                        fontFamily: 'Lato, sans-serif', border: '1px solid #D8D4C8',
+                        borderRadius: '8px', outline: 'none', background: 'white',
+                      }}
+                    />
+                    <button
+                      style={{ ...removeBtnStyle, padding: '8px 12px', whiteSpace: 'nowrap' }}
+                      onClick={() => {
+                        const features = content.giftMechanic.features.filter((_, fi) => fi !== i);
+                        update('giftMechanic', { ...content.giftMechanic, features });
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+                <button
+                  style={{ ...addBtnStyle, marginTop: '4px' }}
+                  onClick={() => {
+                    update('giftMechanic', { ...content.giftMechanic, features: [...content.giftMechanic.features, ''] });
+                  }}
+                >
+                  + Add feature
+                </button>
+              </div>
+            </AdminCard>
+
+            <AdminCard title="Gift Mechanic — CTA">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="CTA label" value={content.giftMechanic.ctaLabel}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, ctaLabel: e.target.value })} />
+                <AdminInput label="CTA href" value={content.giftMechanic.ctaHref}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, ctaHref: e.target.value })} />
+                <AdminInput label="Note" value={content.giftMechanic.note}
+                  onChange={(e) => update('giftMechanic', { ...content.giftMechanic, note: e.target.value })} />
+              </div>
+            </AdminCard>
+          </>
+        )}
+
+        {/* ── PHASE TWO ────────────────────────────────────── */}
+        {activeTab === 'phaseTwo' && (
+          <AdminCard title="Phase Two — Coming soon banner">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <AdminInput label="Tag" value={content.phaseTwo.tag}
+                onChange={(e) => update('phaseTwo', { ...content.phaseTwo, tag: e.target.value })} />
+              <AdminInput label="Heading" value={content.phaseTwo.heading}
+                onChange={(e) => update('phaseTwo', { ...content.phaseTwo, heading: e.target.value })} />
+              <TextareaField label="Body" value={content.phaseTwo.body} rows={4}
+                onChange={(val) => update('phaseTwo', { ...content.phaseTwo, body: val })} />
+              <AdminInput label="Note" value={content.phaseTwo.note}
+                onChange={(e) => update('phaseTwo', { ...content.phaseTwo, note: e.target.value })} />
+            </div>
+          </AdminCard>
+        )}
+
         {/* ── DASHBOARD ────────────────────────────────────── */}
         {activeTab === 'dashboard' && (
           <AdminCard title="Dashboard — Showcase section">
