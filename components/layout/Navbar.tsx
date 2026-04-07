@@ -121,53 +121,69 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
             </a>
           </div>
 
-          {/* Hamburger button — mobile only */}
-          <button
-            className="hamburger"
-            onClick={() => setOpen(!open)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            style={{
-              display: 'none',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '8px',
-              marginRight: '-8px',
-              flexShrink: 0,
-              zIndex: 110,
-            }}
-          >
-            {/* Three-line / X icon */}
-            <div style={{ width: '22px', height: '16px', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <span style={{
-                display: 'block',
-                height: '1.5px',
-                background: 'var(--ink)',
-                borderRadius: '2px',
-                transformOrigin: 'center',
-                transition: 'transform 0.3s ease, opacity 0.3s ease',
-                transform: open ? 'translateY(7.25px) rotate(45deg)' : 'none',
-              }} />
-              <span style={{
-                display: 'block',
-                height: '1.5px',
-                background: 'var(--ink)',
-                borderRadius: '2px',
-                transition: 'opacity 0.2s ease',
-                opacity: open ? 0 : 1,
-              }} />
-              <span style={{
-                display: 'block',
-                height: '1.5px',
-                background: 'var(--ink)',
-                borderRadius: '2px',
-                transformOrigin: 'center',
-                transition: 'transform 0.3s ease, opacity 0.3s ease',
-                transform: open ? 'translateY(-7.25px) rotate(-45deg)' : 'none',
-              }} />
-            </div>
-          </button>
+          {/* Mobile right — locale + switch link + hamburger */}
+          <div className="mobile-right" style={{
+            display: 'none',
+            alignItems: 'center',
+            gap: '16px',
+            flexShrink: 0,
+          }}>
+            <LocaleSwitcher currentLocale={locale} />
+            <Link href={switchHref} style={{
+              fontFamily: 'var(--font-lato)',
+              fontWeight: 400,
+              fontSize: '0.75rem',
+              color: 'var(--ink3)',
+              textDecoration: 'none',
+              letterSpacing: '0.04em',
+              whiteSpace: 'nowrap',
+            }}>
+              {switchText} →
+            </Link>
+            <button
+              onClick={() => setOpen(!open)}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                marginRight: '-8px',
+                flexShrink: 0,
+                zIndex: 110,
+              }}
+            >
+              <div style={{ width: '22px', height: '16px', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <span style={{
+                  display: 'block',
+                  height: '1.5px',
+                  background: 'var(--ink)',
+                  borderRadius: '2px',
+                  transformOrigin: 'center',
+                  transition: 'transform 0.3s ease, opacity 0.3s ease',
+                  transform: open ? 'translateY(7.25px) rotate(45deg)' : 'none',
+                }} />
+                <span style={{
+                  display: 'block',
+                  height: '1.5px',
+                  background: 'var(--ink)',
+                  borderRadius: '2px',
+                  transition: 'opacity 0.2s ease',
+                  opacity: open ? 0 : 1,
+                }} />
+                <span style={{
+                  display: 'block',
+                  height: '1.5px',
+                  background: 'var(--ink)',
+                  borderRadius: '2px',
+                  transformOrigin: 'center',
+                  transition: 'transform 0.3s ease, opacity 0.3s ease',
+                  transform: open ? 'translateY(-7.25px) rotate(-45deg)' : 'none',
+                }} />
+              </div>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -253,35 +269,6 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
                 </a>
               </motion.div>
 
-              {/* Bottom: locale + switch */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.3 }}
-                style={{
-                  marginTop: 'auto',
-                  paddingTop: '40px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '24px',
-                  flexWrap: 'wrap',
-                }}
-              >
-                <LocaleSwitcher currentLocale={locale} />
-                <Link
-                  href={switchHref}
-                  onClick={() => setOpen(false)}
-                  style={{
-                    fontFamily: 'var(--font-lato)',
-                    fontSize: '0.8rem',
-                    color: 'var(--ink3)',
-                    textDecoration: 'none',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  {switchText} →
-                </Link>
-              </motion.div>
             </div>
           </motion.div>
         )}
@@ -291,7 +278,7 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .hamburger { display: flex !important; }
+          .mobile-right { display: flex !important; }
         }
       `}</style>
     </>
