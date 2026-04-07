@@ -721,6 +721,353 @@ export default function DiasporaPage() {
           </AdminCard>
         )}
 
+        {/* ── PROGRESS ─────────────────────────────────────── */}
+        {activeTab === 'progress' && (
+          <>
+            <AdminCard title="Progress — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.progress.tag}
+                  onChange={(e) => update('progress', { ...content.progress, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.progress.heading}
+                  onChange={(e) => update('progress', { ...content.progress, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.progress.intro}
+                  onChange={(val) => update('progress', { ...content.progress, intro: val })} />
+              </div>
+            </AdminCard>
+            {content.progress.milestones.map((milestone, i) => (
+              <AdminCard key={milestone.id} title={`Milestone — ${milestone.year}`} subtitle={milestone.label}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Year" value={milestone.year}
+                    onChange={(e) => {
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, year: e.target.value } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }} />
+                  <AdminInput label="Plot size" value={milestone.size}
+                    onChange={(e) => {
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, size: e.target.value } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }} />
+                  <AdminInput label="Label" value={milestone.label}
+                    onChange={(e) => {
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, label: e.target.value } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }} />
+                  <TextareaField
+                    label="Features (one per line)"
+                    value={milestone.features.join('\n')}
+                    rows={milestone.features.length + 1}
+                    onChange={(val) => {
+                      const features = val.split('\n');
+                      const milestones = content.progress.milestones.map((m, mi) => mi === i ? { ...m, features } : m);
+                      update('progress', { ...content.progress, milestones });
+                    }}
+                  />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+
+        {/* ── FARMER ───────────────────────────────────────── */}
+        {activeTab === 'farmer' && (
+          <>
+            <AdminCard title="Farmer — Photo" subtitle="Drag on the image to reposition the focal point">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }}>
+                <div>
+                  <div style={labelStyle}>Preview (as shown on site)</div>
+                  <div style={{
+                    background: 'var(--cream, #FBF8F2)', borderRadius: '16px', overflow: 'hidden',
+                    border: '1px solid rgba(139,94,60,0.1)', boxShadow: '0 4px 20px rgba(26,26,20,0.07)',
+                  }}>
+                    <ImagePositionPicker
+                      src={content.farmer.image ?? ''}
+                      position={content.farmer.imagePosition ?? 'center center'}
+                      onPositionChange={(pos) => update('farmer', { ...content.farmer, imagePosition: pos })}
+                      containerStyle={{ height: '220px', background: 'linear-gradient(135deg, #E8F5E4 0%, #F5EBE0 100%)' }}
+                    >
+                      {content.farmer.region && (
+                        <div style={{
+                          position: 'absolute', bottom: '14px', left: '18px', zIndex: 3,
+                          fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem',
+                          letterSpacing: '0.12em', textTransform: 'uppercase',
+                          color: '#8B5E3C', background: 'rgba(255,255,255,0.88)',
+                          padding: '3px 10px', borderRadius: '100px',
+                        }}>
+                          {content.farmer.region}
+                        </div>
+                      )}
+                    </ImagePositionPicker>
+                    <div style={{ padding: '20px 24px 24px' }}>
+                      <div style={{ fontFamily: 'Georgia, serif', fontSize: '2.8rem', lineHeight: 0.8, color: '#C49A3C', opacity: 0.45, marginBottom: '8px', userSelect: 'none' }}>&ldquo;</div>
+                      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '0.9rem', lineHeight: 1.6, color: '#1A1A14', marginBottom: '12px', minHeight: '40px' }}>
+                        {content.farmer.quote || <span style={{ opacity: 0.3 }}>Quote will appear here…</span>}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div style={{ width: '20px', height: '1px', background: '#8B5E3C', opacity: 0.35 }} />
+                        <span style={{ fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8B5E3C', opacity: 0.7 }}>
+                          {content.farmer.name || 'Name'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  {content.farmer.image && (
+                    <div style={{ marginTop: '8px', fontFamily: 'Lato, sans-serif', fontSize: '0.7rem', color: '#9B9B82' }}>
+                      Position: {content.farmer.imagePosition ?? 'center center'}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <ImageUpload
+                    label="Photo"
+                    value={content.farmer.image ?? ''}
+                    onChange={(url) => update('farmer', { ...content.farmer, image: url })}
+                    aspectHint="Recommended: 3:2 landscape, min 800×500 px"
+                  />
+                </div>
+              </div>
+            </AdminCard>
+            <AdminCard title="Farmer — Profile">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.farmer.tag}
+                  onChange={(e) => update('farmer', { ...content.farmer, tag: e.target.value })} />
+                <AdminInput label="Name" value={content.farmer.name}
+                  onChange={(e) => update('farmer', { ...content.farmer, name: e.target.value })} />
+                <AdminInput label="Region" value={content.farmer.region}
+                  onChange={(e) => update('farmer', { ...content.farmer, region: e.target.value })} />
+                <AdminInput label="Experience" value={content.farmer.experience}
+                  onChange={(e) => update('farmer', { ...content.farmer, experience: e.target.value })} />
+                <TextareaField label="Quote" value={content.farmer.quote} rows={2}
+                  onChange={(val) => update('farmer', { ...content.farmer, quote: val })} />
+                <TextareaField label="Bio" value={content.farmer.bio} rows={5}
+                  onChange={(val) => update('farmer', { ...content.farmer, bio: val })} />
+              </div>
+            </AdminCard>
+          </>
+        )}
+
+        {/* ── SEASONAL ─────────────────────────────────────── */}
+        {activeTab === 'seasonal' && (
+          <>
+            <AdminCard title="Seasonal — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.seasonal.tag}
+                  onChange={(e) => update('seasonal', { ...content.seasonal, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.seasonal.heading}
+                  onChange={(e) => update('seasonal', { ...content.seasonal, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.seasonal.intro}
+                  onChange={(val) => update('seasonal', { ...content.seasonal, intro: val })} />
+              </div>
+            </AdminCard>
+            {content.seasonal.seasons.map((season, i) => (
+              <AdminCard key={season.id} title={`Season — ${season.name}`} subtitle={season.months}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Season name" value={season.name}
+                    onChange={(e) => {
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, name: e.target.value } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }} />
+                  <AdminInput label="Months" value={season.months} helper="e.g. Mar – May"
+                    onChange={(e) => {
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, months: e.target.value } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }} />
+                  <AdminInput label="Accent color" value={season.color} helper="Hex color code, e.g. #5A9B50"
+                    onChange={(e) => {
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, color: e.target.value } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }} />
+                  <TextareaField
+                    label="Crops (one per line)"
+                    value={season.crops.join('\n')}
+                    rows={season.crops.length + 1}
+                    onChange={(val) => {
+                      const crops = val.split('\n');
+                      const seasons = content.seasonal.seasons.map((s, si) => si === i ? { ...s, crops } : s);
+                      update('seasonal', { ...content.seasonal, seasons });
+                    }}
+                  />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+
+        {/* ── TRUST ────────────────────────────────────────── */}
+        {activeTab === 'trust' && (
+          <>
+            <AdminCard title="Trust — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.trust.tag}
+                  onChange={(e) => update('trust', { ...content.trust, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.trust.heading}
+                  onChange={(e) => update('trust', { ...content.trust, heading: e.target.value })} />
+                <TextareaField label="Intro" value={content.trust.intro}
+                  onChange={(val) => update('trust', { ...content.trust, intro: val })} />
+              </div>
+            </AdminCard>
+            {content.trust.points.map((point, i) => (
+              <AdminCard key={point.id} title={`Trust point ${i + 1} — ${point.title}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Title" value={point.title}
+                    onChange={(e) => {
+                      const points = content.trust.points.map((p, pi) => pi === i ? { ...p, title: e.target.value } : p);
+                      update('trust', { ...content.trust, points });
+                    }} />
+                  <TextareaField label="Description" value={point.description}
+                    onChange={(val) => {
+                      const points = content.trust.points.map((p, pi) => pi === i ? { ...p, description: val } : p);
+                      update('trust', { ...content.trust, points });
+                    }} />
+                </div>
+              </AdminCard>
+            ))}
+          </>
+        )}
+
+        {/* ── FAQ ──────────────────────────────────────────── */}
+        {activeTab === 'faq' && (
+          <>
+            <AdminCard title="FAQ — Header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.faq.tag}
+                  onChange={(e) => update('faq', { ...content.faq, tag: e.target.value })} />
+                <AdminInput label="Heading" value={content.faq.heading}
+                  onChange={(e) => update('faq', { ...content.faq, heading: e.target.value })} />
+              </div>
+            </AdminCard>
+            {content.faq.items.map((item, i) => (
+              <AdminCard key={item.id} title={`FAQ item ${i + 1}`} subtitle={item.question}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <AdminInput label="Question" value={item.question}
+                    onChange={(e) => {
+                      const items = content.faq.items.map((it, ii) => ii === i ? { ...it, question: e.target.value } : it);
+                      update('faq', { ...content.faq, items });
+                    }} />
+                  <TextareaField label="Answer" value={item.answer} rows={3}
+                    onChange={(val) => {
+                      const items = content.faq.items.map((it, ii) => ii === i ? { ...it, answer: val } : it);
+                      update('faq', { ...content.faq, items });
+                    }} />
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button style={removeBtnStyle}
+                      onClick={() => {
+                        const items = content.faq.items.filter((_, ii) => ii !== i);
+                        update('faq', { ...content.faq, items });
+                      }}
+                    >
+                      Remove item
+                    </button>
+                  </div>
+                </div>
+              </AdminCard>
+            ))}
+            <button style={addBtnStyle}
+              onClick={() => {
+                const newItem = { id: crypto.randomUUID(), question: '', answer: '' };
+                update('faq', { ...content.faq, items: [...content.faq.items, newItem] });
+              }}
+            >
+              + Add FAQ item
+            </button>
+          </>
+        )}
+
+        {/* ── ABOUT ────────────────────────────────────────── */}
+        {activeTab === 'about' && (
+          <>
+            <AdminCard title="About — Photo" subtitle="Drag on the image to reposition the focal point">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }}>
+                <div>
+                  <div style={labelStyle}>Preview (as shown on site)</div>
+                  <div style={{
+                    background: 'white', borderRadius: '16px', overflow: 'hidden',
+                    border: '1px solid rgba(90,155,80,0.15)', boxShadow: '0 4px 20px rgba(45,90,39,0.07)',
+                    maxWidth: '260px',
+                  }}>
+                    <ImagePositionPicker
+                      src={content.about.image ?? ''}
+                      position={content.about.imagePosition ?? 'center top'}
+                      onPositionChange={(pos) => update('about', { ...content.about, imagePosition: pos })}
+                      containerStyle={{ aspectRatio: '1 / 1', background: 'linear-gradient(135deg, #E8F5E4 0%, #FBF8F2 100%)' }}
+                    >
+                      {content.about.role && (
+                        <div style={{
+                          position: 'absolute', bottom: '12px', left: '16px', zIndex: 3,
+                          fontFamily: 'Lato, sans-serif', fontWeight: 700, fontSize: '0.65rem',
+                          letterSpacing: '0.1em', textTransform: 'uppercase',
+                          color: '#2D5A27', background: 'rgba(255,255,255,0.92)',
+                          padding: '3px 10px', borderRadius: '100px',
+                        }}>
+                          {content.about.role}
+                        </div>
+                      )}
+                    </ImagePositionPicker>
+                    <div style={{ padding: '16px 20px 20px' }}>
+                      <div style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', color: '#1A1A14', marginBottom: '3px' }}>
+                        {content.about.name || <span style={{ opacity: 0.3 }}>Name</span>}
+                      </div>
+                      <div style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.72rem', fontWeight: 400, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#3D7A35' }}>
+                        {content.about.role || <span style={{ opacity: 0.3 }}>Role</span>}
+                      </div>
+                    </div>
+                  </div>
+                  {content.about.image && (
+                    <div style={{ marginTop: '8px', fontFamily: 'Lato, sans-serif', fontSize: '0.7rem', color: '#9B9B82' }}>
+                      Position: {content.about.imagePosition ?? 'center top'}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <ImageUpload
+                    label="Photo"
+                    value={content.about.image ?? ''}
+                    onChange={(url) => update('about', { ...content.about, image: url })}
+                    aspectHint="Recommended: 1:1 square, min 600×600 px"
+                  />
+                </div>
+              </div>
+            </AdminCard>
+            <AdminCard title="About — Founder">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <AdminInput label="Tag" value={content.about.tag}
+                  onChange={(e) => update('about', { ...content.about, tag: e.target.value })} />
+                <AdminInput label="Name" value={content.about.name}
+                  onChange={(e) => update('about', { ...content.about, name: e.target.value })} />
+                <AdminInput label="Role" value={content.about.role}
+                  onChange={(e) => update('about', { ...content.about, role: e.target.value })} />
+                <TextareaField label="Paragraph 1" value={content.about.paragraph1} rows={4}
+                  onChange={(val) => update('about', { ...content.about, paragraph1: val })} />
+                <TextareaField label="Paragraph 2" value={content.about.paragraph2} rows={4}
+                  onChange={(val) => update('about', { ...content.about, paragraph2: val })} />
+                <TextareaField label="Paragraph 3" value={content.about.paragraph3} rows={4}
+                  onChange={(val) => update('about', { ...content.about, paragraph3: val })} />
+                <AdminInput label="Trust text" value={content.about.trustText} helper="Short meta line shown below the paragraphs"
+                  onChange={(e) => update('about', { ...content.about, trustText: e.target.value })} />
+              </div>
+            </AdminCard>
+          </>
+        )}
+
+        {/* ── CTA FOOTER ───────────────────────────────────── */}
+        {activeTab === 'cta' && (
+          <AdminCard title="CTA Footer — Final call to action">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <AdminInput label="Tag" value={content.ctaFooter.tag}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, tag: e.target.value })} />
+              <AdminInput label="Heading" value={content.ctaFooter.heading}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, heading: e.target.value })} />
+              <TextareaField label="Subtitle" value={content.ctaFooter.subtitle} rows={3}
+                onChange={(val) => update('ctaFooter', { ...content.ctaFooter, subtitle: val })} />
+              <AdminInput label="Button label" value={content.ctaFooter.buttonLabel}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, buttonLabel: e.target.value })} />
+              <AdminInput label="Button href" value={content.ctaFooter.buttonHref}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, buttonHref: e.target.value })} />
+              <AdminInput label="Note" value={content.ctaFooter.note}
+                onChange={(e) => update('ctaFooter', { ...content.ctaFooter, note: e.target.value })} />
+            </div>
+          </AdminCard>
+        )}
+
       </div>
     </div>
   );
