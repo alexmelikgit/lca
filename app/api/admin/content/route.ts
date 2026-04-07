@@ -5,8 +5,8 @@ import { requireSession } from '@/lib/session';
 import { LOCALES } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n';
 
-const ALLOWED_FILES = ['nav', 'local'];
-const LOCALE_FREE_FILES = ['how-it-works', 'diaspora', 'farmer', 'plots', 'faq-local', 'faq-diaspora', 'settings', 'activity-log'];
+const ALLOWED_FILES = ['nav', 'local', 'diaspora'];
+const LOCALE_FREE_FILES = ['how-it-works', 'farmer', 'plots', 'faq-local', 'faq-diaspora', 'settings', 'activity-log'];
 
 export async function GET(req: NextRequest) {
   try {
