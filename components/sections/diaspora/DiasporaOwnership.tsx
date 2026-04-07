@@ -57,7 +57,7 @@ export default function DiasporaOwnership({ content }: Props) {
             <div style={{ marginTop: '40px', width: '48px', height: '3px', background: 'var(--pomegranate)', borderRadius: '2px', opacity: 0.4 }} />
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '20px' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {content.items.map((item, i) => (
               <motion.div
                 key={item.id}
