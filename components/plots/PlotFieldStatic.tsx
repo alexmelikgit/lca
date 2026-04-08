@@ -19,25 +19,25 @@ const STATUS_STYLES: Record<PlotStatusValue, {
   hoverFillOpacity: number;
 }> = {
   available: {
-    fill: '#3D7A35',
-    fillOpacity: 0.18,
-    stroke: '#3D7A35',
-    strokeOpacity: 0.55,
-    hoverFillOpacity: 0.58,
+    fill: '#FFFFFF',
+    fillOpacity: 0.06,
+    stroke: '#C49A3C',
+    strokeOpacity: 0.5,
+    hoverFillOpacity: 0.32,
   },
   sold: {
-    fill: '#8B2535',
-    fillOpacity: 0.48,
-    stroke: '#8B2535',
-    strokeOpacity: 0.75,
-    hoverFillOpacity: 0.72,
+    fill: '#E84060',
+    fillOpacity: 0.45,
+    stroke: '#E84060',
+    strokeOpacity: 0.85,
+    hoverFillOpacity: 0.65,
   },
   reserved: {
     fill: '#C49A3C',
-    fillOpacity: 0.38,
+    fillOpacity: 0.35,
     stroke: '#C49A3C',
-    strokeOpacity: 0.7,
-    hoverFillOpacity: 0.65,
+    strokeOpacity: 0.85,
+    hoverFillOpacity: 0.6,
   },
 };
 
@@ -122,6 +122,12 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
         @media (max-width: 768px) {
           .plot-poly:hover {
             fill-opacity: var(--fill-opacity) !important;
+          }
+          .plot-info-overlay {
+            display: none !important;
+          }
+          .plot-info-mobile {
+            display: flex !important;
           }
         }
       `}</style>
@@ -246,9 +252,10 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
           )}
         </div>
 
-        {/* Info panel — shows on hover (desktop) or tap (mobile) */}
+        {/* Info panel — desktop overlay (hidden on mobile via CSS) */}
         {activeId && activeStatus && (
           <div
+            className="plot-info-overlay"
             style={{
               position: 'absolute',
               bottom: '16px',
@@ -355,6 +362,61 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
           </div>
         )}
       </div>
+
+      {/* Mobile info bar — shown below the map on small screens */}
+      {selectedId && activeStatus && (
+        <div
+          className="plot-info-mobile"
+          style={{
+            display: 'none', // shown via CSS on mobile
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '12px',
+            marginTop: '10px',
+            background: 'rgba(10, 18, 10, 0.92)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '10px',
+            padding: '12px 16px',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+            <span style={{
+              width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0,
+              background: STATUS_STYLES[activeStatus].stroke, display: 'block',
+            }} />
+            <span style={{
+              fontFamily: 'var(--font-lato)', fontWeight: 600,
+              fontSize: '0.85rem', color: 'white', whiteSpace: 'nowrap',
+            }}>
+              Plot {selectedId} · {STATUS_LABELS[activeStatus]}
+            </span>
+            {activeStatus === 'available' && activePrice !== null && (
+              <span style={{
+                fontFamily: 'var(--font-playfair)', fontWeight: 400,
+                fontSize: '1rem', color: '#C49A3C', whiteSpace: 'nowrap',
+              }}>
+                {activeCurrency}{activePrice.toLocaleString()}
+              </span>
+            )}
+          </div>
+          {activeStatus === 'available' && (
+            <a
+              href={reserveCtaHref}
+              style={{
+                flexShrink: 0,
+                fontFamily: 'var(--font-lato)', fontWeight: 700,
+                fontSize: '0.7rem', letterSpacing: '0.08em',
+                textTransform: 'uppercase', color: '#C49A3C',
+                border: '1px solid rgba(196,154,60,0.45)',
+                borderRadius: '100px', padding: '6px 14px',
+                textDecoration: 'none', whiteSpace: 'nowrap',
+              }}
+            >
+              {reserveCtaText} →
+            </a>
+          )}
+        </div>
+      )}
 
       {/* Plot count summary */}
       <div style={{
