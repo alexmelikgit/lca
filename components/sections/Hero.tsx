@@ -48,7 +48,7 @@ export default function Hero({ content }: Props) {
             style={{
               fontFamily: 'var(--font-playfair)',
               fontWeight: 400,
-              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
+              fontSize: 'clamp(1.9rem, 3.2vw, 2.8rem)',
               lineHeight: 1.22,
               color: 'var(--ink)',
               margin: '0 0 10px',
@@ -185,7 +185,7 @@ export default function Hero({ content }: Props) {
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-          style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', minHeight: '560px' }}
+          style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', minHeight: 'clamp(280px, 40vw, 560px)' }}
         >
           {/* BG1: soft landscape SVG */}
           <svg

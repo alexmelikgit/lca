@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ArmenianDivider from '@/components/layout/ArmenianDivider';
 import SectionTag from '@/components/ui/SectionTag';
@@ -12,6 +13,34 @@ interface Props {
 }
 
 export default function CTAFooter({ content, variant = 'gold' }: Props) {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
+
+  const goldColor = variant === 'pomegranate' ? 'var(--pomegranate)' : 'var(--gold)';
+  const goldShadow = variant === 'pomegranate'
+    ? '0 4px 24px rgba(139,37,53,0.3)'
+    : '0 4px 24px rgba(196,154,60,0.3)';
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      if (res.ok) {
+        setStatus('done');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  }
+
   return (
     <>
       <ArmenianDivider variant="gold" />
@@ -74,33 +103,91 @@ export default function CTAFooter({ content, variant = 'gold' }: Props) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={VIEWPORT}
             transition={{ duration: 0.6, ease: EASE, delay: 0.3 }}
-            style={{ marginBottom: '20px' }}
+            style={{ width: '100%', marginBottom: '20px' }}
           >
-            <a
-              href={content.buttonHref}
-              className={variant === 'pomegranate' ? 'btn-pomegranate' : 'btn-gold'}
-              style={{
-                display: 'inline-flex',
+            {status === 'done' ? (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
-                gap: '8px',
-                fontFamily: 'var(--font-lato)',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: variant === 'pomegranate' ? 'white' : 'var(--green-deep)',
-                background: variant === 'pomegranate' ? 'var(--pomegranate)' : 'var(--gold)',
-                padding: '16px 40px',
-                borderRadius: '100px',
-                textDecoration: 'none',
-                boxShadow: variant === 'pomegranate'
-                  ? '0 4px 24px rgba(139,37,53,0.3)'
-                  : '0 4px 24px rgba(196,154,60,0.3)',
-              }}
-            >
-              {content.buttonLabel}
-              <span style={{ fontSize: '1rem' }}>→</span>
-            </a>
+                gap: '12px',
+                padding: '32px 24px',
+                background: 'rgba(255,255,255,0.07)',
+                borderRadius: '16px',
+                border: '1px solid rgba(196,154,60,0.3)',
+              }}>
+                <div style={{ fontSize: '2rem' }}>✓</div>
+                <p style={{
+                  fontFamily: 'var(--font-playfair)',
+                  fontWeight: 400,
+                  fontSize: '1.2rem',
+                  color: goldColor,
+                  margin: 0,
+                }}>
+                  You&apos;re on the list.
+                </p>
+                <p style={{
+                  fontFamily: 'var(--font-lato)',
+                  fontWeight: 300,
+                  fontSize: '0.9rem',
+                  color: 'rgba(255,255,255,0.55)',
+                  margin: 0,
+                }}>
+                  We&apos;ll reach out before the season starts.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', width: '100%' }}>
+                <div style={{ display: 'flex', width: '100%', maxWidth: '440px', gap: '0' }}>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    style={{
+                      flex: 1,
+                      fontFamily: 'var(--font-lato)',
+                      fontSize: '0.95rem',
+                      fontWeight: 300,
+                      color: 'var(--ink)',
+                      background: 'white',
+                      border: 'none',
+                      borderRadius: '100px 0 0 100px',
+                      padding: '15px 24px',
+                      outline: 'none',
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    style={{
+                      fontFamily: 'var(--font-lato)',
+                      fontWeight: 700,
+                      fontSize: '0.78rem',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: 'var(--green-deep)',
+                      background: goldColor,
+                      border: 'none',
+                      borderRadius: '0 100px 100px 0',
+                      padding: '15px 28px',
+                      cursor: status === 'loading' ? 'wait' : 'pointer',
+                      whiteSpace: 'nowrap',
+                      boxShadow: goldShadow,
+                      opacity: status === 'loading' ? 0.7 : 1,
+                    }}
+                  >
+                    {status === 'loading' ? '...' : content.buttonLabel}
+                  </button>
+                </div>
+                {status === 'error' && (
+                  <p style={{ fontFamily: 'var(--font-lato)', fontSize: '0.85rem', color: 'rgba(255,120,120,0.9)', margin: 0 }}>
+                    Something went wrong. Please try again.
+                  </p>
+                )}
+              </form>
+            )}
           </motion.div>
 
           <motion.p

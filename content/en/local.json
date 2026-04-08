@@ -21,14 +21,23 @@
     "h1Line2": "you eat.",
     "h1Italic": "Grown on your land.",
     "subtitle": "Own a real farming plot outside Yerevan.\nA farmer tends it for you.\nHarvest comes to your door weekly.",
-    "primaryCtaLabel": "Join the pre-pilot",
+    "primaryCtaLabel": "Reserve my plot",
     "primaryCtaHref": "#join",
     "secondaryCtaLabel": "See how it works",
     "secondaryCtaHref": "#how-it-works",
     "stats": [
-      { "value": "2 m²", "label": "Your plot" },
-      { "value": "Weekly", "label": "Deliveries" },
-      { "value": "Real", "label": "Farmer assigned" }
+      {
+        "value": "2 m²",
+        "label": "Your plot"
+      },
+      {
+        "value": "Weekly",
+        "label": "Deliveries"
+      },
+      {
+        "value": "Real",
+        "label": "Farmer assigned"
+      }
     ]
   },
   "problem": {

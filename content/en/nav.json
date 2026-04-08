@@ -1,7 +1,7 @@
 {
   "logoMain": "Hye",
   "logoHighlight": "land",
-  "localCta": "Join the pre-pilot",
+  "localCta": "Reserve my plot",
   "diasporaCta": "Get your plot",
   "diasporaLinkText": "For the diaspora",
   "localLinkText": "For those living in Armenia",
@@ -38,10 +38,30 @@
     }
   ],
   "diasporaLinks": [
-    { "id": "dl-1", "label": "How it works", "href": "#how-it-works" },
-    { "id": "dl-2", "label": "Your harvest", "href": "#harvest-options" },
-    { "id": "dl-3", "label": "The gift", "href": "#gift" },
-    { "id": "dl-4", "label": "Progress", "href": "#progress" },
-    { "id": "dl-5", "label": "FAQ", "href": "#faq" }
+    {
+      "id": "dl-1",
+      "label": "How it works",
+      "href": "#how-it-works"
+    },
+    {
+      "id": "dl-2",
+      "label": "Your harvest",
+      "href": "#harvest-options"
+    },
+    {
+      "id": "dl-3",
+      "label": "The gift",
+      "href": "#gift"
+    },
+    {
+      "id": "dl-4",
+      "label": "Progress",
+      "href": "#progress"
+    },
+    {
+      "id": "dl-5",
+      "label": "FAQ",
+      "href": "#faq"
+    }
   ]
 }
