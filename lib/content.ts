@@ -2,9 +2,9 @@ import { join } from 'path';
 import { readBlobOrFs } from '@/lib/blob-content';
 import type { NavContent, HowItWorksContent, LocalContent, DiasporaContent, PlotFieldConfig } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
+import plotFieldConfigJson from '@/data/plot-field.json';
 
 const CONTENT_DIR = join(process.cwd(), 'content');
-const DATA_DIR = join(process.cwd(), 'data');
 
 async function readJson<T>(locale: Locale, file: string): Promise<T> {
   const raw = await readBlobOrFs(
@@ -34,10 +34,8 @@ export async function getDiasporaContent(locale: Locale): Promise<DiasporaConten
   return readJson<DiasporaContent>(locale, 'diaspora');
 }
 
-export async function getPlotFieldConfig(): Promise<PlotFieldConfig> {
-  const raw = await readBlobOrFs(
-    'data/plot-field.json',
-    join(DATA_DIR, 'plot-field.json'),
-  );
-  return JSON.parse(raw) as PlotFieldConfig;
+export function getPlotFieldConfig(): PlotFieldConfig {
+  // Phase 1: static import bundled at build time (not yet admin-editable).
+  // Phase 2: switch to readBlobOrFs when admin editing is added.
+  return plotFieldConfigJson as unknown as PlotFieldConfig;
 }

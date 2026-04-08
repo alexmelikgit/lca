@@ -35,10 +35,10 @@ export default async function Home({
     notFound();
   }
 
-  const [nav, local, fieldConfig] = await Promise.all([
+  const fieldConfig = getPlotFieldConfig();
+  const [nav, local] = await Promise.all([
     getNavContent(locale),
     getLocalContent(locale),
-    getPlotFieldConfig(),
   ]);
 
   return (

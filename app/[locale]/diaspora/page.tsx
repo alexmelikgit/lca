@@ -37,10 +37,10 @@ export default async function DiasporaPage({
     notFound();
   }
 
-  const [nav, diaspora, fieldConfig] = await Promise.all([
+  const fieldConfig = getPlotFieldConfig();
+  const [nav, diaspora] = await Promise.all([
     getNavContent(locale),
     getDiasporaContent(locale),
-    getPlotFieldConfig(),
   ]);
 
   const v = diaspora.sectionVisibility;
