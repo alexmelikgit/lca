@@ -108,7 +108,8 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
     if (!id) return;
     setSelectedIds((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
+      if (next.has(id)) next.delete(id);
+      else if (next.size < 12) next.add(id);
       return next;
     });
   }, []);
