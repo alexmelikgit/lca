@@ -34,11 +34,18 @@ export async function getNavContent(locale: Locale): Promise<NavContent> {
 }
 
 export async function getHowItWorksContent(): Promise<HowItWorksContent> {
-  const raw = await readBlobOrFs(
-    'content/how-it-works.json',
-    join(CONTENT_DIR, 'how-it-works.json'),
-  );
-  return JSON.parse(raw) as HowItWorksContent;
+  const fsPath = join(CONTENT_DIR, 'how-it-works.json');
+  const blobKey = 'content/how-it-works.json';
+  const fsData = JSON.parse(await readFile(fsPath, 'utf-8')) as HowItWorksContent;
+  try {
+    const { blobs } = await list({ prefix: blobKey, limit: 1 });
+    const match = blobs.find((b) => b.pathname === blobKey);
+    if (match) {
+      const res = await fetch(match.url, { cache: 'no-store' });
+      return { ...fsData, ...await res.json() };
+    }
+  } catch { /* fallthrough */ }
+  return fsData;
 }
 
 export async function getLocalContent(locale: Locale): Promise<LocalContent> {
