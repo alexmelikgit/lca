@@ -43,8 +43,29 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const raw = await readBlobOrFs(blobKey, filePath);
-    return NextResponse.json(JSON.parse(raw));
+    const { readFile } = await import('fs/promises');
+    const { list } = await import('@vercel/blob');
+
+    // Load filesystem default (always present in git)
+    const fsRaw = await readFile(filePath, 'utf-8').catch(() => null);
+    const fsData = fsRaw ? JSON.parse(fsRaw) : {};
+
+    // Load Blob override (admin edits), if it exists
+    let blobData: Record<string, unknown> = {};
+    try {
+      const { blobs } = await list({ prefix: blobKey, limit: 1 });
+      const match = blobs.find((b) => b.pathname === blobKey);
+      if (match) {
+        const res = await fetch(match.url, { cache: 'no-store' });
+        blobData = await res.json();
+      }
+    } catch {
+      // no blob — use filesystem only
+    }
+
+    // Merge: filesystem provides defaults for new fields; blob overrides the rest
+    const merged = { ...fsData, ...blobData };
+    return NextResponse.json(merged);
   } catch {
     return NextResponse.json({ error: 'File not found' }, { status: 404 });
   }
