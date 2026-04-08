@@ -6,14 +6,14 @@
     { "lat": 40.25243123, "lng": 44.53429019 }
   ],
   "imageBounds": {
-    "minLat": 40.25230909,
-    "maxLat": 40.25280038,
-    "minLng": 44.53403324,
-    "maxLng": 44.53477353
+    "minLat": 40.25237050,
+    "maxLat": 40.25273795,
+    "minLng": 44.53411102,
+    "maxLng": 44.53479767
   },
   "imagePath": "/images/field-satellite.jpg",
-  "imageWidth": 276,
-  "imageHeight": 240,
+  "imageWidth": 1024,
+  "imageHeight": 718,
   "plotSizeM2": 2,
   "defaultStatus": "available",
   "defaultPriceUSD": 4900,

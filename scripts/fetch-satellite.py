@@ -15,9 +15,10 @@ MAX_LAT = 40.25267617
 MIN_LNG = 44.53419455
 MAX_LNG = 44.53461399
 
-ZOOM = 19
+ZOOM = 20
 TILE_SIZE = 256
-PADDING = 60  # extra pixels around the field
+PAD_X = 160  # wide horizontal padding → landscape ratio
+PAD_Y = 60   # less vertical padding → shorter height
 
 def tile_coords(lat, lng, zoom):
     n = 2 ** zoom
@@ -47,7 +48,7 @@ canvas = Image.new("RGB", (cols * TILE_SIZE, rows * TILE_SIZE))
 
 for ty in range(y_min, y_max + 1):
     for tx in range(x_min, x_max + 1):
-        url = f"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{ZOOM}/{ty}/{tx}"
+        url = f"https://mt1.google.com/vt/lyrs=s&x={tx}&y={ty}&z={ZOOM}"
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         try:
             with urllib.request.urlopen(req, timeout=10) as resp:
@@ -73,18 +74,20 @@ def lnglat_to_px(lng, lat):
 crop_x0, crop_y0 = lnglat_to_px(MIN_LNG, MAX_LAT)
 crop_x1, crop_y1 = lnglat_to_px(MAX_LNG, MIN_LAT)
 
-# Add padding
-crop_x0 = max(0, crop_x0 - PADDING)
-crop_y0 = max(0, crop_y0 - PADDING)
-crop_x1 = min(canvas_w, crop_x1 + PADDING)
-crop_y1 = min(canvas_h, crop_y1 + PADDING)
+# Add asymmetric padding: wider sides, shorter top/bottom
+crop_x0 = max(0, crop_x0 - PAD_X)
+crop_y0 = max(0, crop_y0 - PAD_Y)
+crop_x1 = min(canvas_w, crop_x1 + PAD_X)
+crop_y1 = min(canvas_h, crop_y1 + PAD_Y)
 
 cropped = canvas.crop((crop_x0, crop_y0, crop_x1, crop_y1))
 
 out_path = os.path.join(os.path.dirname(__file__), "../public/images/field-satellite.jpg")
 os.makedirs(os.path.dirname(out_path), exist_ok=True)
-cropped.save(out_path, "JPEG", quality=92)
-print(f"\nSaved: {out_path}  ({cropped.width}×{cropped.height}px)")
+# Upscale 2x with Lanczos for sharper display on modern screens
+upscaled = cropped.resize((cropped.width * 2, cropped.height * 2), Image.LANCZOS)
+upscaled.save(out_path, "JPEG", quality=95)
+print(f"\nSaved: {out_path}  ({upscaled.width}×{upscaled.height}px)")
 
 # Print updated imageBounds accounting for padding
 pad_lng_min, pad_lat_max = (
@@ -100,5 +103,5 @@ print(f'  "minLat": {pad_lat_min:.8f},')
 print(f'  "maxLat": {pad_lat_max:.8f},')
 print(f'  "minLng": {pad_lng_min:.8f},')
 print(f'  "maxLng": {pad_lng_max:.8f}')
-print(f'  "imageWidth": {cropped.width},')
-print(f'  "imageHeight": {cropped.height}')
+print(f'  "imageWidth": {upscaled.width},')
+print(f'  "imageHeight": {upscaled.height}')
