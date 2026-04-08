@@ -61,16 +61,7 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
         }}>
           {/* Logo */}
           <Link href={`/${locale}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
-            <span style={{
-              fontFamily: 'var(--font-playfair)',
-              fontWeight: 400,
-              fontSize: '1rem',
-              color: 'var(--ink)',
-              letterSpacing: '0.01em',
-            }}>
-              {content.logoMain}
-              <span style={{ color: 'var(--green)', fontStyle: 'italic' }}>{content.logoHighlight}</span>
-            </span>
+            <img src="/images/hyeland-logo.svg" alt="Hyeland" style={{ height: '44px', width: 'auto', display: 'block' }} />
           </Link>
 
           {/* Desktop nav */}
