@@ -24,6 +24,7 @@ const TABS = [
   { id: 'health', label: 'Health' },
   { id: 'convenience', label: 'Convenience' },
   { id: 'progress', label: 'Progress' },
+  { id: 'plotMap', label: 'Plot Map' },
   { id: 'farmer', label: 'Farmer' },
   { id: 'seasonal', label: 'Seasonal' },
   { id: 'trust', label: 'Trust' },
@@ -42,6 +43,7 @@ const TAB_VIS: Record<TabId, keyof SectionVisibility> = {
   health: 'health',
   convenience: 'convenience',
   progress: 'progress',
+  plotMap: 'plotMap',
   farmer: 'farmer',
   seasonal: 'seasonal',
   trust: 'trust',
@@ -712,6 +714,40 @@ export default function LocalPage() {
               </AdminCard>
             ))}
           </>
+        )}
+
+        {/* ── PLOT MAP ─────────────────────────────────────── */}
+        {activeTab === 'plotMap' && content.plotMap && (
+          <AdminCard title="Plot Map — Text content" subtitle="Tag, heading, subtitle and CTA shown above the field map">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <AdminInput
+                label="Tag"
+                value={content.plotMap.tag}
+                onChange={(e) => update('plotMap', { ...content.plotMap!, tag: e.target.value })}
+              />
+              <AdminInput
+                label="Heading"
+                value={content.plotMap.heading}
+                onChange={(e) => update('plotMap', { ...content.plotMap!, heading: e.target.value })}
+              />
+              <TextareaField
+                label="Subtitle"
+                value={content.plotMap.subtitle}
+                onChange={(val) => update('plotMap', { ...content.plotMap!, subtitle: val })}
+                rows={3}
+              />
+              <AdminInput
+                label="Reserve CTA text"
+                value={content.plotMap.reserveCtaText}
+                onChange={(e) => update('plotMap', { ...content.plotMap!, reserveCtaText: e.target.value })}
+              />
+              <AdminInput
+                label="Reserve CTA href"
+                value={content.plotMap.reserveCtaHref}
+                onChange={(e) => update('plotMap', { ...content.plotMap!, reserveCtaHref: e.target.value })}
+              />
+            </div>
+          </AdminCard>
         )}
 
         {/* ── FARMER ───────────────────────────────────────── */}
