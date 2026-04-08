@@ -52,7 +52,7 @@ export default async function Home({
         {local.sectionVisibility?.health !== false && <Health content={local.health} />}
         {local.sectionVisibility?.convenience !== false && <Convenience content={local.convenience} />}
         {local.sectionVisibility?.progress !== false && <Progress content={local.progress} />}
-        {local.sectionVisibility?.plotMap !== false && <PlotField content={local.plotMap} fieldConfig={fieldConfig} />}
+        {local.sectionVisibility?.plotMap !== false && local.plotMap && <PlotField content={local.plotMap} fieldConfig={fieldConfig} />}
         {local.sectionVisibility?.farmer !== false && <Farmer content={local.farmer} />}
         {local.sectionVisibility?.seasonal !== false && <Seasonal content={local.seasonal} />}
         {local.sectionVisibility?.trust !== false && <Trust content={local.trust} />}

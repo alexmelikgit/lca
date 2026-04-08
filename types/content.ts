@@ -248,7 +248,7 @@ export interface LocalContent {
   health: HealthContent;
   convenience: ConvenienceContent;
   progress: ProgressContent;
-  plotMap: PlotMapSectionContent;
+  plotMap?: PlotMapSectionContent;
   farmer: FarmerContent;
   seasonal: SeasonalContent;
   trust: TrustContent;
@@ -332,7 +332,7 @@ export interface DiasporaContent {
   ownership: DiasporaOwnershipContent;
   giftMechanic: GiftMechanicContent;
   progress: ProgressContent;
-  plotMap: PlotMapSectionContent;
+  plotMap?: PlotMapSectionContent;
   farmer: FarmerContent;
   seasonal: SeasonalContent;
   trust: TrustContent;

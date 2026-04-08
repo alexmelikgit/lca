@@ -57,7 +57,7 @@ export default async function DiasporaPage({
         {v.ownership !== false && <DiasporaOwnership content={diaspora.ownership} />}
         {v.giftMechanic !== false && <GiftMechanic content={diaspora.giftMechanic} />}
         {v.progress !== false && <Progress content={diaspora.progress} />}
-        {v.plotMap !== false && <PlotField content={diaspora.plotMap} fieldConfig={fieldConfig} />}
+        {v.plotMap !== false && diaspora.plotMap && <PlotField content={diaspora.plotMap} fieldConfig={fieldConfig} />}
         {v.farmer !== false && <Farmer content={diaspora.farmer} />}
         {v.seasonal !== false && <Seasonal content={diaspora.seasonal} />}
         {v.trust !== false && <Trust content={diaspora.trust} />}
