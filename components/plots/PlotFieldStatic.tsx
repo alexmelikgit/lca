@@ -187,6 +187,7 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
             const s = STATUS_STYLES[status];
             const points = cell.pixelCorners.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
             const isActive = activeId === cell.id;
+            const isSelected = selectedId === cell.id;
             return (
               <polygon
                 key={cell.id}
@@ -195,10 +196,10 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
                 data-selected={isActive ? 'true' : undefined}
                 points={points}
                 fill={s.fill}
-                fillOpacity={s.fillOpacity}
-                stroke={s.stroke}
-                strokeWidth="0.7"
-                strokeOpacity={s.strokeOpacity}
+                fillOpacity={isSelected ? 0.55 : s.fillOpacity}
+                stroke={isSelected ? '#FFE066' : s.stroke}
+                strokeWidth={isSelected ? '1.8' : '0.7'}
+                strokeOpacity={isSelected ? 1 : s.strokeOpacity}
                 style={{
                   '--fill-opacity': s.fillOpacity,
                   '--hover-opacity': s.hoverFillOpacity,
@@ -324,7 +325,7 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
                 color: 'var(--gold, #C49A3C)',
                 marginBottom: selectedId ? '12px' : '0',
               }}>
-                {activeCurrency}{activePrice.toLocaleString()}
+                {activeCurrency}{activePrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
               </div>
             )}
 
@@ -395,7 +396,7 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
                 fontFamily: 'var(--font-playfair)', fontWeight: 400,
                 fontSize: '1rem', color: '#C49A3C', whiteSpace: 'nowrap',
               }}>
-                {activeCurrency}{activePrice.toLocaleString()}
+                {activeCurrency}{activePrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
               </span>
             )}
           </div>

@@ -16,7 +16,7 @@
   "imageHeight": 718,
   "plotSizeM2": 2,
   "defaultStatus": "available",
-  "defaultPriceUSD": 4900,
+  "defaultPriceUSD": 21,
   "currency": "USD",
   "plotOverrides": {
     "0-0": { "status": "sold" },
