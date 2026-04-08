@@ -1,19 +1,19 @@
 {
   "fieldCorners": [
-    { "lat": 40.1534, "lng": 44.0381 },
-    { "lat": 40.1534, "lng": 44.0385 },
-    { "lat": 40.1532, "lng": 44.0385 },
-    { "lat": 40.1532, "lng": 44.0381 }
+    { "lat": 40.25260122, "lng": 44.53419455 },
+    { "lat": 40.25267617, "lng": 44.53440019 },
+    { "lat": 40.25254870, "lng": 44.53461399 },
+    { "lat": 40.25243123, "lng": 44.53429019 }
   ],
   "imageBounds": {
-    "minLat": 40.15317,
-    "maxLat": 40.15343,
-    "minLng": 44.03804,
-    "maxLng": 44.03856
+    "minLat": 40.25230909,
+    "maxLat": 40.25280038,
+    "minLng": 44.53403324,
+    "maxLng": 44.53477353
   },
   "imagePath": "/images/field-satellite.jpg",
-  "imageWidth": 1200,
-  "imageHeight": 800,
+  "imageWidth": 276,
+  "imageHeight": 240,
   "plotSizeM2": 2,
   "defaultStatus": "available",
   "defaultPriceUSD": 4900,
