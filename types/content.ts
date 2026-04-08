@@ -190,6 +190,38 @@ export interface DashboardShowcaseContent {
   features: string[];
 }
 
+/* ─── Plot field ─────────────────────────────────────────────── */
+
+export type PlotStatusValue = 'available' | 'sold' | 'reserved';
+
+export interface PlotOverride {
+  status?: PlotStatusValue;
+  priceOverrideUSD?: number;
+  shortDescription?: string;
+}
+
+export interface PlotFieldConfig {
+  fieldCorners: Array<{ lat: number; lng: number }>;
+  /** Bounding box of the satellite image — derived from fieldCorners + padding when image is generated */
+  imageBounds: { minLat: number; maxLat: number; minLng: number; maxLng: number };
+  imagePath: string;
+  imageWidth: number;
+  imageHeight: number;
+  plotSizeM2: number;
+  defaultStatus: PlotStatusValue;
+  defaultPriceUSD: number;
+  currency: string;
+  plotOverrides: Record<string, PlotOverride>;
+}
+
+export interface PlotMapSectionContent {
+  tag: string;
+  heading: string;
+  subtitle: string;
+  reserveCtaText: string;
+  reserveCtaHref: string;
+}
+
 export interface SectionVisibility {
   hero: boolean;
   problem: boolean;
@@ -198,6 +230,7 @@ export interface SectionVisibility {
   health: boolean;
   convenience: boolean;
   progress: boolean;
+  plotMap: boolean;
   farmer: boolean;
   seasonal: boolean;
   trust: boolean;
@@ -215,6 +248,7 @@ export interface LocalContent {
   health: HealthContent;
   convenience: ConvenienceContent;
   progress: ProgressContent;
+  plotMap: PlotMapSectionContent;
   farmer: FarmerContent;
   seasonal: SeasonalContent;
   trust: TrustContent;
@@ -278,6 +312,7 @@ export interface DiasporaSectionVisibility {
   ownership: boolean;
   giftMechanic: boolean;
   progress: boolean;
+  plotMap: boolean;
   farmer: boolean;
   seasonal: boolean;
   trust: boolean;
@@ -297,6 +332,7 @@ export interface DiasporaContent {
   ownership: DiasporaOwnershipContent;
   giftMechanic: GiftMechanicContent;
   progress: ProgressContent;
+  plotMap: PlotMapSectionContent;
   farmer: FarmerContent;
   seasonal: SeasonalContent;
   trust: TrustContent;

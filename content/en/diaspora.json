@@ -14,7 +14,8 @@
     "phaseTwo": true,
     "faq": true,
     "about": true,
-    "ctaFooter": true
+    "ctaFooter": true,
+    "plotMap": true
   },
   "hero": {
     "tag": "For the Armenian diaspora",
@@ -333,6 +334,13 @@
     "paragraph2": "I kept thinking about the gap between the land I was walking on and the people who should feel connected to it — both those living in Armenia and those living far from it. Hyeland is my attempt to close that gap.",
     "paragraph3": "I'm building this publicly, slowly, and honestly. The pre-pilot is how I test whether the idea is real. If you're reading this, you're early — and that matters.",
     "trustText": "Building in public since 2024"
+  },
+  "plotMap": {
+    "tag": "The Field",
+    "heading": "Your plot of Armenian highland",
+    "subtitle": "2 sqm of real soil, yours to own from anywhere in the world. Tap a plot to explore.",
+    "reserveCtaText": "Claim this plot",
+    "reserveCtaHref": "#join"
   },
   "ctaFooter": {
     "tag": "Join the pre-pilot",

@@ -1,0 +1,30 @@
+{
+  "fieldCorners": [
+    { "lat": 40.1534, "lng": 44.0381 },
+    { "lat": 40.1534, "lng": 44.0385 },
+    { "lat": 40.1532, "lng": 44.0385 },
+    { "lat": 40.1532, "lng": 44.0381 }
+  ],
+  "imageBounds": {
+    "minLat": 40.15317,
+    "maxLat": 40.15343,
+    "minLng": 44.03804,
+    "maxLng": 44.03856
+  },
+  "imagePath": "/images/field-satellite.jpg",
+  "imageWidth": 1200,
+  "imageHeight": 800,
+  "plotSizeM2": 2,
+  "defaultStatus": "available",
+  "defaultPriceUSD": 4900,
+  "currency": "USD",
+  "plotOverrides": {
+    "0-0": { "status": "sold" },
+    "0-1": { "status": "sold" },
+    "0-2": { "status": "sold" },
+    "1-0": { "status": "sold" },
+    "1-1": { "status": "reserved", "shortDescription": "Corner plot near the irrigation line" },
+    "2-5": { "status": "reserved" },
+    "3-8": { "status": "sold" }
+  }
+}

@@ -1,4 +1,4 @@
-import { getNavContent, getLocalContent } from '@/lib/content';
+import { getNavContent, getLocalContent, getPlotFieldConfig } from '@/lib/content';
 import type { Locale } from '@/lib/i18n';
 import { LOCALES } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
@@ -16,6 +16,7 @@ import Trust from '@/components/sections/Trust';
 import FAQ from '@/components/sections/FAQ';
 import About from '@/components/sections/About';
 import CTAFooter from '@/components/sections/CTAFooter';
+import PlotField from '@/components/plots/PlotField';
 
 export const revalidate = false;
 
@@ -34,9 +35,10 @@ export default async function Home({
     notFound();
   }
 
-  const [nav, local] = await Promise.all([
+  const [nav, local, fieldConfig] = await Promise.all([
     getNavContent(locale),
     getLocalContent(locale),
+    getPlotFieldConfig(),
   ]);
 
   return (
@@ -50,6 +52,7 @@ export default async function Home({
         {local.sectionVisibility?.health !== false && <Health content={local.health} />}
         {local.sectionVisibility?.convenience !== false && <Convenience content={local.convenience} />}
         {local.sectionVisibility?.progress !== false && <Progress content={local.progress} />}
+        {local.sectionVisibility?.plotMap !== false && <PlotField content={local.plotMap} fieldConfig={fieldConfig} />}
         {local.sectionVisibility?.farmer !== false && <Farmer content={local.farmer} />}
         {local.sectionVisibility?.seasonal !== false && <Seasonal content={local.seasonal} />}
         {local.sectionVisibility?.trust !== false && <Trust content={local.trust} />}

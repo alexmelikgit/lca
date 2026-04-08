@@ -12,7 +12,8 @@
     "trust": true,
     "faq": true,
     "about": true,
-    "ctaFooter": true
+    "ctaFooter": true,
+    "plotMap": true
   },
   "hero": {
     "tag": "For those living in Armenia",
@@ -346,6 +347,13 @@
     "trustText": "Pre-pilot opening spring 2025 · 20 plots · Armavir region",
     "image": "https://zlpkrecnzh3d1psv.public.blob.vercel-storage.com/uploads/1775500295502-p68xjj.jpg",
     "imagePosition": "86% 24%"
+  },
+  "plotMap": {
+    "tag": "The Field",
+    "heading": "Your plot of Armenian highland",
+    "subtitle": "2 sqm of real soil, yours to own. Hover over the map to explore available plots.",
+    "reserveCtaText": "Reserve this plot",
+    "reserveCtaHref": "#join"
   },
   "ctaFooter": {
     "tag": "Join the pre-pilot",

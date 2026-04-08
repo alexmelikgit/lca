@@ -12,7 +12,8 @@
     "trust": true,
     "faq": true,
     "about": true,
-    "ctaFooter": true
+    "ctaFooter": true,
+    "plotMap": true
   },
   "hero": {
     "tag": "Հայաստանում ապրողների համար",
@@ -343,6 +344,13 @@
     "trustText": "Նախնական փուլ՝ 2026 թ. գարուն · 50 հողամաս · Արմավիրի մարզ",
     "image": "https://zlpkrecnzh3d1psv.public.blob.vercel-storage.com/uploads/1775500336172-q1dg0f.jpg",
     "imagePosition": "55% 36%"
+  },
+  "plotMap": {
+    "tag": "Դաշտը",
+    "heading": "Հայկական լեռնաշխարհի ձեր հողատարածքը",
+    "subtitle": "2 քառ.մ իրական հող, ձերը։ Hover արա քարտեզի վրա՝ ազատ հողատարածքները տեսնելու համար։",
+    "reserveCtaText": "Ամրագրել հողատարածքը",
+    "reserveCtaHref": "#join"
   },
   "ctaFooter": {
     "tag": "Միանալ նախնական փուլին",

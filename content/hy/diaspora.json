@@ -14,7 +14,8 @@
     "phaseTwo": true,
     "faq": true,
     "about": true,
-    "ctaFooter": true
+    "ctaFooter": true,
+    "plotMap": true
   },
   "hero": {
     "tag": "Հայ սփյուռքի համար",
@@ -333,6 +334,13 @@
     "paragraph2": "I kept thinking about the gap between the land I was walking on and the people who should feel connected to it — both those living in Armenia and those living far from it. Hyeland is my attempt to close that gap.",
     "paragraph3": "I'm building this publicly, slowly, and honestly. The pre-pilot is how I test whether the idea is real. If you're reading this, you're early — and that matters.",
     "trustText": "Building in public since 2024"
+  },
+  "plotMap": {
+    "tag": "Դաշտը",
+    "heading": "Հայկական լեռնաշխարհի ձեր հողատարածքը",
+    "subtitle": "2 քառ.մ իրական հող, ձերը՝ աշխարհի ցանկացած կետից։ Ընտրիր քո հողատարածքը։",
+    "reserveCtaText": "Ամրագրել հողատարածքը",
+    "reserveCtaHref": "#join"
   },
   "ctaFooter": {
     "tag": "Միացեք նախափուլին",

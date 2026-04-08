@@ -1,4 +1,4 @@
-import { getNavContent, getDiasporaContent } from '@/lib/content';
+import { getNavContent, getDiasporaContent, getPlotFieldConfig } from '@/lib/content';
 import type { Locale } from '@/lib/i18n';
 import { LOCALES } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
@@ -18,6 +18,7 @@ import PhaseTwo from '@/components/sections/diaspora/PhaseTwo';
 import FAQ from '@/components/sections/FAQ';
 import About from '@/components/sections/About';
 import CTAFooter from '@/components/sections/CTAFooter';
+import PlotField from '@/components/plots/PlotField';
 
 export const revalidate = false;
 
@@ -36,9 +37,10 @@ export default async function DiasporaPage({
     notFound();
   }
 
-  const [nav, diaspora] = await Promise.all([
+  const [nav, diaspora, fieldConfig] = await Promise.all([
     getNavContent(locale),
     getDiasporaContent(locale),
+    getPlotFieldConfig(),
   ]);
 
   const v = diaspora.sectionVisibility;
@@ -55,6 +57,7 @@ export default async function DiasporaPage({
         {v.ownership !== false && <DiasporaOwnership content={diaspora.ownership} />}
         {v.giftMechanic !== false && <GiftMechanic content={diaspora.giftMechanic} />}
         {v.progress !== false && <Progress content={diaspora.progress} />}
+        {v.plotMap !== false && <PlotField content={diaspora.plotMap} fieldConfig={fieldConfig} />}
         {v.farmer !== false && <Farmer content={diaspora.farmer} />}
         {v.seasonal !== false && <Seasonal content={diaspora.seasonal} />}
         {v.trust !== false && <Trust content={diaspora.trust} />}
