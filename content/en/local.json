@@ -17,27 +17,18 @@
   },
   "hero": {
     "tag": "For those living in Armenia",
-    "h1Line1": "You know exactly",
-    "h1Line2": "what you're eating.",
-    "h1Italic": "Own a piece of the Highland.",
-    "subtitle": "Own a small, real farming plot outside Yerevan. A farmer tends it for you. Your crops come to your door weekly — 1 to 2 kg at a time, as they ripen. You track everything on your own dashboard.",
+    "h1Line1": "Know what",
+    "h1Line2": "you eat.",
+    "h1Italic": "Grown on your land.",
+    "subtitle": "Own a real farming plot outside Yerevan.\nA farmer tends it for you.\nHarvest comes to your door weekly.",
     "primaryCtaLabel": "Join the pre-pilot",
     "primaryCtaHref": "#join",
     "secondaryCtaLabel": "See how it works",
     "secondaryCtaHref": "#how-it-works",
     "stats": [
-      {
-        "value": "101%",
-        "label": "Traceable"
-      },
-      {
-        "value": "Weekly",
-        "label": "Deliveries"
-      },
-      {
-        "value": "Real",
-        "label": "Your plot"
-      }
+      { "value": "2 m²", "label": "Your plot" },
+      { "value": "Weekly", "label": "Deliveries" },
+      { "value": "Real", "label": "Farmer assigned" }
     ]
   },
   "problem": {
