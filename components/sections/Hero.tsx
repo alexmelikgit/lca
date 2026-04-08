@@ -24,13 +24,13 @@ export default function Hero({ content }: Props) {
   return (
     <section style={{ background: 'var(--cream)', minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: '64px' }}>
       <div style={{
-        maxWidth: '1100px',
+        maxWidth: '1280px',
         margin: '0 auto',
         width: '100%',
-        padding: '60px 24px 80px',
+        padding: '72px 40px 96px',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))',
-        gap: '40px 56px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))',
+        gap: '48px 72px',
         alignItems: 'center',
       }}>
 
@@ -48,11 +48,11 @@ export default function Hero({ content }: Props) {
             style={{
               fontFamily: 'var(--font-playfair)',
               fontWeight: 400,
-              fontSize: 'clamp(1.6rem, 2.8vw, 1.85rem)',
-              lineHeight: 1.28,
+              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
+              lineHeight: 1.22,
               color: 'var(--ink)',
-              margin: '0 0 8px',
-              maxWidth: '260px',
+              margin: '0 0 10px',
+              maxWidth: '320px',
             }}
           >
             {content.h1Line1}<br />
@@ -68,9 +68,9 @@ export default function Hero({ content }: Props) {
               fontFamily: 'var(--font-playfair)',
               fontWeight: 300,
               fontStyle: 'italic',
-              fontSize: '0.9rem',
+              fontSize: '1.05rem',
               color: 'var(--green)',
-              margin: '0 0 24px',
+              margin: '0 0 28px',
             }}
           >
             {content.h1Italic}
@@ -84,11 +84,11 @@ export default function Hero({ content }: Props) {
             style={{
               fontFamily: 'var(--font-lato)',
               fontWeight: 300,
-              fontSize: '0.78rem',
-              lineHeight: 1.8,
+              fontSize: '0.9rem',
+              lineHeight: 1.85,
               color: 'var(--ink2)',
-              margin: '0 0 32px',
-              maxWidth: '240px',
+              margin: '0 0 36px',
+              maxWidth: '300px',
             }}
           >
             {bodyLines.map((line, i) => (
@@ -101,7 +101,7 @@ export default function Hero({ content }: Props) {
             animate="visible"
             custom={0.34}
             variants={fadeUp}
-            style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', marginBottom: '40px' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap', marginBottom: '48px' }}
           >
             <a
               href={content.primaryCtaHref}
@@ -109,12 +109,12 @@ export default function Hero({ content }: Props) {
                 display: 'inline-block',
                 fontFamily: 'var(--font-lato)',
                 fontWeight: 600,
-                fontSize: '0.65rem',
+                fontSize: '0.72rem',
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
                 color: 'white',
                 background: 'var(--green-deep)',
-                padding: '10px 22px',
+                padding: '12px 26px',
                 borderRadius: '100px',
                 textDecoration: 'none',
                 whiteSpace: 'nowrap',
@@ -128,7 +128,7 @@ export default function Hero({ content }: Props) {
               style={{
                 fontFamily: 'var(--font-lato)',
                 fontWeight: 400,
-                fontSize: '0.78rem',
+                fontSize: '0.88rem',
                 color: 'var(--green)',
                 textDecoration: 'underline',
                 textUnderlineOffset: '3px',
@@ -185,7 +185,7 @@ export default function Hero({ content }: Props) {
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-          style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', minHeight: '400px' }}
+          style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', minHeight: '480px' }}
         >
           {/* BG1: soft landscape SVG */}
           <svg
@@ -242,7 +242,7 @@ export default function Hero({ content }: Props) {
             justifyContent: 'center',
           }}>
             <div style={{
-              width: '220px',
+              width: '260px',
               background: 'white',
               borderRadius: '14px',
               boxShadow: '0 12px 40px rgba(0,0,0,0.13)',
@@ -253,36 +253,36 @@ export default function Hero({ content }: Props) {
               {/* Card header */}
               <div style={{ background: '#2D5A27', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '3px' }}>Your plot</div>
-                  <div style={{ color: 'white', fontSize: '13px', fontWeight: 600 }}>Plot 7 — Armavir</div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '3px' }}>Your plot</div>
+                  <div style={{ color: 'white', fontSize: '14px', fontWeight: 600 }}>Plot 7 — Armavir</div>
                 </div>
-                <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: '20px', padding: '3px 9px', color: '#A8D4A0', fontSize: '10px', whiteSpace: 'nowrap' }}>Growing 🌱</div>
+                <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: '20px', padding: '4px 10px', color: '#A8D4A0', fontSize: '11px', whiteSpace: 'nowrap' }}>Growing 🌱</div>
               </div>
               {/* Growth stage */}
               <div style={{ padding: '12px 16px', borderBottom: '1px solid #F0EBE0' }}>
-                <div style={{ color: '#9B9B82', fontSize: '8px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '5px' }}>Growth stage</div>
-                <div style={{ background: '#E8F5E4', borderRadius: '4px', height: '5px', marginBottom: '4px' }}>
+                <div style={{ color: '#9B9B82', fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>Growth stage</div>
+                <div style={{ background: '#E8F5E4', borderRadius: '4px', height: '6px', marginBottom: '5px' }}>
                   <div style={{ background: '#3D7A35', width: '62%', height: '100%', borderRadius: '4px' }} />
                 </div>
-                <div style={{ color: '#3D7A35', fontSize: '9px', fontWeight: 600 }}>Flowering · 62%</div>
+                <div style={{ color: '#3D7A35', fontSize: '10px', fontWeight: 600 }}>Flowering · 62%</div>
               </div>
               {/* Crops + size */}
               <div style={{ padding: '10px 16px', borderBottom: '1px solid #F0EBE0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                 <div>
-                  <div style={{ color: '#9B9B82', fontSize: '8px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '3px' }}>Crops</div>
-                  <div style={{ fontSize: '10px', color: '#1A1A14', fontWeight: 500 }}>Tomatoes · Herbs</div>
+                  <div style={{ color: '#9B9B82', fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '3px' }}>Crops</div>
+                  <div style={{ fontSize: '11px', color: '#1A1A14', fontWeight: 500 }}>Tomatoes · Herbs</div>
                 </div>
                 <div>
-                  <div style={{ color: '#9B9B82', fontSize: '8px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '3px' }}>Plot size</div>
-                  <div style={{ fontSize: '10px', color: '#1A1A14', fontWeight: 500 }}>2 m²</div>
+                  <div style={{ color: '#9B9B82', fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '3px' }}>Plot size</div>
+                  <div style={{ fontSize: '11px', color: '#1A1A14', fontWeight: 500 }}>2 m²</div>
                 </div>
               </div>
               {/* Next delivery */}
               <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{ width: '30px', height: '30px', background: '#FBF3DC', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', flexShrink: 0 }}>📦</div>
                 <div>
-                  <div style={{ color: '#9B9B82', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Next delivery</div>
-                  <div style={{ color: '#1A1A14', fontSize: '10px', fontWeight: 500 }}>Thursday · ~1.5 kg</div>
+                  <div style={{ color: '#9B9B82', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Next delivery</div>
+                  <div style={{ color: '#1A1A14', fontSize: '11px', fontWeight: 500 }}>Thursday · ~1.5 kg</div>
                 </div>
               </div>
             </div>
