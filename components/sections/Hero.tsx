@@ -1,28 +1,17 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import ArmenianLandscape from '@/components/ui/ArmenianLandscape';
-import DashboardCard from '@/components/ui/DashboardCard';
 import SectionTag from '@/components/ui/SectionTag';
 import { EASE } from '@/lib/animations';
 import type { HeroContent } from '@/types/content';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 24 },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: EASE, delay },
+    transition: { duration: 0.65, ease: EASE, delay },
   }),
-};
-
-const DEMO_CARD = {
-  plotName: 'Plot 7 — Armavir',
-  status: 'Growing 🌱',
-  crops: ['Tomatoes', 'Cucumbers'],
-  stats: { plotSize: '2 m²', seasonWeek: 'Week 14', estimatedYield: '~4 kg', harvestDate: 'Aug 12' },
-  progress: { label: 'Flowering', percentage: 62 },
-  nextDelivery: { day: 'Thursday', description: '~1.5 kg tomatoes' },
 };
 
 interface Props {
@@ -30,21 +19,24 @@ interface Props {
 }
 
 export default function Hero({ content }: Props) {
+  const bodyLines = content.subtitle.split('\n');
+
   return (
     <section style={{ background: 'var(--cream)', minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: '64px' }}>
       <div style={{
-        maxWidth: '1280px',
+        maxWidth: '1100px',
         margin: '0 auto',
         width: '100%',
         padding: '60px 24px 80px',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))',
-        gap: '48px 64px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))',
+        gap: '40px 56px',
         alignItems: 'center',
       }}>
-        {/* Left column */}
+
+        {/* ── Left column ── */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp} style={{ marginBottom: '28px' }}>
+          <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp} style={{ marginBottom: '20px' }}>
             <SectionTag variant="green">{content.tag}</SectionTag>
           </motion.div>
 
@@ -55,34 +47,53 @@ export default function Hero({ content }: Props) {
             variants={fadeUp}
             style={{
               fontFamily: 'var(--font-playfair)',
-              fontWeight: 300,
-              fontSize: 'clamp(2.6rem, 4.5vw, 4.2rem)',
-              lineHeight: 1.15,
+              fontWeight: 400,
+              fontSize: 'clamp(1.6rem, 2.8vw, 1.85rem)',
+              lineHeight: 1.28,
               color: 'var(--ink)',
-              margin: '0 0 28px',
+              margin: '0 0 8px',
+              maxWidth: '260px',
             }}
           >
             {content.h1Line1}<br />
-            {content.h1Line2}<br />
-            <em style={{ color: 'var(--green)', fontStyle: 'italic' }}>{content.h1Italic}</em>
+            {content.h1Line2}
           </motion.h1>
 
           <motion.p
             initial="hidden"
             animate="visible"
-            custom={0.22}
+            custom={0.18}
+            variants={fadeUp}
+            style={{
+              fontFamily: 'var(--font-playfair)',
+              fontWeight: 300,
+              fontStyle: 'italic',
+              fontSize: '0.9rem',
+              color: 'var(--green)',
+              margin: '0 0 24px',
+            }}
+          >
+            {content.h1Italic}
+          </motion.p>
+
+          <motion.p
+            initial="hidden"
+            animate="visible"
+            custom={0.26}
             variants={fadeUp}
             style={{
               fontFamily: 'var(--font-lato)',
               fontWeight: 300,
-              fontSize: '1.05rem',
-              lineHeight: 1.85,
+              fontSize: '0.78rem',
+              lineHeight: 1.8,
               color: 'var(--ink2)',
-              margin: '0 0 36px',
-              maxWidth: '460px',
+              margin: '0 0 32px',
+              maxWidth: '240px',
             }}
           >
-            {content.subtitle}
+            {bodyLines.map((line, i) => (
+              <span key={i}>{line}{i < bodyLines.length - 1 && <br />}</span>
+            ))}
           </motion.p>
 
           <motion.div
@@ -90,44 +101,37 @@ export default function Hero({ content }: Props) {
             animate="visible"
             custom={0.34}
             variants={fadeUp}
-            style={{ display: 'flex', alignItems: 'center', gap: '28px', flexWrap: 'wrap', marginBottom: '48px' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', marginBottom: '40px' }}
           >
             <a
               href={content.primaryCtaHref}
-              className="btn-primary"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
+                display: 'inline-block',
                 fontFamily: 'var(--font-lato)',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                letterSpacing: '0.08em',
+                fontWeight: 600,
+                fontSize: '0.65rem',
+                letterSpacing: '0.1em',
                 textTransform: 'uppercase',
                 color: 'white',
                 background: 'var(--green-deep)',
-                padding: '14px 32px',
+                padding: '10px 22px',
                 borderRadius: '100px',
                 textDecoration: 'none',
-                boxShadow: '0 4px 20px rgba(45,90,39,0.25)',
+                whiteSpace: 'nowrap',
               }}
             >
               {content.primaryCtaLabel}
-              <span style={{ fontSize: '1rem' }}>→</span>
             </a>
 
             <a
               href={content.secondaryCtaHref}
-              className="btn-ghost"
               style={{
                 fontFamily: 'var(--font-lato)',
                 fontWeight: 400,
-                fontSize: '0.9rem',
-                color: 'var(--ink2)',
-                textDecoration: 'none',
-                borderBottom: '1px solid var(--ink3)',
-                paddingBottom: '2px',
-                letterSpacing: '0.02em',
+                fontSize: '0.78rem',
+                color: 'var(--green)',
+                textDecoration: 'underline',
+                textUnderlineOffset: '3px',
               }}
             >
               {content.secondaryCtaLabel}
@@ -137,87 +141,154 @@ export default function Hero({ content }: Props) {
           <motion.div
             initial="hidden"
             animate="visible"
-            custom={0.46}
+            custom={0.44}
             variants={fadeUp}
-            style={{ display: 'flex', borderTop: '1px solid rgba(168,212,160,0.35)', paddingTop: '24px' }}
+            style={{ display: 'flex', borderTop: '1px solid rgba(0,0,0,0.07)', paddingTop: '24px' }}
           >
             {content.stats.map((stat, i) => (
               <div
                 key={stat.label}
                 style={{
                   flex: 1,
-                  paddingRight: i < content.stats.length - 1 ? '24px' : '0',
-                  marginRight: i < content.stats.length - 1 ? '24px' : '0',
-                  borderRight: i < content.stats.length - 1 ? '1px solid rgba(168,212,160,0.35)' : 'none',
+                  paddingRight: i < content.stats.length - 1 ? '20px' : '0',
+                  paddingLeft: i > 0 ? '20px' : '0',
+                  borderLeft: i > 0 ? '1px solid rgba(0,0,0,0.08)' : 'none',
                 }}
               >
-                <div style={{
+                <span style={{
+                  display: 'block',
                   fontFamily: 'var(--font-playfair)',
                   fontWeight: 400,
-                  fontSize: '1.35rem',
+                  fontSize: '1.15rem',
                   color: 'var(--green-deep)',
-                  lineHeight: 1,
-                  marginBottom: '4px',
+                  marginBottom: '2px',
                 }}>
                   {stat.value}
-                </div>
-                <div style={{
+                </span>
+                <span style={{
                   fontFamily: 'var(--font-lato)',
-                  fontWeight: 700,
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.14em',
+                  fontWeight: 400,
+                  fontSize: '0.58rem',
+                  letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   color: 'var(--ink3)',
                 }}>
                   {stat.label}
-                </div>
+                </span>
               </div>
             ))}
           </motion.div>
         </div>
 
-        {/* Right column */}
+        {/* ── Right column ── */}
         <motion.div
-          initial={{ opacity: 0, x: 48 }}
+          initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
-          style={{ position: 'relative' }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
+          style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', minHeight: '400px' }}
         >
-          <div style={{
-            position: 'relative',
-            borderRadius: '20px',
-            overflow: 'hidden',
-            background: 'radial-gradient(ellipse at 40% 60%, var(--green-pale), var(--cream))',
-            boxShadow: '0 24px 80px rgba(45,90,39,0.14), 0 4px 16px rgba(45,90,39,0.08)',
-            aspectRatio: '4/3',
-          }}>
-            <ArmenianLandscape width="100%" height="100%" style={{ display: 'block' }} />
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20, rotate: -1 }}
-            animate={{ opacity: 1, y: 0, rotate: -2.5 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
-            style={{ position: 'absolute', bottom: '-20px', right: '-16px', zIndex: 10 }}
+          {/* BG1: soft landscape SVG */}
+          <svg
+            viewBox="0 0 500 420"
+            preserveAspectRatio="xMidYMid slice"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+            aria-hidden="true"
           >
-            <DashboardCard
-              {...DEMO_CARD}
-              style={{ boxShadow: '0 20px 60px rgba(26,26,20,0.18), 0 4px 16px rgba(26,26,20,0.1)' } as React.CSSProperties}
-            />
-          </motion.div>
+            <rect width="500" height="420" fill="#EEF4E8" />
+            {/* Far mountains */}
+            <polygon points="0,240 80,185 160,210 240,168 320,205 400,172 500,192 500,275 0,275" fill="#C8D8BC" opacity="0.55" />
+            {/* Near mountains */}
+            <polygon points="0,258 60,222 130,242 210,206 290,235 380,212 500,228 500,305 0,305" fill="#B4C8A4" opacity="0.65" />
+            {/* Field ground */}
+            <rect x="0" y="292" width="500" height="128" fill="#C4DCAA" opacity="0.75" />
+            {/* Field row lines */}
+            <g stroke="#A0C080" strokeWidth="0.9" opacity="0.55">
+              <line x1="0" y1="308" x2="500" y2="308" />
+              <line x1="0" y1="322" x2="500" y2="322" />
+              <line x1="0" y1="336" x2="500" y2="336" />
+              <line x1="0" y1="350" x2="500" y2="350" />
+              <line x1="0" y1="364" x2="500" y2="364" />
+              <line x1="0" y1="378" x2="500" y2="378" />
+              <line x1="0" y1="392" x2="500" y2="392" />
+              <line x1="0" y1="406" x2="500" y2="406" />
+            </g>
+            {/* Trees left */}
+            <ellipse cx="55" cy="278" rx="22" ry="30" fill="#6B9E5A" opacity="0.65" />
+            <ellipse cx="72" cy="284" rx="16" ry="22" fill="#5A8A4A" opacity="0.55" />
+            {/* Trees right */}
+            <ellipse cx="445" cy="275" rx="20" ry="26" fill="#6B9E5A" opacity="0.6" />
+            {/* Sun glow */}
+            <circle cx="420" cy="65" r="50" fill="#FFF8E8" opacity="0.5" />
+            <circle cx="420" cy="65" r="28" fill="#F5E8C0" opacity="0.4" />
+            {/* Vignette */}
+            <defs>
+              <radialGradient id="heroVg" cx="50%" cy="50%" r="75%">
+                <stop offset="30%" stopColor="transparent" />
+                <stop offset="100%" stopColor="#E8F0E0" stopOpacity="0.55" />
+              </radialGradient>
+            </defs>
+            <rect width="500" height="420" fill="url(#heroVg)" />
+            {/* Horizon line */}
+            <line x1="0" y1="292" x2="500" y2="292" stroke="#B0C898" strokeWidth="0.8" opacity="0.5" />
+          </svg>
 
-          <div style={{ position: 'absolute', top: '-12px', left: '24px', display: 'flex', gap: '6px' }}>
-            {[12, 8, 5].map((size, i) => (
-              <div key={i} style={{
-                width: size,
-                height: size,
-                borderRadius: '50%',
-                background: 'var(--gold)',
-                opacity: 0.6 - i * 0.12,
-              }} />
-            ))}
+          {/* Floating dashboard card */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <div style={{
+              width: '220px',
+              background: 'white',
+              borderRadius: '14px',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.13)',
+              overflow: 'hidden',
+              fontFamily: 'var(--font-lato), sans-serif',
+              transform: 'rotate(-1deg)',
+            }}>
+              {/* Card header */}
+              <div style={{ background: '#2D5A27', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '3px' }}>Your plot</div>
+                  <div style={{ color: 'white', fontSize: '13px', fontWeight: 600 }}>Plot 7 — Armavir</div>
+                </div>
+                <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: '20px', padding: '3px 9px', color: '#A8D4A0', fontSize: '10px', whiteSpace: 'nowrap' }}>Growing 🌱</div>
+              </div>
+              {/* Growth stage */}
+              <div style={{ padding: '12px 16px', borderBottom: '1px solid #F0EBE0' }}>
+                <div style={{ color: '#9B9B82', fontSize: '8px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '5px' }}>Growth stage</div>
+                <div style={{ background: '#E8F5E4', borderRadius: '4px', height: '5px', marginBottom: '4px' }}>
+                  <div style={{ background: '#3D7A35', width: '62%', height: '100%', borderRadius: '4px' }} />
+                </div>
+                <div style={{ color: '#3D7A35', fontSize: '9px', fontWeight: 600 }}>Flowering · 62%</div>
+              </div>
+              {/* Crops + size */}
+              <div style={{ padding: '10px 16px', borderBottom: '1px solid #F0EBE0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <div>
+                  <div style={{ color: '#9B9B82', fontSize: '8px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '3px' }}>Crops</div>
+                  <div style={{ fontSize: '10px', color: '#1A1A14', fontWeight: 500 }}>Tomatoes · Herbs</div>
+                </div>
+                <div>
+                  <div style={{ color: '#9B9B82', fontSize: '8px', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '3px' }}>Plot size</div>
+                  <div style={{ fontSize: '10px', color: '#1A1A14', fontWeight: 500 }}>2 m²</div>
+                </div>
+              </div>
+              {/* Next delivery */}
+              <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '30px', height: '30px', background: '#FBF3DC', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', flexShrink: 0 }}>📦</div>
+                <div>
+                  <div style={{ color: '#9B9B82', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Next delivery</div>
+                  <div style={{ color: '#1A1A14', fontSize: '10px', fontWeight: 500 }}>Thursday · ~1.5 kg</div>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
+
       </div>
     </section>
   );
