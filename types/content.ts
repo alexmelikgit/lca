@@ -194,6 +194,11 @@ export interface DashboardShowcaseContent {
 
 export type PlotStatusValue = 'available' | 'sold' | 'reserved';
 
+export interface DiscountTier {
+  minPlots: number;
+  percent: number;
+}
+
 export interface PlotOverride {
   status?: PlotStatusValue;
   priceOverrideUSD?: number;
@@ -211,6 +216,7 @@ export interface PlotFieldConfig {
   defaultStatus: PlotStatusValue;
   defaultPriceUSD: number;
   currency: string;
+  discountTiers?: DiscountTier[];
   plotOverrides: Record<string, PlotOverride>;
 }
 

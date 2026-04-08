@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useMemo } from 'react';
-import type { PlotFieldConfig, PlotStatusValue } from '@/types/content';
+import type { PlotFieldConfig, PlotStatusValue, DiscountTier } from '@/types/content';
 import { generatePlotGrid } from '@/lib/plot-grid';
 import { projectToPixel } from '@/lib/plot-projection';
 
@@ -56,6 +56,15 @@ function getPlotStatus(id: string, config: PlotFieldConfig): PlotStatusValue {
 function getPlotPrice(id: string, config: PlotFieldConfig): number {
   const override = config.plotOverrides[id];
   return override?.priceOverrideUSD ?? config.defaultPriceUSD;
+}
+
+function getDiscountPercent(count: number, tiers?: DiscountTier[]): number {
+  if (!tiers || count < 2) return 0;
+  let best = 0;
+  for (const t of tiers) {
+    if (count >= t.minPlots && t.percent > best) best = t.percent;
+  }
+  return best;
 }
 
 export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCtaHref }: Props) {
@@ -121,6 +130,10 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
     () => selectionArray.every((id) => getPlotStatus(id, fieldConfig) === 'available'),
     [selectionArray, fieldConfig],
   );
+
+  const discountPercent = getDiscountPercent(selectionCount, fieldConfig.discountTiers);
+  const discountedTotal = Math.round(totalPrice * (1 - discountPercent / 100) * 100) / 100;
+  const savings = Math.round((totalPrice - discountedTotal) * 100) / 100;
 
   return (
     <div style={{ position: 'relative', width: '100%' }}>
@@ -314,9 +327,23 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
                   </div>
                   <div style={{ borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '16px' }}>
                     <div style={{ fontFamily: 'var(--font-lato)', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '2px' }}>Total</div>
-                    <div style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1.1rem', color: '#C49A3C' }}>
-                      {activeCurrency}{totalPrice.toLocaleString()}<span style={{ fontSize: '0.65em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
-                    </div>
+                    {discountPercent > 0 ? (
+                      <div>
+                        <span style={{ fontFamily: 'var(--font-lato)', fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)', textDecoration: 'line-through', marginRight: '5px' }}>
+                          {activeCurrency}{totalPrice}
+                        </span>
+                        <span style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1.1rem', color: '#C49A3C' }}>
+                          {activeCurrency}{discountedTotal.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<span style={{ fontSize: '0.65em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
+                        </span>
+                        <div style={{ marginTop: '3px', fontFamily: 'var(--font-lato)', fontSize: '0.6rem', color: '#A8D4A0', letterSpacing: '0.06em' }}>
+                          −{discountPercent}% · save {activeCurrency}{savings.toFixed(2)}/mo
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1.1rem', color: '#C49A3C' }}>
+                        {activeCurrency}{totalPrice.toLocaleString()}<span style={{ fontSize: '0.65em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -414,9 +441,23 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
             <span style={{ fontFamily: 'var(--font-lato)', fontWeight: 600, fontSize: '0.82rem', color: 'white', whiteSpace: 'nowrap' }}>
               {selectionCount} plot{selectionCount > 1 ? 's' : ''} · {totalArea} m²
             </span>
-            <span style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1rem', color: '#C49A3C', whiteSpace: 'nowrap' }}>
-              {activeCurrency}{totalPrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
-            </span>
+            {discountPercent > 0 ? (
+              <>
+                <span style={{ fontFamily: 'var(--font-lato)', fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', textDecoration: 'line-through', whiteSpace: 'nowrap' }}>
+                  {activeCurrency}{totalPrice}
+                </span>
+                <span style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1rem', color: '#C49A3C', whiteSpace: 'nowrap' }}>
+                  {activeCurrency}{discountedTotal.toFixed(2)}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
+                </span>
+                <span style={{ fontFamily: 'var(--font-lato)', fontSize: '0.65rem', color: '#A8D4A0', whiteSpace: 'nowrap' }}>
+                  −{discountPercent}%
+                </span>
+              </>
+            ) : (
+              <span style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1rem', color: '#C49A3C', whiteSpace: 'nowrap' }}>
+                {activeCurrency}{totalPrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
+              </span>
+            )}
           </div>
           {allSelectedAvailable && (
             <a

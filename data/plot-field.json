@@ -18,6 +18,11 @@
   "defaultStatus": "available",
   "defaultPriceUSD": 21,
   "currency": "USD",
+  "discountTiers": [
+    { "minPlots": 2, "percent": 5 },
+    { "minPlots": 3, "percent": 10 },
+    { "minPlots": 4, "percent": 15 }
+  ],
   "plotOverrides": {
     "0-0": { "status": "sold" },
     "0-1": { "status": "sold" },
