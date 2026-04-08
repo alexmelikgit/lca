@@ -60,9 +60,9 @@ function getPlotPrice(id: string, config: PlotFieldConfig): number {
 
 export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCtaHref }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
-  const activeId = selectedId ?? hoveredId;
+  const activeId = hoveredId;
 
   // Generate plot grid once (expensive math, memoized)
   const plotCells = useMemo(
@@ -96,13 +96,31 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
   const handleClick = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     const target = (e.target as SVGElement).closest<SVGElement>('[data-id]');
     const id = target?.dataset.id ?? null;
-    setSelectedId((prev) => (prev === id ? null : id));
+    if (!id) return;
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
   }, []);
 
   const activeStatus = activeId ? getPlotStatus(activeId, fieldConfig) : null;
   const activePrice = activeId ? getPlotPrice(activeId, fieldConfig) : null;
   const activeDesc = activeId ? fieldConfig.plotOverrides[activeId]?.shortDescription ?? null : null;
   const activeCurrency = fieldConfig.currency === 'USD' ? '$' : fieldConfig.currency;
+
+  // Multi-selection totals
+  const selectionArray = useMemo(() => Array.from(selectedIds), [selectedIds]);
+  const selectionCount = selectionArray.length;
+  const totalArea = selectionCount * fieldConfig.plotSizeM2;
+  const totalPrice = useMemo(
+    () => selectionArray.reduce((sum, id) => sum + getPlotPrice(id, fieldConfig), 0),
+    [selectionArray, fieldConfig],
+  );
+  const allSelectedAvailable = useMemo(
+    () => selectionArray.every((id) => getPlotStatus(id, fieldConfig) === 'available'),
+    [selectionArray, fieldConfig],
+  );
 
   return (
     <div style={{ position: 'relative', width: '100%' }}>
@@ -186,14 +204,13 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
             const status = getPlotStatus(cell.id, fieldConfig);
             const s = STATUS_STYLES[status];
             const points = cell.pixelCorners.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
-            const isActive = activeId === cell.id;
-            const isSelected = selectedId === cell.id;
+            const isSelected = selectedIds.has(cell.id);
             return (
               <polygon
                 key={cell.id}
                 className="plot-poly"
                 data-id={cell.id}
-                data-selected={isActive ? 'true' : undefined}
+                data-selected={isSelected ? 'true' : undefined}
                 points={points}
                 fill={s.fill}
                 fillOpacity={isSelected ? 0.55 : s.fillOpacity}
@@ -254,7 +271,7 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
         </div>
 
         {/* Info panel — desktop overlay (hidden on mobile via CSS) */}
-        {activeId && activeStatus && (
+        {(selectionCount > 0 || (activeId && activeStatus)) && (
           <div
             className="plot-info-overlay"
             style={{
@@ -269,103 +286,116 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
               padding: '14px 18px',
               zIndex: 10,
               minWidth: '200px',
-              maxWidth: '260px',
-              pointerEvents: selectedId ? 'auto' : 'none',
+              maxWidth: '280px',
+              pointerEvents: selectionCount > 0 ? 'auto' : 'none',
             }}
           >
-            <div style={{
-              fontFamily: 'var(--font-lato)',
-              fontWeight: 700,
-              fontSize: '0.65rem',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.38)',
-              marginBottom: '8px',
-            }}>
-              Plot {activeId}
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: activePrice && activeStatus === 'available' ? '10px' : '0' }}>
-              <span style={{
-                width: '7px',
-                height: '7px',
-                borderRadius: '50%',
-                background: STATUS_STYLES[activeStatus].stroke,
-                flexShrink: 0,
-                display: 'block',
-              }} />
-              <span style={{
-                fontFamily: 'var(--font-lato)',
-                fontWeight: 600,
-                fontSize: '0.85rem',
-                color: 'white',
-              }}>
-                {STATUS_LABELS[activeStatus]}
-              </span>
-            </div>
-
-            {activeDesc && (
-              <p style={{
-                fontFamily: 'var(--font-lato)',
-                fontWeight: 300,
-                fontSize: '0.78rem',
-                color: 'rgba(255,255,255,0.55)',
-                lineHeight: 1.6,
-                margin: '6px 0 10px',
-              }}>
-                {activeDesc}
-              </p>
-            )}
-
-            {activeStatus === 'available' && activePrice !== null && (
-              <div style={{
-                fontFamily: 'var(--font-playfair)',
-                fontWeight: 400,
-                fontSize: '1.15rem',
-                color: 'var(--gold, #C49A3C)',
-                marginBottom: selectedId ? '12px' : '0',
-              }}>
-                {activeCurrency}{activePrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
-              </div>
-            )}
-
-            {/* CTA — only shown when plot is tap-selected (persistent), not just hovered */}
-            {selectedId && activeStatus === 'available' && (
-              <a
-                href={reserveCtaHref}
-                style={{
-                  display: 'inline-block',
+            {selectionCount > 0 ? (
+              /* ── Multi-selection totals ── */
+              <>
+                <div style={{
                   fontFamily: 'var(--font-lato)',
                   fontWeight: 700,
-                  fontSize: '0.72rem',
-                  letterSpacing: '0.1em',
+                  fontSize: '0.65rem',
+                  letterSpacing: '0.18em',
                   textTransform: 'uppercase',
-                  color: '#C49A3C',
-                  border: '1px solid rgba(196,154,60,0.45)',
-                  borderRadius: '100px',
-                  padding: '7px 16px',
-                  textDecoration: 'none',
-                  whiteSpace: 'nowrap',
-                  transition: 'background 0.15s ease, border-color 0.15s ease',
-                }}
-                onMouseEnter={(e) => {
-                  (e.target as HTMLAnchorElement).style.background = 'rgba(196,154,60,0.12)';
-                  (e.target as HTMLAnchorElement).style.borderColor = 'rgba(196,154,60,0.7)';
-                }}
-                onMouseLeave={(e) => {
-                  (e.target as HTMLAnchorElement).style.background = 'transparent';
-                  (e.target as HTMLAnchorElement).style.borderColor = 'rgba(196,154,60,0.45)';
-                }}
-              >
-                {reserveCtaText} →
-              </a>
+                  color: 'rgba(255,255,255,0.38)',
+                  marginBottom: '10px',
+                }}>
+                  {selectionCount} plot{selectionCount > 1 ? 's' : ''} selected
+                </div>
+
+                <div style={{ display: 'flex', gap: '16px', marginBottom: '12px' }}>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-lato)', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '2px' }}>Area</div>
+                    <div style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1.1rem', color: 'white' }}>
+                      {totalArea} m²
+                    </div>
+                  </div>
+                  <div style={{ borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '16px' }}>
+                    <div style={{ fontFamily: 'var(--font-lato)', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '2px' }}>Total</div>
+                    <div style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1.1rem', color: '#C49A3C' }}>
+                      {activeCurrency}{totalPrice.toLocaleString()}<span style={{ fontSize: '0.65em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
+                    </div>
+                  </div>
+                </div>
+
+                {allSelectedAvailable && (
+                  <a
+                    href={reserveCtaHref}
+                    style={{
+                      display: 'inline-block',
+                      fontFamily: 'var(--font-lato)',
+                      fontWeight: 700,
+                      fontSize: '0.72rem',
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      color: '#C49A3C',
+                      border: '1px solid rgba(196,154,60,0.45)',
+                      borderRadius: '100px',
+                      padding: '7px 16px',
+                      textDecoration: 'none',
+                      whiteSpace: 'nowrap',
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.target as HTMLAnchorElement).style.background = 'rgba(196,154,60,0.12)';
+                      (e.target as HTMLAnchorElement).style.borderColor = 'rgba(196,154,60,0.7)';
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.target as HTMLAnchorElement).style.background = 'transparent';
+                      (e.target as HTMLAnchorElement).style.borderColor = 'rgba(196,154,60,0.45)';
+                    }}
+                  >
+                    {reserveCtaText} →
+                  </a>
+                )}
+              </>
+            ) : (
+              /* ── Single plot hover preview ── */
+              activeId && activeStatus && (
+                <>
+                  <div style={{
+                    fontFamily: 'var(--font-lato)',
+                    fontWeight: 700,
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.38)',
+                    marginBottom: '8px',
+                  }}>
+                    Plot {activeId}
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: activePrice && activeStatus === 'available' ? '10px' : '0' }}>
+                    <span style={{
+                      width: '7px', height: '7px', borderRadius: '50%',
+                      background: STATUS_STYLES[activeStatus].stroke, flexShrink: 0, display: 'block',
+                    }} />
+                    <span style={{ fontFamily: 'var(--font-lato)', fontWeight: 600, fontSize: '0.85rem', color: 'white' }}>
+                      {STATUS_LABELS[activeStatus]}
+                    </span>
+                  </div>
+
+                  {activeDesc && (
+                    <p style={{ fontFamily: 'var(--font-lato)', fontWeight: 300, fontSize: '0.78rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, margin: '6px 0 10px' }}>
+                      {activeDesc}
+                    </p>
+                  )}
+
+                  {activeStatus === 'available' && activePrice !== null && (
+                    <div style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1.15rem', color: '#C49A3C' }}>
+                      {activeCurrency}{activePrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
+                    </div>
+                  )}
+                </>
+              )
             )}
           </div>
         )}
       </div>
 
       {/* Mobile info bar — shown below the map on small screens */}
-      {selectedId && activeStatus && (
+      {selectionCount > 0 && (
         <div
           className="plot-info-mobile"
           style={{
@@ -380,27 +410,15 @@ export default function PlotFieldStatic({ fieldConfig, reserveCtaText, reserveCt
             padding: '12px 16px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
-            <span style={{
-              width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0,
-              background: STATUS_STYLES[activeStatus].stroke, display: 'block',
-            }} />
-            <span style={{
-              fontFamily: 'var(--font-lato)', fontWeight: 600,
-              fontSize: '0.85rem', color: 'white', whiteSpace: 'nowrap',
-            }}>
-              Plot {selectedId} · {STATUS_LABELS[activeStatus]}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: 'var(--font-lato)', fontWeight: 600, fontSize: '0.82rem', color: 'white', whiteSpace: 'nowrap' }}>
+              {selectionCount} plot{selectionCount > 1 ? 's' : ''} · {totalArea} m²
             </span>
-            {activeStatus === 'available' && activePrice !== null && (
-              <span style={{
-                fontFamily: 'var(--font-playfair)', fontWeight: 400,
-                fontSize: '1rem', color: '#C49A3C', whiteSpace: 'nowrap',
-              }}>
-                {activeCurrency}{activePrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
-              </span>
-            )}
+            <span style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, fontSize: '1rem', color: '#C49A3C', whiteSpace: 'nowrap' }}>
+              {activeCurrency}{totalPrice.toLocaleString()}<span style={{ fontSize: '0.7em', opacity: 0.7, marginLeft: '3px' }}>/mo</span>
+            </span>
           </div>
-          {activeStatus === 'available' && (
+          {allSelectedAvailable && (
             <a
               href={reserveCtaHref}
               style={{
