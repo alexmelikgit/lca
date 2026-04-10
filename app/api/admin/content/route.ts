@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
     let blobData: Record<string, unknown> = {};
     try {
       const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
-      const res = await fetch(url, { cache: 'no-store' });
+      const res = await fetch(url, { next: { tags: ['content'] } });
       if (res.ok) {
         if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
         blobData = await res.json();

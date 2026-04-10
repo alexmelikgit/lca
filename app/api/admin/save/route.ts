@@ -8,7 +8,6 @@ import { LOCALES } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n';
 import type { ActivityLogEntry } from '@/types/content';
 import { setCachedUrl } from '@/lib/blob-url-cache';
-import { blobCacheTag } from '@/lib/content';
 
 const ALLOWED_FILES = ['nav', 'local', 'diaspora'];
 const LOCALE_FREE_FILES = ['how-it-works', 'farmer', 'plots', 'faq-local', 'faq-diaspora', 'settings'];
@@ -81,10 +80,10 @@ export async function POST(req: NextRequest) {
     // Non-fatal
   }
 
-  // Bust the Next.js Data Cache for this specific blob key
-  revalidateTag(blobCacheTag(blobKey), {});
+  // Bust all landing content caches in one call
+  revalidateTag('content', {});
 
-  // Also revalidate the full route cache for affected pages
+  // Revalidate the full route cache for affected pages
   const paths = getRevalidatePaths(file, locale);
   paths.forEach((p) => revalidatePath(p, 'page'));
 
