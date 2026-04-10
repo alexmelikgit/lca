@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid file' }, { status: 400 });
   }
 
+  console.log(`[admin/save] saving key: ${key}`);
   await r2Put(key, JSON.stringify(content, null, 2), 'application/json');
 
   // Append to activity log
@@ -70,8 +71,10 @@ export async function POST(req: NextRequest) {
 
   const paths = getRevalidatePaths(file, locale);
   paths.forEach((p) => revalidatePath(p, 'page'));
+  revalidatePath('/[locale]/diaspora', 'page');
   revalidatePath('/', 'layout');
   revalidatePath('/[locale]', 'layout');
+  console.log(`[admin/save] revalidated: ${[...paths, '/[locale]/diaspora', '/ (layout)', '/[locale] (layout)'].join(', ')}`);
 
   return NextResponse.json({ success: true, revalidated: paths });
 }
