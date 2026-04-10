@@ -15,9 +15,6 @@ export const r2 = new S3Client({
   },
 });
 
-/** Public base URL for uploaded media (R2 bucket must have public access enabled). */
-export const R2_PUBLIC_BASE = `${process.env.R2_ENDPOINT}/${BUCKET}`;
-
 /** Upload any content to R2. */
 export async function r2Put(
   key: string,

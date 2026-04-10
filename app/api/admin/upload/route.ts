@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireSession } from '@/lib/session';
-import { r2Put, R2_PUBLIC_BASE } from '@/lib/r2';
+import { r2Put } from '@/lib/r2';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
@@ -30,5 +30,5 @@ export async function POST(req: NextRequest) {
 
   await r2Put(key, Buffer.from(await file.arrayBuffer()), file.type);
 
-  return NextResponse.json({ url: `${R2_PUBLIC_BASE}/${key}` });
+  return NextResponse.json({ url: `${process.env.R2_PUBLIC_URL}/${key}` });
 }
