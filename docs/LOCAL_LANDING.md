@@ -103,6 +103,8 @@ text-transform: uppercase;
 | `components/sections/Health.tsx` | Four health benefit cards with vegetable illustrations |
 | `components/sections/Convenience.tsx` | Two-column: text left + four convenience items right |
 | `components/sections/Progress.tsx` | Three-year timeline: 2m² → 6m² → 15m² with features per year |
+| `components/plots/PlotField.tsx` | Plot map section shell + dynamic import (ssr: false) |
+| `components/plots/PlotFieldStatic.tsx` | SVG renderer: topographic illustration bg, plot grid overlay, event delegation, hover/select states, desktop info overlay + mobile info bar |
 | `components/sections/Farmer.tsx` | Farmer portrait card left + bio/quote text right |
 | `components/sections/RegionsMap.tsx` | SVG map of Armenia with accurate borders + region markers |
 | `components/sections/SeasonalCalendar.tsx` | Four season cards with crop pills |
@@ -174,6 +176,22 @@ Background: `--gold-pale`. Header: "Your plot grows with you." Three-column time
 - Year 1: 2m² starter plot, tomatoes + cucumbers + herbs
 - Year 2: 6m² expanded, add carrots + peppers + eggplant
 - Year 3: 15m² full plot, seasonal variety, winter storage crop option
+
+### 8.5 Plot Field Map
+
+Background: `--green-deep`. Section tag + H2 + subtitle above the map. Component: `PlotField.tsx` → `PlotFieldStatic.tsx`.
+
+SVG topographic illustration (`/public/images/field-illustration.svg`, 1024×718, brand green/gold palette, topo rings, compass rose, scale bar, no road/building) as background. 210 selectable 2m² plots in a 14×15 grid drawn as SVG polygons over the illustration.
+
+Plot states:
+- **Available:** white fill (low opacity) + gold stroke; hover → white fill 0.32 opacity
+- **Sold:** red fill + red stroke
+- **Reserved:** gold fill + gold stroke
+- **Selected:** bright yellow stroke `#FFE066`, 1.8px, fill 0.55
+
+Desktop: info panel overlay (bottom-left, absolute, hidden on mobile). Mobile: compact info bar below the map (shows on tap-select only).
+
+Config: `data/plot-field.json` — GPS corners (from KML), imageBounds, plotSizeM2=2, defaultPriceUSD=21 (displayed as $21/mo). Static — bundled at build time, not Blob-managed.
 
 ### 9. Farmer
 Background: `--soil-pale`. Left: farmer portrait card (name, region, photo placeholder, years of experience). Right: H2, biography paragraph, quote block. Farmer is named Aram Mkrtchyan, Armavir region, grows tomatoes and cucumbers.

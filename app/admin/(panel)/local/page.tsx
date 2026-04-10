@@ -281,7 +281,7 @@ export default function LocalPage() {
       >
         {TABS.map((tab) => {
           const visKey = TAB_VIS[tab.id];
-          const isVisible = content.sectionVisibility[visKey];
+          const isVisible = content.sectionVisibility?.[visKey];
           return (
             <button
               key={tab.id}

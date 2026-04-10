@@ -13,8 +13,8 @@ The admin panel lives at `/admin` within the same Next.js project. It allows non
 | Auth | NextAuth.js v4, Credentials provider | No database needed for v1 — username + password in env |
 | Session | JWT, 8-hour expiry | Stateless, no Redis/DB required |
 | Route protection | `proxy.ts` (Next.js 16 middleware) using `withAuth` | Redirects all `/admin/*` to `/admin/login` when unauthenticated |
-| Content storage | JSON files in `/content/` | Zero infrastructure, version-controllable, instant reads |
-| Content reads | `lib/content.ts` typed helpers + ISR (`revalidate = 60`) | Pages rebuild within 60s of a save; no full redeploy needed |
+| Content storage | JSON in `/content/` (filesystem) + Vercel Blob (admin edits) | Filesystem = git-versioned defaults; Blob = live overrides. `lib/content.ts` merges both — new fields added to filesystem never disappear after an admin save. |
+| Content reads | `lib/content.ts` typed helpers — merges `{ ...fsData, ...blobData }` | Filesystem provides defaults; Blob provides overrides. Same merge in `/api/admin/content` for admin panel reads. |
 | Rich text | Plain textarea + markdown (future: react-markdown preview) | Avoids heavy editors; staff only needs basic formatting |
 | Image uploads | `POST /api/admin/upload` → `/public/uploads/` | Simple file storage; swap for Vercel Blob in production |
 | Drag-to-reorder | `@dnd-kit/core` + `@dnd-kit/sortable` | Lightweight, accessible, headless |
@@ -422,8 +422,8 @@ Accepts a multipart image upload, saves to `/public/uploads/`.
 | `/admin` | ✅ Done | Dashboard with quick links |
 | `/admin/login` | ✅ Done | Login page |
 | `/admin/navigation` | ✅ Done | Logo, CTA buttons, drag-to-reorder nav links |
-| `/admin/local` | 🔜 Planned | All local residents page content |
-| `/admin/diaspora` | 🔜 Planned | All diaspora page content |
+| `/admin/local` | ✅ Done | 13 tabs: Hero, Problem, How It Works, Dashboard, Health, Convenience, Progress, Plot Map, Farmer, Seasonal, Trust, FAQ, About, CTA |
+| `/admin/diaspora` | ✅ Done | 15 tabs: Hero, Problem, How It Works, Health, Convenience, Seasonal, Farmer, About, Trust, Dashboard Showcase, Progress, FAQ, CTA Footer, Ownership/Gift/Phase 2, Harvest Options |
 | `/admin/farmer` | 🔜 Planned | Farmer profile + photo upload |
 | `/admin/plots` | 🔜 Planned | Plots table + inline editing |
 | `/admin/faq` | 🔜 Planned | FAQ accordion editor (tabbed) |
@@ -436,23 +436,23 @@ Accepts a multipart image upload, saves to `/public/uploads/`.
 ```
 Admin edits form
        ↓
-POST /api/admin/save
+POST /api/admin/save → writes to Vercel Blob
        ↓
-Writes /content/{file}.json
+GET /api/admin/content → reads filesystem (defaults) merged with Blob (overrides)
        ↓
-revalidatePath('/') called
+lib/content.ts readJson → same merge on every page render
        ↓
-Next.js marks the page stale
-       ↓
-Next request to '/' triggers rebuild
-       ↓
-lib/content.ts reads updated JSON
-       ↓
-Component receives new props → renders updated content
+Component receives merged props → renders updated content
 ```
 
-In **dev mode**: changes appear on the next page refresh immediately.
-In **production** (Vercel): ISR kicks in within 60 seconds (`revalidate = 60`).
+In **dev mode**: changes appear on next page refresh (Blob token in `.env.local`).
+In **production** (Vercel): Blob reads are `cache: 'no-store'` — always fresh.
+
+### Plot field config
+
+`data/plot-field.json` is **static** — bundled at build time via static import, not Blob-managed.
+To update GPS corners, illustration, or pricing: edit the file and redeploy.
+Run `scripts/generate-illustration.py` to regenerate the SVG illustration from new coordinates.
 
 ---
 
