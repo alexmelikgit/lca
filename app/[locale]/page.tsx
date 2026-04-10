@@ -18,7 +18,7 @@ import About from '@/components/sections/About';
 import CTAFooter from '@/components/sections/CTAFooter';
 import PlotField from '@/components/plots/PlotField';
 
-export const revalidate = false;
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));

@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
 
   // Also revalidate the full route cache for affected pages
   const paths = getRevalidatePaths(file, locale);
-  paths.forEach((p) => revalidatePath(p));
+  paths.forEach((p) => revalidatePath(p, 'page'));
 
   return NextResponse.json({ success: true, revalidated: paths });
 }
