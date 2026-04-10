@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { join } from 'path';
-import { readBlobOrFs } from '@/lib/blob-content';
 import { requireSession } from '@/lib/session';
 import { LOCALES } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n';
+import { getCachedUrl, setCachedUrl, getBlobStoreUrl } from '@/lib/blob-url-cache';
 
 const ALLOWED_FILES = ['nav', 'local', 'diaspora'];
 const LOCALE_FREE_FILES = ['how-it-works', 'farmer', 'plots', 'faq-local', 'faq-diaspora', 'settings', 'activity-log'];
@@ -35,37 +35,31 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid file' }, { status: 400 });
   }
 
-  let blobKey: string;
-  if (ALLOWED_FILES.includes(file)) {
-    blobKey = `content/${locale}/${file}.json`;
-  } else {
-    blobKey = `content/${file}.json`;
-  }
+  const blobKey = ALLOWED_FILES.includes(file)
+    ? `content/${locale}/${file}.json`
+    : `content/${file}.json`;
 
   try {
     const { readFile } = await import('fs/promises');
-    const { list } = await import('@vercel/blob');
 
     // Load filesystem default (always present in git)
     const fsRaw = await readFile(filePath, 'utf-8').catch(() => null);
     const fsData = fsRaw ? JSON.parse(fsRaw) : {};
 
-    // Load Blob override (admin edits), if it exists
+    // Load Blob override (admin edits) via direct URL — no list()
     let blobData: Record<string, unknown> = {};
     try {
-      const { blobs } = await list({ prefix: blobKey, limit: 1 });
-      const match = blobs.find((b) => b.pathname === blobKey);
-      if (match) {
-        const res = await fetch(match.url, { cache: 'no-store' });
+      const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
+      const res = await fetch(url, { next: { revalidate: 60 } });
+      if (res.ok) {
+        if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
         blobData = await res.json();
       }
     } catch {
-      // no blob — use filesystem only
+      // no blob or env error — use filesystem only
     }
 
-    // Merge: filesystem provides defaults for new fields; blob overrides the rest
-    const merged = { ...fsData, ...blobData };
-    return NextResponse.json(merged);
+    return NextResponse.json({ ...fsData, ...blobData });
   } catch {
     return NextResponse.json({ error: 'File not found' }, { status: 404 });
   }

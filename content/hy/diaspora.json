@@ -19,321 +19,353 @@
   },
   "hero": {
     "tag": "Հայ սփյուռքի համար",
-    "h1Line1": "Your land is still",
-    "h1Line2": "there. So is",
-    "h1Italic": "your name on it.",
-    "subtitle": "Own a real farming plot in Armenia. A local farmer tends it. Watch it grow from anywhere in the world — and at harvest, decide what happens to it.",
-    "primaryCtaLabel": "Claim your plot",
+    "h1Line1": "Ձեր հողը դեռ մնում է",
+    "h1Line2": "այնտեղ։ Այդպես էլ կա",
+    "h1Italic": "քո անունը դրա վրա:",
+    "subtitle": "Ունեցեք իրական հողատարածք Հայաստանում: Տեղացի ֆերմերն այն խնամում է։ Դիտեք, թե ինչպես է այն աճում աշխարհի ցանկացած կետից և բերքահավաքի ժամանակ, որոշեք, թե ինչ կլինի նրա հետ:",
+    "primaryCtaLabel": "Պահանջեք ձեր հողամասը",
     "primaryCtaHref": "#join",
-    "secondaryCtaLabel": "See how it works",
+    "secondaryCtaLabel": "Տեսեք, թե ինչպես է այն աշխատում",
     "secondaryCtaHref": "#how-it-works",
     "stats": [
-      { "value": "101%", "label": "Traceable" },
-      { "value": "4", "label": "Harvest Options" },
-      { "value": "Real", "label": "Your plot" }
+      {
+        "value": "101%",
+        "label": "Հետագծելի"
+      },
+      {
+        "value": "4",
+        "label": "Բերքահավաքի ընտրանքներ"
+      },
+      {
+        "value": "Real",
+        "label": "Ձեր հողամասը"
+      }
     ]
   },
   "problem": {
     "tag": "Հանգիստ հեռավորությունը",
-    "heading": "The land doesn't disappear. The connection does.",
+    "heading": "Հողը չի անհետանում. Կապն անում է:",
     "cards": [
       {
         "id": "p1",
         "vegetable": "tomato",
-        "title": "Your children have never seen it",
-        "description": "Growing up abroad means Armenia stays abstract — a word, a story, a photograph. Without something real to point to, the homeland fades with each generation."
+        "title": "Ձեր երեխաները դա երբեք չեն տեսել",
+        "description": "Արտերկրում մեծանալը նշանակում է, որ Հայաստանը մնում է վերացական՝ բառ, պատմություն, լուսանկար: Առանց մատնանշելու իրական բանի՝ հայրենիքը խամրում է յուրաքանչյուր սերնդի հետ:"
       },
       {
         "id": "p2",
         "vegetable": "greens",
-        "title": "Every visit feels like the first time",
-        "description": "You love it but you don't belong to it. There's no anchor — no plot of land, no corner of Armenia that is yours to return to every season."
+        "title": "Յուրաքանչյուր այցելություն կարծես առաջին անգամ է",
+        "description": "Դու սիրում ես այն, բայց չես պատկանում դրան: Չկա ոչ մի խարիսխ, ոչ մի հողակտոր, Հայաստանի ոչ մի անկյուն, որը ձերն է, որպեսզի վերադառնաք ամեն սեզոնին:"
       },
       {
         "id": "p3",
         "vegetable": "cucumber",
-        "title": "You can't give roots you don't hold",
-        "description": "You want to pass something real to the next generation. But without a living, tangible tie to the land, there's nothing concrete to hand down."
+        "title": "Չես կարող արմատներ տալ, որոնց չես պահում",
+        "description": "Դուք ցանկանում եք ինչ-որ իրական բան փոխանցել հաջորդ սերնդին: Բայց առանց հողի հետ կենդանի, շոշափելի կապի, հանձնելու կոնկրետ բան չկա:"
       }
     ]
   },
   "howItWorks": {
-    "tag": "How it works",
-    "heading": "Four steps to owning a piece of Armenia.",
-    "intro": "No travel required. No farming experience. Just a real plot with your name on it.",
+    "tag": "Ինչպես է այն աշխատում",
+    "heading": "Չորս քայլ Հայաստանից մի կտոր ունենալու համար.",
+    "intro": "Ճամփորդություն չի պահանջվում: Ոչ գյուղատնտեսական փորձ: Ընդամենը իսկական սյուժե՝ քո անունով:",
     "steps": [
       {
         "id": "step-1",
-        "title": "Choose your plot in Armenia",
-        "description": "Browse plots in Armenian farming regions. Pick your preferred size and what grows on it — tomatoes, cucumbers, herbs, leafy greens."
+        "title": "Ընտրեք ձեր հողամասը Հայաստանում",
+        "description": "Թերթիր հողատարածքները Հայաստանի գյուղատնտեսական շրջաններում: Ընտրեք ձեր նախընտրած չափսը և այն, ինչ աճում է դրա վրա՝ լոլիկ, վարունգ, խոտաբույսեր, տերևավոր կանաչի:"
       },
       {
         "id": "step-2",
-        "title": "Your farmer tends it",
-        "description": "A real on-the-ground farmer handles everything — soil, planting, irrigation, care. Weekly photo updates show exactly what's happening on your plot."
+        "title": "Ձեր ֆերմերը խնամում է այն",
+        "description": "Իսկական հողագործը զբաղվում է ամեն ինչով՝ հող, տնկում, ոռոգում, խնամք: Շաբաթական լուսանկարների թարմացումները ցույց են տալիս, թե ինչ է կատարվում ձեր հողամասում:"
       },
       {
         "id": "step-3",
-        "title": "Watch your plot grow",
-        "description": "Live status, farmer diary updates, harvest notifications. Follow every stage of the season from anywhere in the world on your personal dashboard."
+        "title": "Դիտեք ձեր հողամասի աճը",
+        "description": "Կենդանի կարգավիճակ, ֆերմերների օրագրի թարմացումներ, բերքահավաքի ծանուցումներ: Հետևեք սեզոնի յուրաքանչյուր փուլին աշխարհի ցանկացած կետից ձեր անձնական վահանակի վրա:"
       },
       {
         "id": "step-4",
-        "title": "Decide what happens at harvest",
-        "description": "Reinvest it into next season, donate to a local Armenian family, convert to account credit, or gift the value to someone who deserves a piece of the Highland."
+        "title": "Որոշեք, թե ինչ է տեղի ունենում բերքահավաքի ժամանակ",
+        "description": "Վերաներդրեք այն հաջորդ սեզոնում, նվիրաբերեք տեղի հայ ընտանիքի, փոխակերպեք հաշվի վարկի կամ նվիրեք արժեքը մեկին, ով արժանի է մի կտոր լեռնաշխարհից:"
       }
     ]
   },
   "harvestOptions": {
-    "tag": "Your harvest",
-    "heading": "What happens at harvest time.",
-    "intro": "Diaspora plots don't ship physically in Phase 1. Four options let you put your harvest to meaningful use.",
+    "tag": "Ձեր բերքը",
+    "heading": "Ինչ է տեղի ունենում բերքահավաքի ժամանակ:",
+    "intro": "Սփյուռքի հողատարածքները ֆիզիկապես չեն առաքվում 1-ին փուլում: Չորս տարբերակ թույլ է տալիս իմաստալից օգտագործել ձեր բերքը:",
     "options": [
       {
         "id": "ho-1",
         "icon": "↺",
-        "title": "Reinvest",
-        "description": "Put the harvest value back into your plot. Expand it, add a new crop variety, or grow it toward next season."
+        "title": "Վերաներդնել",
+        "description": "Վերադարձեք բերքի արժեքը ձեր հողամասում: Ընդարձակեք այն, ավելացրեք մշակաբույսերի նոր տեսականի կամ աճեցրեք այն հաջորդ սեզոնի համար:"
       },
       {
         "id": "ho-2",
         "icon": "♥",
-        "title": "Donate",
-        "description": "Your harvest goes to a local Armenian family in need. You receive a photo of the delivery as proof of impact."
+        "title": "Նվիրաբերել",
+        "description": "Ձեր բերքը գնում է կարիքավոր տեղի հայ ընտանիքի: Դուք ստանում եք առաքման լուսանկարը որպես ազդեցության ապացույց:"
       },
       {
         "id": "ho-3",
         "icon": "◎",
-        "title": "Sell & Hold Credit",
-        "description": "We convert your harvest to account credit. Use it next season, upgrade your plot, or carry it forward indefinitely."
+        "title": "Վաճառել և պահել վարկը",
+        "description": "Մենք ձեր բերքը վերածում ենք հաշվի վարկի: Օգտագործեք այն հաջորդ սեզոնին, արդիականացրեք ձեր հողամասը կամ առաջ տանեք այն անորոշ ժամանակով:"
       },
       {
         "id": "ho-4",
         "icon": "✦",
-        "title": "Gift Card",
-        "description": "Turn your harvest value into a Hyeland gift. A plot for a family member, a friend — anyone who deserves a piece of the Highland."
+        "title": "Նվեր Քարտ",
+        "description": "Ձեր բերքի արժեքը վերածեք Hyeland-ի նվերի: Սյուժե ընտանիքի անդամի, ընկերոջ համար՝ յուրաքանչյուրի համար, ով արժանի է մի կտոր լեռնաշխարհից:"
       }
     ]
   },
   "dashboardShowcase": {
-    "tag": "Your dashboard",
-    "heading": "Your plot, in your pocket.",
-    "intro": "Watch every stage of your season from wherever you are. Your farmer updates it. You follow along.",
+    "tag": "Ձեր վահանակը",
+    "heading": "Ձեր հողամասը, ձեր գրպանում:",
+    "intro": "Դիտեք ձեր սեզոնի յուրաքանչյուր փուլը, որտեղ էլ որ լինեք: Ձեր ֆերմերը թարմացնում է այն: Դուք հետևում եք:",
     "features": [
-      "Live photos from your plot, posted by your farmer",
-      "Farmer diary — seasonal notes, weather reports, growth milestones",
-      "Harvest notifications when your crops are ready",
-      "One-tap harvest option selection — reinvest, donate, gift, or hold credit",
-      "Season timeline and estimated harvest weight"
+      "Կենդանի լուսանկարներ ձեր հողամասից, որոնք տեղադրվել են ձեր ֆերմերի կողմից",
+      "Ֆերմերի օրագիր - սեզոնային նշումներ, եղանակի մասին հաշվետվություններ, աճի նշաձողեր",
+      "Բերքահավաքի ծանուցումներ, երբ ձեր բերքը պատրաստ է",
+      "Մեկ հպումով բերքահավաքի ընտրանք. վերաներդրեք, նվիրաբերեք, նվիրեք կամ պահեք վարկ",
+      "Սեզոնի ժամանակացույցը և բերքի գնահատված քաշը"
     ]
   },
   "ownership": {
-    "tag": "Real ownership",
-    "heading": "Your name. Your plot. Your Armenia.",
-    "intro": "This isn't symbolic. Your plot has coordinates, a farmer, and a record. You own a specific piece of land — not a share of a basket.",
+    "tag": "Իրական սեփականություն",
+    "heading": "Ձեր անունը։ Ձեր հողամասը: Ձեր Հայաստանը.",
+    "intro": "Սա խորհրդանշական չէ. Ձեր հողամասն ունի կոորդինատներ, ֆերմեր և գրառում: Դուք ունեք որոշակի հողատարածք, այլ ոչ թե զամբյուղի բաժին:",
     "items": [
       {
         "id": "do-1",
-        "title": "Named and registered",
-        "description": "Your plot is registered to you by name. You receive the exact GPS coordinates and a plot reference number."
+        "title": "Անվանված և գրանցված",
+        "description": "Ձեր հողամասը գրանցված է ձեզ անունով: Դուք ստանում եք ճշգրիտ GPS կոորդինատները և հողամասի հղման համարը:"
       },
       {
         "id": "do-2",
-        "title": "Photo evidence every week",
-        "description": "Your farmer documents every stage — planting, first shoots, flowering, harvest. You see it as it happens."
+        "title": "Լուսանկարչական ապացույցներ ամեն շաբաթ",
+        "description": "Ձեր ֆերմերը փաստաթղթավորում է յուրաքանչյուր փուլ՝ տնկում, առաջին ծիլերը, ծաղկում, բերքահավաք: Դուք տեսնում եք դա այնպես, ինչպես դա տեղի է ունենում:"
       },
       {
         "id": "do-3",
-        "title": "Legal accountability",
-        "description": "Your farmer agreement covers the full season. If something goes wrong, we tell you first — no surprises."
+        "title": "Իրավական պատասխանատվություն",
+        "description": "Ձեր ֆերմերային պայմանագիրն ընդգրկում է ամբողջ սեզոնը: Եթե ​​ինչ-որ բան սխալ է, մենք նախ ասում ենք ձեզ՝ ոչ մի անակնկալ:"
       },
       {
         "id": "do-4",
-        "title": "Transferable legacy",
-        "description": "A Hyeland plot can be gifted, passed down, or extended into a family holding across multiple seasons."
+        "title": "Փոխանցելի ժառանգություն",
+        "description": "Hyeland-ի հողամասը կարող է շնորհվել, փոխանցվել կամ ընդլայնվել մի քանի սեզոնների ընթացքում ընտանիքում:"
       }
     ]
   },
   "giftMechanic": {
-    "tag": "The gift",
-    "heading": "Give someone roots.",
-    "intro": "A Hyeland plot is the only gift that keeps a living connection to Armenia. Give one to a parent in Yerevan, a child growing up abroad, or a friend who misses home.",
+    "tag": "Նվերը",
+    "heading": "Ինչ-որ մեկին արմատներ տվեք:",
+    "intro": "Hyeland հողամասը միակ նվերն է, որը կենդանի կապ է պահպանում Հայաստանի հետ: Մեկը նվիրեք Երևանում գտնվող ծնողին, արտասահմանում մեծացող երեխային կամ տունը կարոտող ընկերոջը:",
     "features": [
-      "Choose a plot and crop type on their behalf",
-      "A personalised gift confirmation sent to them by email",
-      "They get their own dashboard to watch the plot grow",
-      "At harvest, they choose what happens to it"
+      "Նրանց անունից ընտրեք հողամաս և բերքի տեսակ",
+      "Անհատականացված նվերի հաստատում, որն ուղարկվել է նրանց էլեկտրոնային փոստով",
+      "Նրանք ստանում են իրենց սեփական վահանակը՝ սյուժեի աճը դիտելու համար",
+      "Բերքահավաքի ժամանակ նրանք ընտրում են, թե ինչ կլինի դրա հետ"
     ],
-    "ctaLabel": "Gift a plot",
+    "ctaLabel": "Նվիրեք հողամաս",
     "ctaHref": "#join",
-    "note": "Use your harvest credit, or purchase a gift plot directly."
+    "note": "Օգտագործեք ձեր բերքի վարկը կամ ուղղակիորեն գնեք նվեր հողամաս:"
   },
   "progress": {
-    "tag": "The roadmap",
-    "heading": "We're building this in public.",
-    "intro": "We're at the beginning. Here's where we are, and where we're going.",
+    "tag": "Ճանապարհային քարտեզը",
+    "heading": "Մենք սա կառուցում ենք հրապարակային:",
+    "intro": "Մենք սկզբում ենք: Ահա թե որտեղ ենք մենք և ուր ենք գնում:",
     "milestones": [
       {
         "id": "m1",
         "year": "2025",
-        "size": "20 plots",
-        "label": "Phase 1 — Now",
+        "size": "20 հողամաս",
+        "label": "Փուլ 1 - Այժմ",
         "features": [
-          "Diaspora pre-pilot launch",
-          "20 diaspora plots in Armavir",
-          "All 4 harvest options available",
-          "Weekly farmer updates via dashboard",
-          "Pre-pilot members shape the roadmap"
+          "Սփյուռքի նախնական փորձնական մեկնարկը",
+          "Սփյուռքի 20 հողամաս Արմավիրում",
+          "Հասանելի են բերքի բոլոր 4 տարբերակները",
+          "Շաբաթական ֆերմերների թարմացումները վահանակի միջոցով",
+          "Նախնական փորձնական անդամները ձևավորում են ճանապարհային քարտեզը"
         ]
       },
       {
         "id": "m2",
         "year": "2026",
-        "size": "100 plots",
-        "label": "Phase 2 — Coming",
+        "size": "100 հողամաս",
+        "label": "Փուլ 2 - Գալիս",
         "features": [
-          "Physical shipping to diaspora countries",
-          "100 diaspora plots across multiple regions",
-          "Multi-season plot holdings",
-          "Family plot packages",
-          "Expanded harvest options"
+          "Ֆիզիկական առաքում դեպի սփյուռքի երկրներ",
+          "Սփյուռքի 100 հողամաս բազմաթիվ մարզերում",
+          "Բազմասեզոնային սյուժետային հոլդինգներ",
+          "Ընտանեկան հողամասի փաթեթներ",
+          "Ընդլայնված բերքահավաքի տարբերակներ"
         ]
       },
       {
         "id": "m3",
         "year": "2027",
-        "size": "500+ plots",
-        "label": "Phase 3 — Vision",
+        "size": "500+ հողատարածք",
+        "label": "Փուլ 3 - Տեսիլք",
         "features": [
-          "500+ plots across Armenia",
-          "Full diaspora shipping network",
-          "Custom crop requests",
-          "Plot gifting marketplace",
-          "Generational transfer system"
+          "500+ հողատարածք ամբողջ Հայաստանում",
+          "Սփյուռքի առաքման ամբողջական ցանց",
+          "Պատվերով բերքի հարցումներ",
+          "Հողամաս նվերների շուկա",
+          "Սերունդների փոխանցման համակարգ"
         ]
       }
     ]
   },
   "farmer": {
-    "tag": "Your farmer",
+    "tag": "Ձեր ֆերմերը",
     "name": "Aram Mkrtchyan",
     "region": "Armavir",
-    "experience": "18 years growing",
-    "quote": "Every plot I tend has a name behind it. Someone far away is watching. I take that seriously.",
-    "bio": "Aram manages plots in the Armavir region — one of Armenia's most fertile valleys. He tends dozens of individual plots and treats each one as his own. When you're across the world wondering about your land, it's Aram who's there — planting, watering, documenting, and caring for it season after season."
+    "experience": "18 տարի աճում է",
+    "quote": "Յուրաքանչյուր սյուժե, որը ես հակված եմ, իր ետևում անուն ունի: Հեռվից ինչ-որ մեկը նայում է: Ես դա լուրջ եմ վերաբերվում:",
+    "bio": "Արամը տնօրինում է հողատարածքներ Արմավիրի մարզում՝ Հայաստանի ամենաբերրի հովիտներից մեկում: Նա մշակում է տասնյակ առանձին սյուժեներ և յուրաքանչյուրին վերաբերվում է որպես իրեն: Երբ աշխարհով մեկ մտածում ես քո հողի մասին, Արամն է այնտեղ՝ սեզոն առ սեզոն տնկում, ջրում, փաստագրում և խնամում:"
   },
   "seasonal": {
-    "tag": "What grows on your plot",
-    "heading": "Four seasons of real Armenian produce.",
-    "intro": "These are the crops growing on your plot across the year. You'll see them at every stage — from first shoots to full harvest.",
+    "tag": "Ինչ է աճում ձեր հողամասում",
+    "heading": "Չորս սեզոն իրական հայկական արտադրանք.",
+    "intro": "Սրանք այն մշակաբույսերն են, որոնք աճում են ձեր հողամասում ամբողջ տարվա ընթացքում: Դուք դրանք կտեսնեք ամեն փուլում՝ առաջին ծիլերից մինչև ամբողջական բերքահավաք:",
     "seasons": [
       {
         "id": "s1",
-        "name": "Spring",
-        "months": "Mar — May",
+        "name": "Գարուն",
+        "months": "Մար - մայիս",
         "color": "#5A9B50",
-        "crops": ["Spinach", "Lettuce", "Radishes", "Spring onion", "Parsley"]
+        "crops": [
+          "Սպանախ",
+          "Հազար",
+          "Բողկ",
+          "Գարնանային սոխ",
+          "Մաղադանոս"
+        ]
       },
       {
         "id": "s2",
-        "name": "Summer",
-        "months": "Jun — Aug",
+        "name": "Ամառ",
+        "months": "հունիս - օգոստոս",
         "color": "#C49A3C",
-        "crops": ["Tomatoes", "Cucumbers", "Bell peppers", "Zucchini", "Basil"]
+        "crops": [
+          "Լոլիկ",
+          "Վարունգ",
+          "Բուլղարական պղպեղ",
+          "Ցուկկինի",
+          "Ռեհան"
+        ]
       },
       {
         "id": "s3",
-        "name": "Autumn",
-        "months": "Sep — Nov",
+        "name": "Աշուն",
+        "months": "Սեպտեմբեր — նոյ",
         "color": "#8B5E3C",
-        "crops": ["Eggplant", "Pumpkin", "Beetroot", "Cabbage", "Carrots"]
+        "crops": [
+          "Սմբուկ",
+          "Դդում",
+          "Բազուկ",
+          "Կաղամբ",
+          "գազար"
+        ]
       },
       {
         "id": "s4",
-        "name": "Winter",
-        "months": "Dec — Feb",
+        "name": "Ձմեռ",
+        "months": "դեկտեմբեր — փետր",
         "color": "#4A6FA5",
-        "crops": ["Preserved goods", "Dried herbs", "Root cellar stock", "Winter greens"]
+        "crops": [
+          "Պահածոյացված ապրանքներ",
+          "Չորացրած խոտաբույսեր",
+          "Արմատային նկուղի պաշար",
+          "Ձմեռային կանաչի"
+        ]
       }
     ]
   },
   "trust": {
     "tag": "Նախափուլ",
-    "heading": "What Phase 1 means for diaspora.",
-    "intro": "We're being clear about what this is. Phase 1 diaspora plots come with honest constraints — and real value.",
+    "heading": "Ինչ է նշանակում 1-ին փուլը սփյուռքի համար.",
+    "intro": "Մենք հստակ հասկանում ենք, թե ինչ է սա: Սփյուռքի 1-ին փուլի սյուժեները ունեն ազնիվ սահմանափակումներ և իրական արժեք:",
     "points": [
       {
         "id": "tp-1",
-        "title": "No physical shipping in Phase 1",
-        "description": "Diaspora plots don't ship produce during Phase 1. All harvest value is handled through our four digital options: reinvest, donate, sell & hold credit, or gift."
+        "title": "Ֆիզիկական առաքում չկա 1-ին փուլում",
+        "description": "Սփյուռքի հողատարածքները արտադրանք չեն առաքում 1-ին փուլի ընթացքում: Բերքի ամբողջ արժեքը մշակվում է մեր չորս թվային տարբերակների միջոցով՝ վերաներդրում, նվիրաբերում, վաճառում և պահում վարկ կամ նվեր:"
       },
       {
         "id": "tp-2",
-        "title": "Limited to 20 diaspora plots",
-        "description": "The pre-pilot is capped at 20 diaspora plots globally. Early members directly shape what Phase 2 looks like."
+        "title": "Սահմանափակված է 20 սփյուռքի հողատարածքներով",
+        "description": "Նախնական փորձնական ծրագիրը սահմանափակված է 20 սփյուռքյան հողամասերով ամբողջ աշխարհում: Վաղ անդամներն ուղղակիորեն ձևավորում են, թե ինչ տեսք ունի 2-րդ փուլը:"
       },
       {
         "id": "tp-3",
-        "title": "Armavir region only",
-        "description": "All Phase 1 plots are in the Armavir valley. Additional regions open in Phase 2 as we grow the farmer network."
+        "title": "Միայն Արմավիրի մարզ",
+        "description": "1-ին փուլի բոլոր հողատարածքները գտնվում են Արմավիրի դաշտում: Լրացուցիչ շրջաններ են բացվում 2-րդ փուլում, քանի որ մենք աճում ենք ֆերմերային ցանցը:"
       },
       {
         "id": "tp-4",
-        "title": "You're a founding member, not a customer",
-        "description": "Pre-pilot members have direct access to us. Your feedback on the product, the harvest options, and the experience shapes every decision we make."
+        "title": "Դուք հիմնադիր անդամ եք, ոչ թե հաճախորդ",
+        "description": "Նախնական օդաչուների անդամներն ուղղակի մուտք ունեն մեզ: Ապրանքի, բերքի ընտրանքների և փորձի վերաբերյալ ձեր կարծիքը ձևավորում է մեր յուրաքանչյուր որոշում:"
       }
     ]
   },
   "phaseTwo": {
-    "tag": "Phase 2 — Coming Later",
-    "heading": "Physical shipping is on the roadmap.",
-    "body": "We're building toward direct delivery from your plot to your door — wherever you are in the world. This isn't available yet in Phase 1, but it's the direction we're heading. Pre-pilot diaspora members will be first in line.",
-    "note": "Expected: 2026"
+    "tag": "Փուլ 2 — Ավելի ուշ",
+    "heading": "Ֆիզիկական առաքումը ճանապարհային քարտեզի վրա է:",
+    "body": "Մենք կառուցում ենք ուղիղ առաքում ձեր հողատարածքից մինչև ձեր դուռը, որտեղ էլ որ լինեք աշխարհում: Սա դեռ հասանելի չէ 1-ին փուլում, բայց դա այն ուղղությունն է, որով մենք գնում ենք: Շարքում առաջինը կլինեն նախափորձնական սփյուռքի անդամները.",
+    "note": "Ակնկալվում է` 2026 թ"
   },
   "faq": {
     "tag": "ՀՏՀ",
-    "heading": "Questions from the diaspora.",
+    "heading": "Հարցեր սփյուռքից.",
     "items": [
       {
         "id": "faq-d1",
-        "question": "Can I visit my plot in Armenia?",
-        "answer": "Yes. Your plot has exact GPS coordinates. You're welcome to visit during any of your trips to Armenia — just let us know in advance and Aram will show you around. We'd love for you to see it in person."
+        "question": "Կարո՞ղ եմ այցելել իմ հողամաս Հայաստանում:",
+        "answer": "Այո՛։ Ձեր հողամասն ունի ճշգրիտ GPS կոորդինատներ: Դուք կարող եք այցելել Հայաստան ձեր ցանկացած ուղևորության ժամանակ, պարզապես նախօրոք տեղեկացրեք մեզ, և Արամը ձեզ ցույց կտա: Մենք կցանկանայինք, որ դուք անձամբ տեսնեիք այն:"
       },
       {
         "id": "faq-d2",
-        "question": "What happens to my harvest — do I have to decide in advance?",
-        "answer": "No. We notify you when your harvest is ready and give you time to choose. You pick one of the four options — reinvest, donate, sell & hold credit, or gift — directly from your dashboard. You can change your mind up until the harvest date."
+        "question": "Ի՞նչ է պատահում իմ բերքի հետ. ես պետք է նախօրոք որոշե՞մ:",
+        "answer": "Ոչ: Մենք ծանուցում ենք ձեզ, երբ ձեր բերքը պատրաստ է և ձեզ ժամանակ ենք տալիս ընտրելու: Դուք ընտրում եք չորս տարբերակներից մեկը՝ վերաներդրեք, նվիրաբերեք, վաճառեք և պահեք վարկ կամ նվեր, անմիջապես ձեր վահանակից: Դուք կարող եք փոխել ձեր կարծիքը մինչև բերքահավաքի ամսաթիվը:"
       },
       {
         "id": "faq-d3",
-        "question": "Can I gift a plot to someone as a present?",
-        "answer": "Yes — and it's one of our favourite use cases. You can gift a plot to anyone: a parent in Armenia, a sibling abroad, or a friend who wants a living connection to the land. They get their own dashboard and choose what happens to their harvest."
+        "question": "Կարո՞ղ եմ հողամաս նվիրել ինչ-որ մեկին:",
+        "answer": "Այո, և դա մեր սիրելի օգտագործման դեպքերից մեկն է: Դուք կարող եք հողատարածք նվիրել ցանկացածին՝ Հայաստանում գտնվող ծնողին, արտերկրում գտնվող եղբորը կամ եղբորը կամ ընկերոջը, ով ցանկանում է կենդանի կապ ունենալ հողի հետ: Նրանք ստանում են իրենց վահանակը և ընտրում, թե ինչ կլինի իրենց բերքի հետ:"
       },
       {
         "id": "faq-d4",
-        "question": "Is this a one-time purchase or a subscription?",
-        "answer": "It's seasonal. You pay per growing season. At the end of each season you can renew, expand, or let the plot go. There's no automatic renewal — we ask you each time."
+        "question": "Սա մեկանգա՞մ գնում է, թե՞ բաժանորդագրություն:",
+        "answer": "Սեզոնային է։ Դուք վճարում եք աճող սեզոնի համար: Յուրաքանչյուր սեզոնի վերջում դուք կարող եք թարմացնել, ընդլայնել կամ թողնել սյուժեն: Ավտոմատ նորացում չկա. մենք ամեն անգամ խնդրում ենք ձեզ:"
       },
       {
         "id": "faq-d5",
-        "question": "Will physical delivery to my country ever be available?",
-        "answer": "Yes — that's Phase 2. We're working toward it but it's not available yet. We won't promise a date, but diaspora pre-pilot members will be first to access it when it launches."
+        "question": "Երբևէ հասանելի կլինի՞ ֆիզիկական առաքում իմ երկիր:",
+        "answer": "Այո, սա 2-րդ փուլն է: Մենք աշխատում ենք դրա ուղղությամբ, բայց այն դեռ հասանելի չէ: Մենք չենք խոստանա ամսաթիվ, բայց սփյուռքի նախնական փորձնական անդամները առաջինը հասանելի կլինեն դրան, երբ այն գործարկվի:"
       },
       {
         "id": "faq-d6",
-        "question": "Can I own more than one plot?",
-        "answer": "In Phase 1 we're limiting it to one plot per person to keep the pre-pilot manageable. Once we expand in Phase 2, you'll be able to hold multiple plots or build a family holding."
+        "question": "Կարո՞ղ եմ ունենալ մեկից ավելի հողամաս:",
+        "answer": "1-ին փուլում մենք այն սահմանափակում ենք մեկ անձի համար մեկ հողամասով, որպեսզի կարողանանք կառավարելի լինել նախափորձնականը: Երբ մենք ընդլայնենք 2-րդ փուլում, դուք կկարողանաք մի քանի հողատարածքներ պահել կամ ընտանեկան հոլդինգ կառուցել:"
       }
     ]
   },
   "about": {
     "tag": "Հիմնադիրը",
     "name": "Aleksandr Melikyan",
-    "role": "Founder",
-    "paragraph1": "I've spent nine years building software products. In 2022 I started hiking in the Armenian mountains — Aragats, Geghama, Khustup. Something shifted.",
-    "paragraph2": "I kept thinking about the gap between the land I was walking on and the people who should feel connected to it — both those living in Armenia and those living far from it. Hyeland is my attempt to close that gap.",
-    "paragraph3": "I'm building this publicly, slowly, and honestly. The pre-pilot is how I test whether the idea is real. If you're reading this, you're early — and that matters.",
-    "trustText": "Building in public since 2024"
+    "role": "Հիմնադիր",
+    "paragraph1": "Ես ծախսել եմ ինը տարի՝ ստեղծելով ծրագրային արտադրանք: 2022 թվականին սկսեցի քայլել հայկական լեռներում՝ Արագած, Գեղամա, Խուստուփ։ Ինչ-որ բան փոխվեց:",
+    "paragraph2": "Անընդհատ մտածում էի այն անջրպետի մասին, որով ես քայլում էի երկրի և այն մարդկանց, ովքեր պետք է կապված զգան դրա հետ՝ և՛ Հայաստանում ապրողների, և՛ նրանից հեռու ապրողների միջև: Հայլանդը իմ փորձն է փակելու այդ բացը:",
+    "paragraph3": "Ես սա կառուցում եմ հրապարակայնորեն, դանդաղ և ազնվորեն: Նախնական փորձարկումն այն է, թե ինչպես եմ ես ստուգում, թե արդյոք գաղափարը իրական է: Եթե ​​կարդում եք սա, վաղ եք, և դա կարևոր է:",
+    "trustText": "Հանրային շենքում 2024 թվականից"
   },
   "plotMap": {
     "tag": "Դաշտը",
@@ -344,10 +376,10 @@
   },
   "ctaFooter": {
     "tag": "Միացեք նախափուլին",
-    "heading": "Own a piece of the Highland.",
-    "subtitle": "Phase 1 is limited to 20 diaspora plots. No payment yet — just register your interest and we'll reach out directly.",
-    "buttonLabel": "Claim your plot",
+    "heading": "Ունեցեք լեռնաշխարհի մի կտոր:",
+    "subtitle": "1-ին փուլը սահմանափակվում է 20 սփյուռքի հողակտորներով: Դեռևս վճարում չկա. պարզապես գրանցեք ձեր հետաքրքրությունը, և մենք անմիջապես կկապնվենք:",
+    "buttonLabel": "Պահանջեք ձեր հողամասը",
     "buttonHref": "#",
-    "note": "No payment required to register. We'll contact you personally."
+    "note": "Գրանցվելու համար վճար չի պահանջվում: Մենք անձամբ կկապվենք ձեզ հետ:"
   }
 }

@@ -1,19 +1,18 @@
-import { list } from '@vercel/blob';
 import { readFile } from 'fs/promises';
+import { getCachedUrl, setCachedUrl, getBlobStoreUrl } from '@/lib/blob-url-cache';
 
 /**
  * Read content JSON: Blob first (admin edits on live), filesystem fallback (git-deployed defaults).
  */
 export async function readBlobOrFs(blobKey: string, fsPath: string): Promise<string> {
   try {
-    const { blobs } = await list({ prefix: blobKey, limit: 1 });
-    const match = blobs.find((b) => b.pathname === blobKey);
-    if (match) {
-      const res = await fetch(match.url, { cache: 'no-store' });
-      return res.text();
-    }
+    const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error(`blob ${res.status}`);
+    if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
+    return res.text();
   } catch {
-    // fall through to filesystem
+    // 404 = no blob override yet, or network error — fall through to filesystem
   }
   return readFile(fsPath, 'utf-8');
 }

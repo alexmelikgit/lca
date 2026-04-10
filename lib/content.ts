@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
-import { list } from '@vercel/blob';
+import { getCachedUrl, setCachedUrl, getBlobStoreUrl } from '@/lib/blob-url-cache';
 import type { NavContent, HowItWorksContent, LocalContent, DiasporaContent, PlotFieldConfig } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
 import plotFieldConfigJson from '@/data/plot-field.json';
@@ -14,16 +14,14 @@ async function readJson<T>(locale: Locale, file: string): Promise<T> {
   const fsData = JSON.parse(await readFile(fsPath, 'utf-8')) as T;
 
   try {
-    const { blobs } = await list({ prefix: blobKey, limit: 1 });
-    const match = blobs.find((b) => b.pathname === blobKey);
-    if (match) {
-      const res = await fetch(match.url, { cache: 'no-store' });
-      const blobData = await res.json() as T;
-      // Filesystem provides defaults for new fields; blob overrides the rest
-      return { ...fsData, ...blobData };
-    }
+    const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error(`blob ${res.status}`);
+    if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
+    const blobData = await res.json() as T;
+    return { ...fsData, ...blobData };
   } catch {
-    // no blob or network error — use filesystem only
+    // 404 = no blob override yet, or network error — use filesystem only
   }
 
   return fsData;
@@ -38,12 +36,11 @@ export async function getHowItWorksContent(): Promise<HowItWorksContent> {
   const blobKey = 'content/how-it-works.json';
   const fsData = JSON.parse(await readFile(fsPath, 'utf-8')) as HowItWorksContent;
   try {
-    const { blobs } = await list({ prefix: blobKey, limit: 1 });
-    const match = blobs.find((b) => b.pathname === blobKey);
-    if (match) {
-      const res = await fetch(match.url, { cache: 'no-store' });
-      return { ...fsData, ...await res.json() };
-    }
+    const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error(`blob ${res.status}`);
+    if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
+    return { ...fsData, ...await res.json() };
   } catch { /* fallthrough */ }
   return fsData;
 }

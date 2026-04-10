@@ -7,6 +7,7 @@ import { requireSession } from '@/lib/session';
 import { LOCALES } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n';
 import type { ActivityLogEntry } from '@/types/content';
+import { setCachedUrl } from '@/lib/blob-url-cache';
 
 const ALLOWED_FILES = ['nav', 'local', 'diaspora'];
 const LOCALE_FREE_FILES = ['how-it-works', 'farmer', 'plots', 'faq-local', 'faq-diaspora', 'settings'];
@@ -51,12 +52,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid file' }, { status: 400 });
   }
 
-  await put(blobKey, JSON.stringify(content, null, 2), {
+  const savedBlob = await put(blobKey, JSON.stringify(content, null, 2), {
     access: 'public',
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: 'application/json',
   });
+  setCachedUrl(blobKey, savedBlob.url);
 
   // Append to activity log
   try {
