@@ -28,7 +28,7 @@ export async function r2Put(
 
 /**
  * Fetch an R2 object and return its content as a string.
- * Returns null if the object does not exist (NoSuchKey).
+ * Returns null if the object does not exist or any error occurs.
  */
 export async function r2GetText(key: string): Promise<string | null> {
   try {
@@ -36,14 +36,13 @@ export async function r2GetText(key: string): Promise<string | null> {
     if (!res.Body) return null;
     return res.Body.transformToString();
   } catch (err: unknown) {
-    if (
-      typeof err === 'object' &&
-      err !== null &&
-      'name' in err &&
-      (err as { name: string }).name === 'NoSuchKey'
-    ) {
-      return null;
+    const code =
+      typeof err === 'object' && err !== null
+        ? ((err as Record<string, unknown>).name ?? (err as Record<string, unknown>).Code)
+        : null;
+    if (code !== 'NoSuchKey') {
+      console.error(`[r2] GetObject failed for key "${key}":`, err);
     }
-    throw err;
+    return null;
   }
 }
