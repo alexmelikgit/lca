@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { label: 'Diaspora Page', href: '/admin/diaspora', icon: '◎' },
   { label: 'Farmer Profile', href: '/admin/farmer', icon: '◌' },
   { label: 'Available Plots', href: '/admin/plots', icon: '▦' },
-  { label: 'FAQ', href: '/admin/faq', icon: '?' },
+  { label: 'FAQ', href: '/admin/local', icon: '?' },
   { label: 'Settings', href: '/admin/settings', icon: '⚙' },
 ];
 

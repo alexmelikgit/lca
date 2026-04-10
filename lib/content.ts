@@ -7,6 +7,11 @@ import plotFieldConfigJson from '@/data/plot-field.json';
 
 const CONTENT_DIR = join(process.cwd(), 'content');
 
+/** Tag name used for revalidateTag() calls in save/route.ts */
+export function blobCacheTag(blobKey: string): string {
+  return `blob:${blobKey}`;
+}
+
 async function readJson<T>(locale: Locale, file: string): Promise<T> {
   const fsPath = join(CONTENT_DIR, locale, `${file}.json`);
   const blobKey = `content/${locale}/${file}.json`;
@@ -15,7 +20,7 @@ async function readJson<T>(locale: Locale, file: string): Promise<T> {
 
   try {
     const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
-    const res = await fetch(url, { next: { revalidate: 60 } });
+    const res = await fetch(url, { next: { revalidate: 60, tags: [blobCacheTag(blobKey)] } });
     if (!res.ok) throw new Error(`blob ${res.status}`);
     if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
     const blobData = await res.json() as T;
@@ -37,7 +42,7 @@ export async function getHowItWorksContent(): Promise<HowItWorksContent> {
   const fsData = JSON.parse(await readFile(fsPath, 'utf-8')) as HowItWorksContent;
   try {
     const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
-    const res = await fetch(url, { next: { revalidate: 60 } });
+    const res = await fetch(url, { next: { revalidate: 60, tags: [blobCacheTag(blobKey)] } });
     if (!res.ok) throw new Error(`blob ${res.status}`);
     if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
     return { ...fsData, ...await res.json() };
