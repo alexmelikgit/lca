@@ -70,6 +70,8 @@ export async function POST(req: NextRequest) {
 
   const paths = getRevalidatePaths(file, locale);
   paths.forEach((p) => revalidatePath(p, 'page'));
+  revalidatePath('/', 'layout');
+  revalidatePath('/[locale]', 'layout');
 
   return NextResponse.json({ success: true, revalidated: paths });
 }
