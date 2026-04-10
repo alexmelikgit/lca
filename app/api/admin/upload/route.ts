@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put } from '@vercel/blob';
 import { requireSession } from '@/lib/session';
+import { r2Put, R2_PUBLIC_BASE } from '@/lib/r2';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
@@ -26,9 +26,9 @@ export async function POST(req: NextRequest) {
   }
 
   const ext = file.name.split('.').pop() ?? 'jpg';
-  const filename = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const key = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
-  const blob = await put(filename, file, { access: 'public' });
+  await r2Put(key, Buffer.from(await file.arrayBuffer()), file.type);
 
-  return NextResponse.json({ url: blob.url });
+  return NextResponse.json({ url: `${R2_PUBLIC_BASE}/${key}` });
 }

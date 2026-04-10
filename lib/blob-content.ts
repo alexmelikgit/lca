@@ -1,19 +1,15 @@
-import { list } from '@vercel/blob';
 import { readFile } from 'fs/promises';
+import { r2GetText } from '@/lib/r2';
 
 /**
- * Read content JSON: Blob first (admin edits on live), filesystem fallback (git-deployed defaults).
+ * Read content JSON: R2 first (admin edits on live), filesystem fallback (git-deployed defaults).
  */
-export async function readBlobOrFs(blobKey: string, fsPath: string): Promise<string> {
+export async function readBlobOrFs(key: string, fsPath: string): Promise<string> {
   try {
-    const { blobs } = await list({ prefix: blobKey, limit: 1 });
-    const match = blobs.find((b) => b.pathname === blobKey);
-    if (match) {
-      const res = await fetch(match.url, { cache: 'no-store' });
-      return res.text();
-    }
+    const text = await r2GetText(key);
+    if (text) return text;
   } catch {
-    // fall through to filesystem
+    // R2 error — fall through to filesystem
   }
   return readFile(fsPath, 'utf-8');
 }

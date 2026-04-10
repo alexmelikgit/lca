@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import { put } from '@vercel/blob';
 import { revalidatePath } from 'next/cache';
 import { requireSession } from '@/lib/session';
 import { LOCALES } from '@/lib/i18n';
 import type { Locale } from '@/lib/i18n';
 import type { ActivityLogEntry } from '@/types/content';
+import { r2Put } from '@/lib/r2';
 
 const ALLOWED_FILES = ['nav', 'local', 'diaspora'];
 const LOCALE_FREE_FILES = ['how-it-works', 'farmer', 'plots', 'faq-local', 'faq-diaspora', 'settings'];
@@ -17,7 +17,7 @@ function getRevalidatePaths(file: string, locale?: Locale): string[] {
   if (file === 'nav') return ['/hy', '/en', '/hy/diaspora', '/en/diaspora'];
   if (file === 'diaspora') return ['/hy/diaspora', '/en/diaspora'];
   if (file === 'farmer') return ['/hy', '/en', '/hy/diaspora', '/en/diaspora'];
-  if (file === 'how-it-works') return ['/hy', '/en'];
+  if (file === 'how-it-works') return ['/hy', '/en', '/hy/diaspora', '/en/diaspora'];
   return [];
 }
 
@@ -38,25 +38,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid content' }, { status: 400 });
   }
 
-  let blobKey: string;
+  let key: string;
 
   if (ALLOWED_FILES.includes(file)) {
     if (!locale || !LOCALES.includes(locale)) {
       return NextResponse.json({ error: 'Invalid or missing locale' }, { status: 400 });
     }
-    blobKey = `content/${locale}/${file}.json`;
+    key = `content/${locale}/${file}.json`;
   } else if (LOCALE_FREE_FILES.includes(file)) {
-    blobKey = `content/${file}.json`;
+    key = `content/${file}.json`;
   } else {
     return NextResponse.json({ error: 'Invalid file' }, { status: 400 });
   }
 
-  await put(blobKey, JSON.stringify(content, null, 2), {
-    access: 'public',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: 'application/json',
-  });
+  await r2Put(key, JSON.stringify(content, null, 2), 'application/json');
 
   // Append to activity log
   try {
@@ -68,18 +63,13 @@ export async function POST(req: NextRequest) {
       section: section ?? file,
       user: 'Admin',
     });
-    await put('content/activity-log.json', JSON.stringify(log.slice(0, 50), null, 2), {
-      access: 'public',
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      contentType: 'application/json',
-    });
+    await r2Put('content/activity-log.json', JSON.stringify(log.slice(0, 50), null, 2), 'application/json');
   } catch {
     // Non-fatal
   }
 
   const paths = getRevalidatePaths(file, locale);
-  paths.forEach((p) => revalidatePath(p));
+  paths.forEach((p) => revalidatePath(p, 'page'));
 
   return NextResponse.json({ success: true, revalidated: paths });
 }
