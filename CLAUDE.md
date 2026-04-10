@@ -2,7 +2,8 @@
 Hyeland — Next.js app
 
 ## Deploy
-Push to main = auto deploy via Vercel
+Hosted on Hetzner. Deployment is manual (SSH → git pull → restart).
+No auto-deploy, no preview URLs.
 
 ## Git
 - feat:, fix:, chore: prefixes
@@ -10,7 +11,5 @@ Push to main = auto deploy via Vercel
 
 ## Deploy workflow
 Before every push, always ask me:
-"Deploy to test (feat/ branch) or live (main branch)?"
-- test = push to feat/current-branch, creates preview URL on Vercel
-- live = push to main, deploys to production
+"Push to main (live)?"
 Never push to main without asking first.
