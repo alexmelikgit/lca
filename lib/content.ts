@@ -15,7 +15,7 @@ async function readJson<T>(locale: Locale, file: string): Promise<T> {
 
   try {
     const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
-    const res = await fetch(url, { next: { tags: ['content'] } });
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error(`blob ${res.status}`);
     if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
     const blobData = await res.json() as T;
@@ -37,7 +37,7 @@ export async function getHowItWorksContent(): Promise<HowItWorksContent> {
   const fsData = JSON.parse(await readFile(fsPath, 'utf-8')) as HowItWorksContent;
   try {
     const url = getCachedUrl(blobKey) ?? `${getBlobStoreUrl()}/${blobKey}`;
-    const res = await fetch(url, { next: { tags: ['content'] } });
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error(`blob ${res.status}`);
     if (!getCachedUrl(blobKey)) setCachedUrl(blobKey, url);
     return { ...fsData, ...await res.json() };
