@@ -1,0 +1,110 @@
+<h2>Hero — Right side direction</h2>
+<p class="subtitle">Which feels more premium and calm?</p>
+
+<div class="cards" style="grid-template-columns: 1fr 1fr; gap: 24px;">
+
+  <!-- Option A: Dashboard mockup -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F5F3EE; padding: 24px 20px; min-height: 280px; display: flex; align-items: center; justify-content: center;">
+      <!-- Dashboard card mockup -->
+      <div style="width: 100%; max-width: 300px; background: white; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.10); overflow: hidden; font-family: sans-serif;">
+        <!-- Card header -->
+        <div style="background: #2D5A27; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="color: rgba(255,255,255,0.55); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px;">Your plot</div>
+            <div style="color: white; font-size: 15px; font-weight: 600;">Plot 7 — Armavir</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; color: #A8D4A0; font-size: 11px;">Growing 🌱</div>
+        </div>
+        <!-- Stats row -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid #F0EBE0;">
+          <div style="padding: 12px 16px; border-right: 1px solid #F0EBE0;">
+            <div style="color: #8A8A72; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;">Crops</div>
+            <div style="color: #1A1A14; font-size: 12px; font-weight: 500;">Tomatoes · Herbs</div>
+          </div>
+          <div style="padding: 12px 16px;">
+            <div style="color: #8A8A72; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;">Plot size</div>
+            <div style="color: #1A1A14; font-size: 12px; font-weight: 500;">2 m²</div>
+          </div>
+        </div>
+        <!-- Progress -->
+        <div style="padding: 14px 16px; border-bottom: 1px solid #F0EBE0;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 7px;">
+            <span style="color: #4A4A3A; font-size: 11px;">Growth stage</span>
+            <span style="color: #3D7A35; font-size: 11px; font-weight: 600;">Flowering · 62%</span>
+          </div>
+          <div style="background: #E8F5E4; border-radius: 4px; height: 5px; overflow: hidden;">
+            <div style="background: #3D7A35; width: 62%; height: 100%; border-radius: 4px;"></div>
+          </div>
+        </div>
+        <!-- Next delivery -->
+        <div style="padding: 12px 16px; display: flex; align-items: center; gap: 10px;">
+          <div style="width: 28px; height: 28px; background: #FBF3DC; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">📦</div>
+          <div>
+            <div style="color: #8A8A72; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">Next delivery</div>
+            <div style="color: #1A1A14; font-size: 12px; font-weight: 500;">Thursday · ~1.5 kg tomatoes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Dashboard product view</h3>
+      <p>Real UI card. Shows what the user gets — plot, crops, growth, delivery. Tangible, functional feel.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Minimal illustration -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F5F3EE; padding: 24px 20px; min-height: 280px; display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 300px;">
+        <!-- Sky -->
+        <rect width="300" height="220" fill="#F5F3EE"/>
+        <!-- Subtle horizon gradient -->
+        <rect width="300" height="100" y="120" fill="#EAF0E4" rx="0"/>
+        <!-- Mountain silhouettes — minimal, clean -->
+        <polygon points="0,145 60,85 120,130 160,75 220,120 300,90 300,145" fill="#C8D8C0" opacity="0.6"/>
+        <polygon points="0,155 40,110 90,140 140,100 200,135 260,105 300,125 300,155" fill="#A8C4A0" opacity="0.7"/>
+        <!-- Ground / field -->
+        <rect x="0" y="155" width="300" height="65" fill="#D4E8C8"/>
+        <!-- Field rows — perspective lines, very minimal -->
+        <g stroke="#B0CC9A" stroke-width="0.8" opacity="0.8">
+          <line x1="80" y1="220" x2="140" y2="165"/>
+          <line x1="110" y1="220" x2="158" y2="165"/>
+          <line x1="140" y1="220" x2="176" y2="165"/>
+          <line x1="170" y1="220" x2="194" y2="165"/>
+          <line x1="200" y1="220" x2="212" y2="165"/>
+          <line x1="70" y1="165" x2="230" y2="165"/>
+          <line x1="75" y1="177" x2="225" y2="177"/>
+          <line x1="78" y1="189" x2="222" y2="189"/>
+          <line x1="79" y1="201" x2="221" y2="201"/>
+          <line x1="80" y1="213" x2="220" y2="213"/>
+        </g>
+        <!-- Gold plot boundary -->
+        <rect x="105" y="163" width="90" height="52" fill="none" stroke="#C49A3C" stroke-width="1.5" rx="1"/>
+        <!-- Plot fill hint -->
+        <rect x="105" y="163" width="90" height="52" fill="#C49A3C" opacity="0.06"/>
+        <!-- Small gold corner markers -->
+        <circle cx="105" cy="163" r="2.5" fill="#C49A3C"/>
+        <circle cx="195" cy="163" r="2.5" fill="#C49A3C"/>
+        <circle cx="195" cy="215" r="2.5" fill="#C49A3C"/>
+        <circle cx="105" cy="215" r="2.5" fill="#C49A3C"/>
+        <!-- Minimal tree shapes -->
+        <ellipse cx="55" cy="148" rx="14" ry="20" fill="#6B9E5A" opacity="0.7"/>
+        <ellipse cx="68" cy="152" rx="10" ry="15" fill="#5A8A4A" opacity="0.6"/>
+        <ellipse cx="255" cy="145" rx="12" ry="18" fill="#6B9E5A" opacity="0.65"/>
+        <!-- Sun — very subtle -->
+        <circle cx="240" cy="42" r="18" fill="#F5E8C0" opacity="0.7"/>
+        <circle cx="240" cy="42" r="12" fill="#EDD98A" opacity="0.5"/>
+        <!-- Horizon line -->
+        <line x1="0" y1="155" x2="300" y2="155" stroke="#B8CCA8" stroke-width="0.8" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Minimal landscape illustration</h3>
+      <p>Clean, flat, calm. Mountains + field rows + your gold plot boundary. Abstract but grounded. No UI chrome.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top: 20px; text-align: center;">Սեղմիր ուզածի վրա կամ terminal-ում ասա</p>

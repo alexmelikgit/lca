@@ -1,0 +1,175 @@
+<h2>Illustration ոճ — ո՞րն ավելի հարմար է</h2>
+<p class="subtitle">Յուրաքանչյուր տարբերակ ցույց է տալիս, ինչ կտեսնի user-ը satellite image-ի փոխարեն</p>
+
+<div class="cards" style="grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+  <!-- A: Flat aerial -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #1A2E1B;">
+      <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:6px;">
+        <!-- Sky/ground base -->
+        <rect width="280" height="200" fill="#2D4A1E"/>
+        <!-- Surrounding land -->
+        <rect width="280" height="200" fill="#3D5C2A"/>
+        <!-- Road diagonal -->
+        <polygon points="160,0 200,0 280,140 240,140" fill="#8B7355" opacity="0.9"/>
+        <polygon points="168,0 178,0 258,140 248,140" fill="#A08B6E" opacity="0.5"/>
+        <!-- Main field -->
+        <polygon points="30,80 120,55 200,110 110,140" fill="#4A7A3A"/>
+        <!-- Field grid lines -->
+        <g stroke="#6AAA55" stroke-width="0.6" opacity="0.7">
+          <line x1="47" y1="75" x2="127" y2="135"/>
+          <line x1="64" y1="69" x2="144" y2="129"/>
+          <line x1="81" y1="63" x2="161" y2="123"/>
+          <line x1="98" y1="57" x2="178" y2="117"/>
+          <line x1="115" y1="51" x2="195" y2="111"/>
+          <line x1="40" y1="90" x2="194" y2="116"/>
+          <line x1="38" y1="97" x2="188" y2="122"/>
+          <line x1="36" y1="105" x2="182" y2="128"/>
+          <line x1="34" y1="112" x2="176" y2="134"/>
+          <line x1="32" y1="120" x2="170" y2="140"/>
+        </g>
+        <!-- Field border -->
+        <polygon points="30,80 120,55 200,110 110,140" fill="none" stroke="#C49A3C" stroke-width="1.5"/>
+        <!-- Trees (circles) -->
+        <circle cx="205" cy="108" r="10" fill="#2D6B25"/>
+        <circle cx="215" cy="100" r="7" fill="#3D7A35"/>
+        <circle cx="195" cy="98" r="6" fill="#2D6B25"/>
+        <circle cx="50" cy="145" r="8" fill="#2D6B25"/>
+        <circle cx="62" cy="152" r="6" fill="#3D7A35"/>
+        <!-- Building bottom-left -->
+        <rect x="0" y="155" width="55" height="45" fill="#5A5A4A" rx="2"/>
+        <rect x="5" y="160" width="45" height="35" fill="#6B6B58" rx="1"/>
+        <polygon points="0,155 27,140 55,155" fill="#4A4A3A"/>
+        <!-- Irrigation line -->
+        <line x1="0" y1="100" x2="30" y2="80" stroke="#5B8FD4" stroke-width="2.5" opacity="0.7"/>
+        <!-- Gold dot markers -->
+        <circle cx="75" cy="90" r="2.5" fill="#C49A3C" opacity="0.8"/>
+        <circle cx="95" cy="85" r="2.5" fill="#C49A3C" opacity="0.8"/>
+        <circle cx="115" cy="80" r="2.5" fill="#C49A3C" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — Flat Aerial</h3>
+      <p>Flat vector ոճ, aerial view, simplified shapes. Site-ի green/gold palette-ը։ Մաքուր, branded.</p>
+    </div>
+  </div>
+
+  <!-- B: Topographic -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #1A2E1B;">
+      <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:6px;">
+        <!-- Base -->
+        <rect width="280" height="200" fill="#1E3318"/>
+        <!-- Topo rings outer→inner -->
+        <ellipse cx="130" cy="105" rx="130" ry="90" fill="#243D1C" stroke="#3A5A2A" stroke-width="0.5"/>
+        <ellipse cx="130" cy="105" rx="108" ry="74" fill="#2A4A22" stroke="#3A5A2A" stroke-width="0.5"/>
+        <ellipse cx="130" cy="105" rx="88" ry="58" fill="#30562A" stroke="#4A6A38" stroke-width="0.5"/>
+        <ellipse cx="130" cy="105" rx="68" ry="44" fill="#386230" stroke="#4A6A38" stroke-width="0.5"/>
+        <ellipse cx="130" cy="105" rx="50" ry="32" fill="#406E36" stroke="#5A7A44" stroke-width="0.5"/>
+        <!-- Road -->
+        <polygon points="155,0 185,0 260,145 230,145" fill="#6B5C3A" opacity="0.85"/>
+        <!-- Field overlay -->
+        <polygon points="42,88 118,65 188,112 112,138" fill="#4A7840" opacity="0.85"/>
+        <!-- Grid on field -->
+        <g stroke="#7AAA66" stroke-width="0.5" opacity="0.6">
+          <line x1="58" y1="83" x2="128" y2="133"/>
+          <line x1="74" y1="76" x2="154" y2="126"/>
+          <line x1="90" y1="70" x2="170" y2="120"/>
+          <line x1="106" y1="64" x2="186" y2="114"/>
+          <line x1="50" y1="98" x2="186" y2="116"/>
+          <line x1="48" y1="107" x2="180" y2="124"/>
+          <line x1="46" y1="116" x2="174" y2="130"/>
+          <line x1="44" y1="125" x2="168" y2="136"/>
+        </g>
+        <!-- Contour labels -->
+        <text x="18" y="75" fill="#5A8A4A" font-size="6" opacity="0.6" font-family="monospace">1253m</text>
+        <text x="225" y="170" fill="#5A8A4A" font-size="6" opacity="0.6" font-family="monospace">1251m</text>
+        <!-- Field border gold -->
+        <polygon points="42,88 118,65 188,112 112,138" fill="none" stroke="#C49A3C" stroke-width="1.5"/>
+        <!-- Compass rose -->
+        <g transform="translate(248, 22)">
+          <circle r="12" fill="#1E3318" stroke="#4A6A38" stroke-width="0.8"/>
+          <polygon points="0,-9 2,0 0,4 -2,0" fill="#C49A3C"/>
+          <text x="0" y="-10" text-anchor="middle" font-size="5" fill="#C49A3C" font-family="sans-serif">N</text>
+        </g>
+        <!-- Scale bar -->
+        <rect x="12" y="185" width="40" height="2" fill="#8AAA7A"/>
+        <text x="12" y="183" fill="#8AAA7A" font-size="5" font-family="monospace">0    20m</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Topographic Map</h3>
+      <p>Contour rings, compass, scale bar. Cartographic/survey ոճ։ "Հողի" feeling, ավելի technical.</p>
+    </div>
+  </div>
+
+  <!-- C: Stylized painterly -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #1A2E1B;">
+      <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:6px;">
+        <defs>
+          <filter id="blur1">
+            <feGaussianBlur stdDeviation="2"/>
+          </filter>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1A3A5C"/>
+            <stop offset="100%" stop-color="#2D5A27"/>
+          </linearGradient>
+          <linearGradient id="fieldGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#4A8A3A"/>
+            <stop offset="100%" stop-color="#2D6020"/>
+          </linearGradient>
+        </defs>
+        <!-- Background gradient -->
+        <rect width="280" height="200" fill="url(#sky)"/>
+        <!-- Soft glow patches (painterly feel) -->
+        <ellipse cx="110" cy="100" rx="80" ry="55" fill="#3D7A35" filter="url(#blur1)" opacity="0.5"/>
+        <ellipse cx="130" cy="95" rx="55" ry="38" fill="#5A9B50" filter="url(#blur1)" opacity="0.4"/>
+        <!-- Road with soft edge -->
+        <polygon points="158,0 196,0 270,145 232,145" fill="#9B8B6A" opacity="0.7"/>
+        <polygon points="162,0 172,0 246,145 236,145" fill="#BBA880" opacity="0.3"/>
+        <!-- Trees (organic blobs) -->
+        <ellipse cx="208" cy="104" rx="14" ry="18" fill="#1E5218" opacity="0.9"/>
+        <ellipse cx="202" cy="98" rx="10" ry="13" fill="#2D7025" opacity="0.8"/>
+        <ellipse cx="55" cy="148" rx="12" ry="10" fill="#1E5218" opacity="0.7"/>
+        <ellipse cx="68" cy="155" rx="9" ry="8" fill="#2D7025" opacity="0.7"/>
+        <!-- Main field, painterly polygon -->
+        <polygon points="35,82 118,58 196,112 108,140" fill="url(#fieldGrad)" opacity="0.95"/>
+        <!-- Light texture strokes -->
+        <g stroke="#7AC060" stroke-width="1" opacity="0.25">
+          <path d="M50,90 Q85,75 118,70 Q155,80 185,110" fill="none"/>
+          <path d="M45,105 Q80,90 115,85 Q152,92 180,118" fill="none"/>
+          <path d="M42,118 Q78,105 112,100 Q148,104 175,124" fill="none"/>
+        </g>
+        <!-- Plot grid, subtle -->
+        <g stroke="#C49A3C" stroke-width="0.5" opacity="0.4">
+          <line x1="52" y1="86" x2="122" y2="136"/>
+          <line x1="69" y1="79" x2="149" y2="128"/>
+          <line x1="86" y1="73" x2="168" y2="121"/>
+          <line x1="103" y1="67" x2="185" y2="114"/>
+          <line x1="43" y1="99" x2="190" y2="116"/>
+          <line x1="41" y1="109" x2="184" y2="123"/>
+          <line x1="39" y1="119" x2="178" y2="130"/>
+          <line x1="37" y1="129" x2="172" y2="137"/>
+        </g>
+        <!-- Field border glowing gold -->
+        <polygon points="35,82 118,58 196,112 108,140" fill="none" stroke="#C49A3C" stroke-width="2" opacity="0.8"/>
+        <!-- Building silhouette -->
+        <rect x="0" y="158" width="50" height="42" fill="#2A3A2A" opacity="0.85" rx="1"/>
+        <polygon points="0,158 25,144 50,158" fill="#1E2E1E" opacity="0.9"/>
+        <!-- Golden hour glow -->
+        <ellipse cx="250" cy="15" rx="35" ry="25" fill="#C49A3C" filter="url(#blur1)" opacity="0.2"/>
+        <!-- Water/irrigation glimmer -->
+        <line x1="0" y1="102" x2="35" y2="82" stroke="#7AB4D4" stroke-width="2" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C — Painterly / Atmospheric</h3>
+      <p>Soft gradients, organic shapes, golden hour glow։ Aspirational, premium feeling. Ավելի emotional.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:20px; text-align:center;">Սեղմիր ուզածի վրա, հետո terminal-ում ասա</p>
