@@ -1,5 +1,7 @@
 import AdminCard from '@/components/admin/AdminCard';
+import DiasporaToggle from '@/components/admin/DiasporaToggle';
 import Link from 'next/link';
+import { getSiteSettings } from '@/lib/content';
 
 const QUICK_LINKS = [
   { label: 'Navigation', href: '/admin/navigation', desc: 'Logo, nav links, CTA buttons' },
@@ -10,7 +12,9 @@ const QUICK_LINKS = [
   { label: 'Settings', href: '/admin/settings', desc: 'Pilot status, social links' },
 ];
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const settings = await getSiteSettings();
+
   return (
     <div>
       <div style={{ marginBottom: '28px' }}>
@@ -19,6 +23,8 @@ export default function AdminDashboard() {
           Welcome back. Jump into any section to edit content.
         </p>
       </div>
+
+      <DiasporaToggle initialEnabled={settings.diasporaEnabled} />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
         {QUICK_LINKS.map((item) => (
