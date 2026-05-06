@@ -18,6 +18,7 @@ function getRevalidatePaths(file: string, locale?: Locale): string[] {
   if (file === 'diaspora') return ['/hy/diaspora', '/en/diaspora'];
   if (file === 'farmer') return ['/hy', '/en', '/hy/diaspora', '/en/diaspora'];
   if (file === 'how-it-works') return ['/hy', '/en', '/hy/diaspora', '/en/diaspora'];
+  if (file === 'settings') return ['/hy', '/en', '/hy/diaspora', '/en/diaspora'];
   return [];
 }
 
