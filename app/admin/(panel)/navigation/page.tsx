@@ -333,6 +333,18 @@ export default function NavigationPage() {
               onChange={(e) => set('diasporaCta', e.target.value)}
               helper='Shown on the diaspora page'
             />
+            <AdminInput
+              label="Local button link"
+              value={content.localCtaHref}
+              onChange={(e) => set('localCtaHref', e.target.value)}
+              helper='#anchor, /path, or full URL'
+            />
+            <AdminInput
+              label="Diaspora button link"
+              value={content.diasporaCtaHref}
+              onChange={(e) => set('diasporaCtaHref', e.target.value)}
+              helper='#anchor, /path, or full URL'
+            />
           </div>
         </AdminCard>
 
