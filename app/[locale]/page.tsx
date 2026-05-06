@@ -1,4 +1,4 @@
-import { getNavContent, getLocalContent, getPlotFieldConfig } from '@/lib/content';
+import { getNavContent, getLocalContent, getPlotFieldConfig, getSiteSettings } from '@/lib/content';
 import type { Locale } from '@/lib/i18n';
 import { LOCALES } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
@@ -36,14 +36,15 @@ export default async function Home({
   }
 
   const fieldConfig = getPlotFieldConfig();
-  const [nav, local] = await Promise.all([
+  const [nav, local, settings] = await Promise.all([
     getNavContent(locale),
     getLocalContent(locale),
+    getSiteSettings(),
   ]);
 
   return (
     <>
-      <Navbar content={nav} page="local" locale={locale} />
+      <Navbar content={nav} page="local" locale={locale} diasporaEnabled={settings.diasporaEnabled} />
       <main>
         {local.sectionVisibility?.hero !== false && <Hero content={local.hero} />}
         {local.sectionVisibility?.problem !== false && <Problem content={local.problem} />}
