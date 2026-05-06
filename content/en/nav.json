@@ -2,7 +2,9 @@
   "logoMain": "Hye",
   "logoHighlight": "land",
   "localCta": "Reserve my plot",
+  "localCtaHref": "#join",
   "diasporaCta": "Get your plot",
+  "diasporaCtaHref": "#join",
   "diasporaLinkText": "For the diaspora",
   "localLinkText": "For those living in Armenia",
   "localLinks": [

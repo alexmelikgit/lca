@@ -2,7 +2,9 @@
   "logoMain": "Hye",
   "logoHighlight": "land",
   "localCta": "Ամրագրել հողամասս",
+  "localCtaHref": "#join",
   "diasporaCta": "Ստանալ հողամաս",
+  "diasporaCtaHref": "#join",
   "diasporaLinkText": "Սփյուռքի համար",
   "localLinkText": "Հայաստանում ապրողների համար",
   "localLinks": [
