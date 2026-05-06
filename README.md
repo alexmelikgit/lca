@@ -27,14 +27,9 @@ Landing page for Hyeland — farming plots outside Yerevan for local residents, 
 
 Go to **`http://localhost:3000/admin`** — it will redirect to login automatically.
 
-### Credentials (dev)
+### Credentials
 
-```
-Username: admin
-Password: armenia2024
-```
-
-_(stored in `.env.local` — change for production)_
+Stored in `.env.local` (`ADMIN_USERNAME` / `ADMIN_PASSWORD`). See `docs/ADMIN_PANEL.md` → "Environment Variables" for setup. Local credentials are not committed.
 
 ### Admin sections
 

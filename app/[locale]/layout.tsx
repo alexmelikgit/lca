@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Script from 'next/script';
 import type { Locale } from '@/lib/i18n';
 import { LOCALES } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
@@ -24,7 +25,14 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${playfair.variable} ${lato.variable}`} suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <Script
+          defer
+          src="https://analytics.hyeland.am/script.js"
+          data-website-id="215137b2-60cf-4019-a65e-09b9d7698df8"
+        />
+      </body>
     </html>
   );
 }
