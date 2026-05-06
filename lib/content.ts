@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { readFile } from 'fs/promises';
 import { r2GetText } from '@/lib/r2';
-import type { NavContent, HowItWorksContent, LocalContent, DiasporaContent, PlotFieldConfig } from '@/types/content';
+import type { NavContent, HowItWorksContent, LocalContent, DiasporaContent, PlotFieldConfig, SiteSettings } from '@/types/content';
 import type { Locale } from '@/lib/i18n';
 import plotFieldConfigJson from '@/data/plot-field.json';
 
@@ -53,4 +53,16 @@ export function getPlotFieldConfig(): PlotFieldConfig {
   // Phase 1: static import bundled at build time (not yet admin-editable).
   // Phase 2: switch to r2GetText when admin editing is added.
   return plotFieldConfigJson as unknown as PlotFieldConfig;
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const fsPath = join(CONTENT_DIR, 'settings.json');
+  const fsData = JSON.parse(await readFile(fsPath, 'utf-8')) as SiteSettings;
+  try {
+    const text = await r2GetText('content/settings.json');
+    if (text) return { ...fsData, ...JSON.parse(text) };
+  } catch {
+    // R2 error — use filesystem only
+  }
+  return fsData;
 }
