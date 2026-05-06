@@ -347,3 +347,9 @@ export interface DiasporaContent {
   about: AboutContent;
   ctaFooter: CtaFooterContent;
 }
+
+/* ─── Site settings (locale-free, R2-overridable) ───────────── */
+
+export interface SiteSettings {
+  diasporaEnabled: boolean;
+}
