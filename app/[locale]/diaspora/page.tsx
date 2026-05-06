@@ -1,4 +1,4 @@
-import { getNavContent, getDiasporaContent, getPlotFieldConfig } from '@/lib/content';
+import { getNavContent, getDiasporaContent, getPlotFieldConfig, getSiteSettings } from '@/lib/content';
 import type { Locale } from '@/lib/i18n';
 import { LOCALES } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
@@ -38,16 +38,19 @@ export default async function DiasporaPage({
   }
 
   const fieldConfig = getPlotFieldConfig();
-  const [nav, diaspora] = await Promise.all([
+  const [nav, diaspora, settings] = await Promise.all([
     getNavContent(locale),
     getDiasporaContent(locale),
+    getSiteSettings(),
   ]);
+
+  if (!settings.diasporaEnabled) notFound();
 
   const v = diaspora.sectionVisibility;
 
   return (
     <>
-      <Navbar content={nav} page="diaspora" locale={locale} />
+      <Navbar content={nav} page="diaspora" locale={locale} diasporaEnabled={settings.diasporaEnabled} />
       <main>
         {v.hero !== false && <DiasporaHero content={diaspora.hero} />}
         {v.problem !== false && <DiasporaProblem content={diaspora.problem} />}

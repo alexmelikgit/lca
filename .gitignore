@@ -30,3 +30,6 @@ Thumbs.db
 
 # Uploaded media
 public/uploads/
+
+# Superpowers brainstorm session files
+.superpowers/
