@@ -11,9 +11,10 @@ interface NavbarProps {
   content: NavContent;
   page?: 'local' | 'diaspora';
   locale: Locale;
+  diasporaEnabled?: boolean;
 }
 
-export default function Navbar({ content, page = 'local', locale }: NavbarProps) {
+export default function Navbar({ content, page = 'local', locale, diasporaEnabled = true }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -83,17 +84,19 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
           {/* Desktop right */}
           <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexShrink: 0 }}>
             <LocaleSwitcher currentLocale={locale} />
-            <Link href={switchHref} style={{
-              fontFamily: 'var(--font-lato)',
-              fontWeight: 400,
-              fontSize: '0.8rem',
-              color: 'var(--ink3)',
-              textDecoration: 'none',
-              letterSpacing: '0.04em',
-              whiteSpace: 'nowrap',
-            }}>
-              {switchText} →
-            </Link>
+            {diasporaEnabled && (
+              <Link href={switchHref} style={{
+                fontFamily: 'var(--font-lato)',
+                fontWeight: 400,
+                fontSize: '0.8rem',
+                color: 'var(--ink3)',
+                textDecoration: 'none',
+                letterSpacing: '0.04em',
+                whiteSpace: 'nowrap',
+              }}>
+                {switchText} →
+              </Link>
+            )}
             <a href="#join" className="btn-nav" style={{
               fontFamily: 'var(--font-lato)',
               fontWeight: 700,
@@ -120,17 +123,19 @@ export default function Navbar({ content, page = 'local', locale }: NavbarProps)
             flexShrink: 0,
           }}>
             <LocaleSwitcher currentLocale={locale} />
-            <Link href={switchHref} style={{
-              fontFamily: 'var(--font-lato)',
-              fontWeight: 400,
-              fontSize: '0.75rem',
-              color: 'var(--ink3)',
-              textDecoration: 'none',
-              letterSpacing: '0.04em',
-              whiteSpace: 'nowrap',
-            }}>
-              {switchText} →
-            </Link>
+            {diasporaEnabled && (
+              <Link href={switchHref} style={{
+                fontFamily: 'var(--font-lato)',
+                fontWeight: 400,
+                fontSize: '0.75rem',
+                color: 'var(--ink3)',
+                textDecoration: 'none',
+                letterSpacing: '0.04em',
+                whiteSpace: 'nowrap',
+              }}>
+                {switchText} →
+              </Link>
+            )}
             <button
               onClick={() => setOpen(!open)}
               aria-label={open ? 'Close menu' : 'Open menu'}
