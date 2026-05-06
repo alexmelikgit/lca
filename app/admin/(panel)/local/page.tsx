@@ -165,7 +165,6 @@ export default function LocalPage() {
   const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     fetch(`/api/admin/content?file=local&locale=${locale}`)
       .then((r) => r.json())
       .then((data: LocalContent) => { setContent(data); setLoading(false); setIsDirty(false); })
@@ -217,7 +216,7 @@ export default function LocalPage() {
         {(['en', 'hy'] as Locale[]).map((l) => (
           <button
             key={l}
-            onClick={() => setLocale(l)}
+            onClick={() => { setLoading(true); setLocale(l); }}
             style={{
               padding: '6px 16px',
               borderRadius: '6px',

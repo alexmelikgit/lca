@@ -260,7 +260,6 @@ export default function DiasporaPage() {
   const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     fetch(`/api/admin/content?file=diaspora&locale=${locale}`)
       .then((r) => r.json())
       .then((data: DiasporaContent) => { setContent(data); setLoading(false); setIsDirty(false); })
@@ -306,7 +305,7 @@ export default function DiasporaPage() {
         {(['en', 'hy'] as Locale[]).map((l) => (
           <button
             key={l}
-            onClick={() => setLocale(l)}
+            onClick={() => { setLoading(true); setLocale(l); }}
             style={{
               padding: '6px 16px', borderRadius: '6px', border: '1px solid',
               borderColor: locale === l ? '#8B2535' : '#D8D4C8',
