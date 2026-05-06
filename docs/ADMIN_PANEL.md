@@ -323,31 +323,25 @@ openssl rand -base64 32
 
 ### `content/settings.json`
 
+Site-wide settings (locale-free). Read via `getSiteSettings()` in `lib/content.ts` — R2 override + filesystem fallback. Saving writes via `/api/admin/save` with `file: 'settings'` (no `locale`).
+
+**Current schema:**
+
 ```json
 {
-  "siteName": "Hyeland",
-  "contactEmail": "hello@armenia.farm",
-  "tagline": "Own a piece of the Highland.",
-  "pilotStatus": "open",
-  "social": {
-    "telegram": "",
-    "instagram": "",
-    "newsletter": ""
-  },
-  "dashboardDemo": {
-    "plotName": "Plot 7 — Armavir",
-    "crop1": "Tomatoes",
-    "crop2": "Cucumbers",
-    "plotSize": "2 m²",
-    "seasonWeek": "Week 14",
-    "estimatedYield": "~4 kg",
-    "progressLabel": "Flowering",
-    "progressPercent": 62,
-    "nextDeliveryDay": "Thursday",
-    "nextDeliveryAmount": "~1.5 kg tomatoes"
-  }
+  "diasporaEnabled": true
 }
 ```
+
+| Field | Type | Default | Effect |
+|---|---|---|---|
+| `diasporaEnabled` | `boolean` | `true` | When `false`, `/[locale]/diaspora` returns 404 and the navbar local↔diaspora switch link is hidden on home. Toggled from the `/admin` Dashboard. |
+
+**Planned fields** (not yet implemented — for the future `/admin/settings` page):
+- `siteName`, `contactEmail`, `tagline`
+- `pilotStatus`
+- `social: { telegram, instagram, newsletter }`
+- `dashboardDemo: { ... }` — demo-data values for the dashboard mockup section
 
 ### `content/activity-log.json`
 
@@ -419,7 +413,7 @@ Accepts a multipart image upload, saves to `/public/uploads/`.
 
 | Route | Status | Description |
 |---|---|---|
-| `/admin` | ✅ Done | Dashboard with quick links |
+| `/admin` | ✅ Done | Dashboard with quick links + **Diaspora page toggle** (disables `/[locale]/diaspora` and hides the navbar switch link site-wide) |
 | `/admin/login` | ✅ Done | Login page |
 | `/admin/navigation` | ✅ Done | Logo, CTA buttons, drag-to-reorder nav links |
 | `/admin/local` | ✅ Done | 13 tabs: Hero, Problem, How It Works, Dashboard, Health, Convenience, Progress, Plot Map, Farmer, Seasonal, Trust, FAQ, About, CTA |

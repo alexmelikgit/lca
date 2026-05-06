@@ -13,6 +13,8 @@ app/[locale]/diaspora/page.tsx
 ```
 The locale layout (`app/[locale]/layout.tsx`) covers it automatically — no new layout needed.
 
+The diaspora page can be administratively disabled site-wide via the `/admin` Dashboard toggle (`diasporaEnabled` in `content/settings.json`) — when off, `/[locale]/diaspora` returns 404 and the navbar's local↔diaspora switch link is hidden on the home page.
+
 ### Component Pattern
 Each section is a separate file in `components/sections/`. The page file (`app/[locale]/page.tsx`) imports all sections and composes them with `sectionVisibility` guards. The diaspora page should follow the same pattern: one new page file, new section files per section, reusing shared components directly.
 
