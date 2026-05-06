@@ -32,6 +32,7 @@ export default function Navbar({ content, page = 'local', locale, diasporaEnable
 
   const links = page === 'diaspora' ? content.diasporaLinks : content.localLinks;
   const ctaText = page === 'diaspora' ? content.diasporaCta : content.localCta;
+  const ctaHref = (page === 'diaspora' ? content.diasporaCtaHref : content.localCtaHref) || '#join';
   const switchHref = page === 'diaspora' ? `/${locale}` : `/${locale}/diaspora`;
   const switchText = page === 'diaspora' ? content.localLinkText : content.diasporaLinkText;
 
@@ -97,7 +98,7 @@ export default function Navbar({ content, page = 'local', locale, diasporaEnable
                 {switchText} →
               </Link>
             )}
-            <a href="#join" className="btn-nav" style={{
+            <a href={ctaHref} className="btn-nav" style={{
               fontFamily: 'var(--font-lato)',
               fontWeight: 700,
               fontSize: '0.78rem',
@@ -243,7 +244,7 @@ export default function Navbar({ content, page = 'local', locale, diasporaEnable
                 style={{ marginTop: '40px' }}
               >
                 <a
-                  href="#join"
+                  href={ctaHref}
                   onClick={() => setOpen(false)}
                   style={{
                     display: 'inline-flex',

@@ -10,7 +10,9 @@ export interface NavContent {
   logoMain: string;
   logoHighlight: string;
   localCta: string;
+  localCtaHref: string;
   diasporaCta: string;
+  diasporaCtaHref: string;
   diasporaLinkText: string;
   localLinkText: string;
   localLinks: NavLink[];
