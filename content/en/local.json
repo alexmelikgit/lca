@@ -361,6 +361,10 @@
     "subtitle": "Leave your email and we'll be in touch before the Spring 2027 pilot begins.",
     "buttonLabel": "Join the waitlist",
     "buttonHref": "#join",
-    "note": "No payment. Just your email. We'll be in touch before the pilot starts."
+    "note": "No payment. Just your email. We'll be in touch before the pilot starts.",
+    "successHeading": "You're on the list.",
+    "successBody": "We'll be in touch before the Spring 2027 pilot begins.",
+    "errorText": "Something went wrong. Please try again.",
+    "emailPlaceholder": "your@email.com"
   }
 }
