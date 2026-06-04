@@ -14,7 +14,7 @@ The brief references several spec files. Status against the working tree on bran
 
 | File | Status | Notes |
 |---|---|---|
-| `PRICING_MODEL_PIVOT.md` | **MISSING from repo — IMPLEMENTATION BLOCKER** | Not found anywhere under `/home/victus/hyeland/`. The pivot is described *in the task brief itself* — this plan treats the brief as the new-model source of truth, but **the next implementation task MUST NOT start until this file is committed to the repo**, otherwise the next session will re-derive intent from this plan or fall back to the stale `LOCAL_LANDING.md`. **Action before any code/content task opens: commit `PRICING_MODEL_PIVOT.md` into `docs/` and reference it from `LANDING_INDEX.md`.** |
+| `PRICING_MODEL_PIVOT.md` | **STUB committed** at `docs/PRICING_MODEL_PIVOT.md` on branch `feat/landing-pivot` | Stub committed 2026-06-04; awaiting Alex to fill in canonical pricing model, off-season assortment, launch timing, farm identity. The 8 mandatory rules from §6 / §4.3 / §5.1 / §8 / §10 are already canonicalized in the stub so future sessions can reference them. |
 | `LANDING_VISION.md` | **MISSING from repo** | Not found. |
 | `APP_VISION.md` | **MISSING from repo** | Not found. |
 | `LANDING_INDEX.md` | **Present** (parent workspace) | Located at `/home/victus/hyeland/docs/LANDING_INDEX.md` — generic, no per-section detail; still aligned with brand intent ("calm, grounded, human"). Section list still says "Plot Field / Selection: 'this is a real place'" — partially outdated under new model. |
