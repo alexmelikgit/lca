@@ -1,3 +1,15 @@
+> ⚠ **SUPERSEDED — historical reference only.**
+>
+> This document describes the *old* model: fixed 2m² physical plots at $21/mo, weekly delivery, `2m² → 6m² → 15m²` size ladder, Armavir partner farm, Aram as confirmed farmer. The pivot to a share-based annual production model invalidated all of that. The pilot now launches Spring 2027 in the **Kotayk** region with TBC farm identity.
+>
+> Current sources of truth:
+> - `LANDING_PIVOT_PLAN.md` (repo root) — section-by-section pivot roadmap with two-state framing (Pre-launch vs Launch-ready)
+> - `docs/PRICING_MODEL_PIVOT.md` — canonical model (stub awaiting Alex's input)
+>
+> This file is kept for historical context on the original brand voice, component plan, and design tokens — those remain accurate as styling references.
+
+---
+
 # Hyeland — Local Residents Landing Page
 
 ## Project Overview

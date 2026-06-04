@@ -6,12 +6,10 @@ import { signOut } from 'next-auth/react';
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin', icon: '▤' },
+  { label: 'Waitlist', href: '/admin/waitlist', icon: '✉' },
   { label: 'Navigation', href: '/admin/navigation', icon: '≡' },
   { label: 'Local Page', href: '/admin/local', icon: '◉' },
   { label: 'Diaspora Page', href: '/admin/diaspora', icon: '◎' },
-  { label: 'Farmer Profile', href: '/admin/farmer', icon: '◌' },
-  { label: 'Available Plots', href: '/admin/plots', icon: '▦' },
-  { label: 'FAQ', href: '/admin/faq', icon: '?' },
   { label: 'Settings', href: '/admin/settings', icon: '⚙' },
 ];
 

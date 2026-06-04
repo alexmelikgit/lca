@@ -21,22 +21,22 @@
     "h1Line2": "you eat.",
     "h1Italic": "Grown on your land.",
     "subtitle": "Own a real farming plot outside Yerevan.\nA farmer tends it for you.\nHarvest comes to your door weekly.",
-    "primaryCtaLabel": "Reserve my plot",
+    "primaryCtaLabel": "Join the waitlist",
     "primaryCtaHref": "#join",
     "secondaryCtaLabel": "See how it works",
     "secondaryCtaHref": "#how-it-works",
     "stats": [
       {
-        "value": "2 m²",
-        "label": "Your plot"
+        "value": "12 mo",
+        "label": "Annual cycle"
       },
       {
-        "value": "Weekly",
-        "label": "Deliveries"
+        "value": "Real organic",
+        "label": "Transparent"
       },
       {
-        "value": "Real",
-        "label": "Farmer assigned"
+        "value": "Your share",
+        "label": "Direct from the farm"
       }
     ]
   },
@@ -157,7 +157,7 @@
       {
         "id": "c4",
         "title": "Grows with you",
-        "description": "Start with 2 m² and expand as you want. Add crop varieties as the seasons change."
+        "description": "Pick the share size that fits you. Adjust it at the end of each season — add crops, change your allocation."
       }
     ]
   },
@@ -207,10 +207,10 @@
   "farmer": {
     "tag": "Who tends your land",
     "name": "Aram Mkrtchyan",
-    "region": "Armavir region",
+    "region": "Kotayk region",
     "experience": "18 years farming",
     "quote": "Every plot I tend, I treat like my own family's land.",
-    "bio": "Aram has been farming the Armavir valley for 18 years. He grew up watching his father work the same soil. Today he tends over 40 individual plots for families across Yerevan — keeping detailed notes on each one, adjusting for the season, and treating every harvest with care.",
+    "bio": "Aram has been farming the Kotayk region for 18 years. He grew up watching his father work the same soil. Today he tends over 40 individual plots for families across Yerevan — keeping detailed notes on each one, adjusting for the season, and treating every harvest with care.",
     "image": "https://zlpkrecnzh3d1psv.public.blob.vercel-storage.com/uploads/1775500279088-gaq5mi.jpg",
     "imagePosition": "49% 0%"
   },
@@ -281,18 +281,18 @@
     "points": [
       {
         "id": "t1",
-        "title": "Limited to 20 plots",
-        "description": "We're starting small intentionally. The first 20 participants will shape how this works for everyone who comes after."
+        "title": "Limited to 30 places",
+        "description": "We're starting small intentionally. The first 30 participants will shape how this works for everyone who comes after."
       },
       {
         "id": "t2",
-        "title": "Launching spring 2026",
-        "description": "The first harvest season begins in September 2026. You'll receive updates as we get closer."
+        "title": "Launching Spring 2027",
+        "description": "The first harvest season begins in Spring 2027. You'll receive updates as we get closer."
       },
       {
         "id": "t3",
         "title": "One region first",
-        "description": "We're starting in Armavir, where our farmer partner is based. More regions come in year two."
+        "description": "We're starting in Kotayk, where our farmer partner is based. More regions come in year two."
       },
       {
         "id": "t4",
@@ -312,8 +312,8 @@
       },
       {
         "id": "f2",
-        "question": "How big is a 2 m² plot?",
-        "answer": "About the size of a large dining table. Small enough to tend easily, large enough to produce meaningful harvests each week."
+        "question": "What does 1 sqm mean here?",
+        "answer": "1 sqm is your personal share in this farm's annual organic production. At season start, you allocate it across the crops you want, and the farm grows your share accordingly. Through the year, you follow how your share grows."
       },
       {
         "id": "f3",
@@ -328,12 +328,12 @@
       {
         "id": "f5",
         "question": "What happens in winter?",
-        "answer": "The growing season in Armavir runs March through November. During winter months, plots rest and we send preserved goods where possible."
+        "answer": "The growing season in Kotayk runs March through November. During winter months, plots rest and we send preserved goods where possible."
       },
       {
         "id": "f6",
-        "question": "Is my plot really mine?",
-        "answer": "Yes. You're assigned a specific, named plot with a unique number. The land itself remains with the farming partner, but the crops grown on your plot are entirely yours."
+        "question": "Is my share really mine?",
+        "answer": "The land itself belongs to the farm partner. What you receive is a personal share in this farm's annual harvest — the produce tied to your share comes to you, along with a real, ongoing relationship with the farm."
       }
     ]
   },
@@ -341,10 +341,10 @@
     "tag": "Why this exists",
     "name": "Aleksandr Melikyan",
     "role": "Founder",
-    "paragraph1": "I started in code. Nine years building websites and platforms — readable, functional, clean. I thought in systems and logic. Then I started hiking. Not once or twice — seriously, repeatedly, deep into Armenian mountains through the Bardzunk movement I co-founded. And somewhere on those trails something shifted.",
+    "paragraph1": "I started in code. Eleven years building websites and platforms — readable, functional, clean. I thought in systems and logic. Then I started hiking. Not once or twice — seriously, repeatedly, deep into Armenian mountains through the Bardzunk movement I co-founded. And somewhere on those trails something shifted.",
     "paragraph2": "I started understanding Armenia differently. Not as a concept or a heritage word, but as soil, altitude, water, light. I started noticing that every Armenian I met — regardless of where they were born or how far they'd drifted — had this pull toward land. Not metaphorical. Physical. Like something encoded.",
     "paragraph3": "That's where this idea came from. Not from a business model. From a hike. From watching someone touch Armenian soil and go quiet.\n\nI'm a builder. I know how to start something small, prove it works, and grow it carefully. I've done it with code, with hiking programs, with educational projects. I'm not asking you to trust a pitch — I'm asking you to watch me build this in public, one season at a time. The failures will be documented the same as the successes.\n\n",
-    "trustText": "Pre-pilot opening spring 2025 · 20 plots · Armavir region",
+    "trustText": "Pre-pilot opening Spring 2027 · 30 places · Kotayk region",
     "image": "https://zlpkrecnzh3d1psv.public.blob.vercel-storage.com/uploads/1775500295502-p68xjj.jpg",
     "imagePosition": "86% 24%"
   },
@@ -356,11 +356,15 @@
     "reserveCtaHref": "#join"
   },
   "ctaFooter": {
-    "tag": "Join the pre-pilot",
-    "heading": "Be one of the first 20.",
-    "subtitle": "Reserve your plot now. We'll reach out with all the details before the season starts.",
-    "buttonLabel": "Reserve my plot",
+    "tag": "Join the waitlist",
+    "heading": "Join the Spring 2027 waitlist.",
+    "subtitle": "Leave your email and we'll be in touch before the Spring 2027 pilot begins.",
+    "buttonLabel": "Join the waitlist",
     "buttonHref": "#join",
-    "note": "No payment yet. Just your name and email. We'll contact you directly."
+    "note": "No payment. Just your email. We'll be in touch before the pilot starts.",
+    "successHeading": "You're on the list.",
+    "successBody": "We'll be in touch before the Spring 2027 pilot begins.",
+    "errorText": "Something went wrong. Please try again.",
+    "emailPlaceholder": "your@email.com"
   }
 }

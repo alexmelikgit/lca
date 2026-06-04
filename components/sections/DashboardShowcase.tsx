@@ -8,7 +8,7 @@ import { EASE, VIEWPORT } from '@/lib/animations';
 import type { DashboardShowcaseContent } from '@/types/content';
 
 const DEMO_CARD = {
-  plotName: 'Plot 7 — Armavir',
+  plotName: 'Plot 7 — Kotayk',
   status: 'Growing 🌱',
   crops: ['Tomatoes', 'Cucumbers', 'Herbs'],
   stats: { plotSize: '2 m²', seasonWeek: 'Week 14', estimatedYield: '~4 kg', harvestDate: 'Aug 12' },

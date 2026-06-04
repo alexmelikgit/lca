@@ -183,6 +183,10 @@ export interface CtaFooterContent {
   buttonLabel: string;
   buttonHref: string;
   note: string;
+  successHeading?: string;
+  successBody?: string;
+  errorText?: string;
+  emailPlaceholder?: string;
 }
 
 export interface DashboardShowcaseContent {

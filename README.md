@@ -5,7 +5,7 @@ Tagline: *"Own a piece of the Highland"*
 
 ## What it is
 
-Landing page for Hyeland — farming plots outside Yerevan for local residents, with weekly produce delivery. Pre-pilot, 20 plots, Armavir region.
+Landing page for Hyeland — share-based access to a real organic farm in Armenia. Pre-launch validation phase; pilot opens **Spring 2027** in the **Kotayk region**. See `LANDING_PIVOT_PLAN.md` and `docs/PRICING_MODEL_PIVOT.md` for the current model and roadmap.
 
 **Dev server:** `http://localhost:3000`
 
@@ -35,11 +35,10 @@ Stored in `.env.local` (`ADMIN_USERNAME` / `ADMIN_PASSWORD`). See `docs/ADMIN_PA
 
 | Section | What you can edit |
 |---------|-------------------|
+| **Waitlist** | Spring 2027 pilot signups — view, approve/decline, delete, CSV export |
 | **Navigation** | Logo, nav links, CTA buttons |
 | **Local Page** | Hero, Problem, FAQ, How it Works, Dashboard Showcase, and all other sections |
 | **Diaspora Page** | Diaspora version Hero, Testimonials, How it works |
-| **Farmer Profile** | Name, photo, quote, region |
-| **Available Plots** | Plot availability |
 | **Settings** | Pilot status, social links |
 
 ---

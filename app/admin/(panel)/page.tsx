@@ -4,11 +4,10 @@ import Link from 'next/link';
 import { getSiteSettings } from '@/lib/content';
 
 const QUICK_LINKS = [
+  { label: 'Waitlist', href: '/admin/waitlist', desc: 'Spring 2027 pilot signups' },
   { label: 'Navigation', href: '/admin/navigation', desc: 'Logo, nav links, CTA buttons' },
   { label: 'Local Page', href: '/admin/local', desc: 'Hero, Problem, FAQ and more' },
   { label: 'Diaspora Page', href: '/admin/diaspora', desc: 'Hero, Testimonials, How it works' },
-  { label: 'Farmer Profile', href: '/admin/farmer', desc: 'Name, photo, quote, region' },
-  { label: 'Available Plots', href: '/admin/plots', desc: 'Manage plot availability' },
   { label: 'Settings', href: '/admin/settings', desc: 'Pilot status, social links' },
 ];
 

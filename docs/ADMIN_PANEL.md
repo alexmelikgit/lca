@@ -13,10 +13,10 @@ The admin panel lives at `/admin` within the same Next.js project. It allows non
 | Auth | NextAuth.js v4, Credentials provider | No database needed for v1 — username + password in env |
 | Session | JWT, 8-hour expiry | Stateless, no Redis/DB required |
 | Route protection | `proxy.ts` (Next.js 16 middleware) using `withAuth` | Redirects all `/admin/*` to `/admin/login` when unauthenticated |
-| Content storage | JSON in `/content/` (filesystem) + Vercel Blob (admin edits) | Filesystem = git-versioned defaults; Blob = live overrides. `lib/content.ts` merges both — new fields added to filesystem never disappear after an admin save. |
-| Content reads | `lib/content.ts` typed helpers — merges `{ ...fsData, ...blobData }` | Filesystem provides defaults; Blob provides overrides. Same merge in `/api/admin/content` for admin panel reads. |
+| Content storage | JSON in `/content/` (filesystem) + Cloudflare R2 (admin edits) | Filesystem = git-versioned defaults; R2 = live overrides. `lib/content.ts` merges both — new fields added to filesystem never disappear after an admin save. R2 client lives in `lib/r2.ts`. |
+| Content reads | `lib/content.ts` typed helpers — merges `{ ...fsData, ...r2Data }` | Filesystem provides defaults; R2 provides overrides. Same merge in `/api/admin/content` for admin panel reads. |
 | Rich text | Plain textarea + markdown (future: react-markdown preview) | Avoids heavy editors; staff only needs basic formatting |
-| Image uploads | `POST /api/admin/upload` → `/public/uploads/` | Simple file storage; swap for Vercel Blob in production |
+| Image uploads | `POST /api/admin/upload` → R2 | Stored via `lib/r2.ts` and served from R2 public URL. |
 | Drag-to-reorder | `@dnd-kit/core` + `@dnd-kit/sortable` | Lightweight, accessible, headless |
 | Revalidation | `revalidatePath()` called in `/api/admin/save` | Triggers ISR for affected pages immediately after save |
 
@@ -284,7 +284,7 @@ openssl rand -base64 32
 ```json
 {
   "name": "Aram Mkrtchyan",
-  "region": "Armavir",
+  "region": "Kotayk",
   "years": 18,
   "quote": "Every plot I tend, I treat like my own family's land.",
   "bio": "Aram has been farming the Ararat valley for nearly two decades...",
@@ -298,8 +298,8 @@ openssl rand -base64 32
 [
   {
     "id": "plot-7",
-    "name": "Plot 7 — Armavir Valley",
-    "region": "Armavir",
+    "name": "Plot 7 — Kotayk",
+    "region": "Kotayk",
     "sizeM2": 2,
     "status": "available",
     "crops": ["Tomatoes", "Cucumbers"],
@@ -418,9 +418,7 @@ Accepts a multipart image upload, saves to `/public/uploads/`.
 | `/admin/navigation` | ✅ Done | Logo, CTA buttons, drag-to-reorder nav links |
 | `/admin/local` | ✅ Done | 13 tabs: Hero, Problem, How It Works, Dashboard, Health, Convenience, Progress, Plot Map, Farmer, Seasonal, Trust, FAQ, About, CTA |
 | `/admin/diaspora` | ✅ Done | 15 tabs: Hero, Problem, How It Works, Health, Convenience, Seasonal, Farmer, About, Trust, Dashboard Showcase, Progress, FAQ, CTA Footer, Ownership/Gift/Phase 2, Harvest Options |
-| `/admin/farmer` | 🔜 Planned | Farmer profile + photo upload |
-| `/admin/plots` | 🔜 Planned | Plots table + inline editing |
-| `/admin/faq` | 🔜 Planned | FAQ accordion editor (tabbed) |
+| `/admin/waitlist` | ✅ Done | Spring 2027 pilot signups — multi-select, approve/decline/delete, CSV export |
 | `/admin/settings` | 🔜 Planned | Pilot status, social links, demo data |
 
 ---
@@ -430,21 +428,21 @@ Accepts a multipart image upload, saves to `/public/uploads/`.
 ```
 Admin edits form
        ↓
-POST /api/admin/save → writes to Vercel Blob
+POST /api/admin/save → writes to Cloudflare R2
        ↓
-GET /api/admin/content → reads filesystem (defaults) merged with Blob (overrides)
+GET /api/admin/content → reads filesystem (defaults) merged with R2 (overrides)
        ↓
 lib/content.ts readJson → same merge on every page render
        ↓
 Component receives merged props → renders updated content
 ```
 
-In **dev mode**: changes appear on next page refresh (Blob token in `.env.local`).
-In **production** (Vercel): Blob reads are `cache: 'no-store'` — always fresh.
+In **dev mode**: changes appear on next page refresh (R2 credentials in `.env.local`).
+In **production** (Hetzner): `app/[locale]/page.tsx` uses `revalidate = false` (static at build) — R2 changes appear after the next manual deploy (`git pull` + restart).
 
 ### Plot field config
 
-`data/plot-field.json` is **static** — bundled at build time via static import, not Blob-managed.
+`data/plot-field.json` is **static** — bundled at build time via static import, not R2-managed.
 To update GPS corners, illustration, or pricing: edit the file and redeploy.
 Run `scripts/generate-illustration.py` to regenerate the SVG illustration from new coordinates.
 
@@ -526,10 +524,12 @@ That's it. No config, no migrations, no redeploy needed.
 
 ---
 
-## Production Deployment (Vercel)
+## Production Deployment (Hetzner)
 
-1. Set all env vars in Vercel dashboard:
+The Hetzner box is provisioned with the Node runtime and serves the built Next.js app behind a reverse proxy. Deploys are manual: SSH in, `git pull`, restart the service.
+
+1. Ensure these env vars are set on the server (`.env.local` next to the app, or systemd env file):
    - `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`
-2. The `/content/` directory is read-only on Vercel's filesystem — **switch to Vercel Blob or a database before deploying**
-3. `/public/uploads/` is also ephemeral on Vercel — use Vercel Blob for image uploads
-4. ISR works natively on Vercel — `revalidate = 60` requires no extra config
+2. R2 is the single source of admin overrides — `/content/` ships as defaults; admin saves write to R2 via `lib/r2.ts`.
+3. The landing pages use `revalidate = false`, so R2 changes only appear after the next manual deploy. Plan deploys accordingly.
+4. The build process is `npm ci && npm run build && (restart node service)`.

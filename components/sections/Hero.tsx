@@ -254,7 +254,7 @@ export default function Hero({ content }: Props) {
               <div style={{ background: '#2D5A27', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '4px' }}>Your plot</div>
-                  <div style={{ color: 'white', fontSize: '15px', fontWeight: 600 }}>Plot 7 — Armavir</div>
+                  <div style={{ color: 'white', fontSize: '15px', fontWeight: 600 }}>Plot 7 — Kotayk</div>
                 </div>
                 <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: '20px', padding: '4px 11px', color: '#A8D4A0', fontSize: '12px', whiteSpace: 'nowrap' }}>Growing 🌱</div>
               </div>

@@ -124,7 +124,7 @@ export default function CTAFooter({ content, variant = 'gold' }: Props) {
                   color: goldColor,
                   margin: 0,
                 }}>
-                  You&apos;re on the list.
+                  {content.successHeading ?? "You're on the list."}
                 </p>
                 <p style={{
                   fontFamily: 'var(--font-lato)',
@@ -133,7 +133,7 @@ export default function CTAFooter({ content, variant = 'gold' }: Props) {
                   color: 'rgba(255,255,255,0.55)',
                   margin: 0,
                 }}>
-                  We&apos;ll reach out before the season starts.
+                  {content.successBody ?? "We'll reach out before the season starts."}
                 </p>
               </div>
             ) : (
@@ -144,7 +144,7 @@ export default function CTAFooter({ content, variant = 'gold' }: Props) {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
+                    placeholder={content.emailPlaceholder ?? 'your@email.com'}
                     style={{
                       flex: 1,
                       fontFamily: 'var(--font-lato)',
@@ -183,7 +183,7 @@ export default function CTAFooter({ content, variant = 'gold' }: Props) {
                 </div>
                 {status === 'error' && (
                   <p style={{ fontFamily: 'var(--font-lato)', fontSize: '0.85rem', color: 'rgba(255,120,120,0.9)', margin: 0 }}>
-                    Something went wrong. Please try again.
+                    {content.errorText ?? 'Something went wrong. Please try again.'}
                   </p>
                 )}
               </form>
