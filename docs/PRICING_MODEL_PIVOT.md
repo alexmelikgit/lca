@@ -51,10 +51,11 @@
 
 ## 7. Farm + farmer identity
 
-> *Fill in (currently TBC):*
+> *Partial answer (2026-06-04): **Region = Kotayk** (was Armavir). All other identity details still TBC.*
+> Fill in:
 > - Farm name
 > - Farmer name + photo
-> - Region
+> - Region — **Kotayk** ✓
 > - Years of experience
 > - "Not used" list (no glyphosate, no urea, no synthetic pesticides, no synthetic fertilizers — final list confirmed by farmer)
 > - Visit policy

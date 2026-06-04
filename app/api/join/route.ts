@@ -5,11 +5,14 @@ const SIGNUPS_KEY = 'waitlist/signups.json';
 // Simple permissive email regex — RFC-compliant is overkill for a waitlist gate.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-interface Signup {
+export type SignupStatus = 'pending' | 'approved' | 'declined';
+
+export interface Signup {
   email: string;
   timestamp: string;
   locale?: 'hy' | 'en';
   source?: string;
+  status?: SignupStatus;
 }
 
 function localeFromReferer(referer: string | null): 'hy' | 'en' | undefined {
@@ -37,6 +40,7 @@ export async function POST(req: Request) {
       timestamp: new Date().toISOString(),
       locale: localeFromReferer(req.headers.get('referer')),
       source: 'landing',
+      status: 'pending',
     };
 
     // Read existing signups from R2 (NoSuchKey → empty list).

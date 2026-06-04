@@ -1,5 +1,8 @@
 # Local Landing Pivot Implementation Plan
 
+> **Status update (2026-06-04 / branch `feat/landing-pivot`):**
+> Phase 1 batches 1 + 2 are implemented in this branch (FS + R2 + verified live in dev). Additional Phase-1-adjacent work also done: CTAFooter i18n (success/error/placeholder localized), waitlist persistence (`/api/join` → R2 `waitlist/signups.json`), admin Waitlist page at `/admin/waitlist` with multi-select actions, admin sidebar cleanup (Farmer Profile / Available Plots / FAQ removed), region rename Armavir → Kotayk across content. See bottom of §14 for the running Phase 1 status checklist.
+>
 > Discovery + planning deliverable. **No production code is changed by this document.**
 > All proposed copy is **DRAFT DIRECTION — not approved final text.**
 > All numbers (pricing, buffer %, delivery fee, per-crop kg prices) are **PLACEHOLDERS** pending the Spring 2027 pricing pass.
@@ -556,7 +559,7 @@ The brief requires identifying consumers of shared components before any breakin
 
 6. **Drone footage** — does the 366MB source actually exist somewhere already, or does it need to be filmed? If filmed: by whom, when, with what authorization at the Armavir field?
 
-7. **Farm identity + farmer "not used" list — all TBC.** Is the new-model farm partner the same Aram Mkrtchyan in the same Armavir region? Or has the farm/region/farmer changed? Until confirmed, leave name, region, photo, years of experience, farm name, and the "not used" list as placeholder slots and don't render the public claims.
+7. **Farm identity — partial answer 2026-06-04.** **Region is confirmed changed**: Armavir → **Kotayk**. Other identity details (farmer name, photo, years of experience, farm name, visit policy, drone-update cadence, "not used" list) are still TBC. The 2026-06-04 batch updated `farmer.region`, `farmer.bio` regional clause, `trust.points[2].description`, `faq.items[4] (f5).answer`, and `about.trustText` to "Kotayk / Կոտայք" in both locales (FS + R2). The Hero + DashboardShowcase mockups had hardcoded `Plot 7 — Armavir` strings — both updated to `Plot 7 — Kotayk` (Phase 2 will replace the entire mockup per §4.1). The Armavir GPS in `data/plot-field.json` is no longer the active site but is kept in place because diaspora still imports it.
 
 8. **Should Progress section stay or go?** Under new model, the size ladder is meaningless. Recommendation: revise into long-relationship timeline. Confirm direction.
 
@@ -595,6 +598,29 @@ Two-state framing from §7: **Pre-launch** phases (Phase 1, 2) ship before Feb 2
 9. Decide section-visibility re-enablement per §13/4 — `ctaFooter`, `farmer`, `seasonal`. **Do NOT auto-flip these to `true`.** Each is a deliberate choice with its own copy/content prerequisites.
 
 **Dependencies**: §13/0 unblocked; §13/2, §13/4, §13/7 answered. **Risk**: low. **Effort**: per-section S.
+
+### Phase 1 status checklist (2026-06-04)
+
+| Item | Status | Notes |
+|---|---|---|
+| Trust t1 capacity → 30 (both locales) | ✅ FS + R2 | §13/2 answer = 30 |
+| Trust t2 timing → Spring 2027 (both) | ✅ FS + R2 | §13/1 answer = generic season-level |
+| About paragraph1 → 11 years (both) | ✅ FS sync | live R2 already had 11 |
+| About trustText → Spring 2027 · 30 places · Kotayk | ✅ FS + R2 | per §13/1 + §13/2 + §13/7 partial |
+| Hero stats → 12 mo / Real organic · Transparent / Your share | ✅ FS + R2 | per §4.2 plan defaults |
+| Hero primary CTA + Nav local CTA → `#join` + waitlist label | ✅ FS + R2 | §13/14 path A (CTAFooter is the surface) |
+| Convenience c4 → drop 2 m², share-resize framing | ✅ FS + R2 | |
+| FAQ f2 → "What does 1 sqm mean here?" + §6 positive | ✅ FS + R2 | |
+| FAQ f6 → share-vs-exclusive honest answer | ✅ FS + R2 | |
+| CTAFooter copy → waitlist framing, drop "20" | ✅ FS + R2 | tag, heading, subtitle, buttonLabel, note rewritten |
+| `sectionVisibility.ctaFooter: true` | ✅ R2 | per §13/4 — CTAFooter is the waitlist surface |
+| `sectionVisibility.farmer / seasonal / plotMap` stay false | ✅ R2 | per §13/4 |
+| Wording: սպասելացուցակ → սպասման ցուցակ (HY) | ✅ FS + R2 | wording correction |
+| Region: Armavir → Kotayk (Armenian + English) | ✅ FS + R2 + Hero.tsx + DashboardShowcase.tsx | farmer.region/bio, trust t3, FAQ f5, about.trustText, hardcoded mockup strings |
+| **Bonus, beyond plan Phase 1**: CTAFooter i18n | ✅ Component + types + FS + R2 | new optional fields: successHeading, successBody, errorText, emailPlaceholder; falls back to English for diaspora compat |
+| **Bonus**: `/api/join` persistence | ✅ Code + R2 | writes to `waitlist/signups.json`, status='pending', dedup, tighter email regex |
+| **Bonus**: `/admin/waitlist` page | ✅ Server page + WaitlistTable client + bulk-action API | multi-select, approve/decline/delete (with confirm), CSV download, mailto-BCC |
+| **Bonus**: Admin sidebar cleanup | ✅ Sidebar.tsx + dashboard | removed Farmer Profile / Available Plots / FAQ stale entries; added Waitlist |
 
 ### Phase 2 — Structural changes (Pre-launch · medium risk, type + shared-component changes)
 

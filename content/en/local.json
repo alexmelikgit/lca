@@ -207,10 +207,10 @@
   "farmer": {
     "tag": "Who tends your land",
     "name": "Aram Mkrtchyan",
-    "region": "Armavir region",
+    "region": "Kotayk region",
     "experience": "18 years farming",
     "quote": "Every plot I tend, I treat like my own family's land.",
-    "bio": "Aram has been farming the Armavir valley for 18 years. He grew up watching his father work the same soil. Today he tends over 40 individual plots for families across Yerevan — keeping detailed notes on each one, adjusting for the season, and treating every harvest with care.",
+    "bio": "Aram has been farming the Kotayk region for 18 years. He grew up watching his father work the same soil. Today he tends over 40 individual plots for families across Yerevan — keeping detailed notes on each one, adjusting for the season, and treating every harvest with care.",
     "image": "https://zlpkrecnzh3d1psv.public.blob.vercel-storage.com/uploads/1775500279088-gaq5mi.jpg",
     "imagePosition": "49% 0%"
   },
@@ -292,7 +292,7 @@
       {
         "id": "t3",
         "title": "One region first",
-        "description": "We're starting in Armavir, where our farmer partner is based. More regions come in year two."
+        "description": "We're starting in Kotayk, where our farmer partner is based. More regions come in year two."
       },
       {
         "id": "t4",
@@ -328,7 +328,7 @@
       {
         "id": "f5",
         "question": "What happens in winter?",
-        "answer": "The growing season in Armavir runs March through November. During winter months, plots rest and we send preserved goods where possible."
+        "answer": "The growing season in Kotayk runs March through November. During winter months, plots rest and we send preserved goods where possible."
       },
       {
         "id": "f6",
@@ -344,7 +344,7 @@
     "paragraph1": "I started in code. Eleven years building websites and platforms — readable, functional, clean. I thought in systems and logic. Then I started hiking. Not once or twice — seriously, repeatedly, deep into Armenian mountains through the Bardzunk movement I co-founded. And somewhere on those trails something shifted.",
     "paragraph2": "I started understanding Armenia differently. Not as a concept or a heritage word, but as soil, altitude, water, light. I started noticing that every Armenian I met — regardless of where they were born or how far they'd drifted — had this pull toward land. Not metaphorical. Physical. Like something encoded.",
     "paragraph3": "That's where this idea came from. Not from a business model. From a hike. From watching someone touch Armenian soil and go quiet.\n\nI'm a builder. I know how to start something small, prove it works, and grow it carefully. I've done it with code, with hiking programs, with educational projects. I'm not asking you to trust a pitch — I'm asking you to watch me build this in public, one season at a time. The failures will be documented the same as the successes.\n\n",
-    "trustText": "Pre-pilot opening Spring 2027 · 30 places · Armavir region",
+    "trustText": "Pre-pilot opening Spring 2027 · 30 places · Kotayk region",
     "image": "https://zlpkrecnzh3d1psv.public.blob.vercel-storage.com/uploads/1775500295502-p68xjj.jpg",
     "imagePosition": "86% 24%"
   },

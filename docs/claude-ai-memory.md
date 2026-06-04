@@ -2,10 +2,19 @@
 
 ## What is Hyeland?
 
-A Next.js web app for selling fractional land plots in Armenia to diaspora Armenians and locals.
+A Next.js web app that gives users a personal share in a real organic farm in Armenia. Users allocate their share across crops at season start; the farm grows and delivers. Two audiences: local Armenia residents and diaspora.
 
 **Brand:** Hyeland = Hye (հայ, Armenian) + land, also Highland = Armenian Highlands (Հայկական լեռնաշխարհ). Dual meaning is intentional — works for both local and diaspora audiences without translation.
-**Tagline:** "Own a piece of the Highland"
+**Tagline:** "Own a piece of the Highland" (the word "piece" is interpreted: a share + relationship, not exclusive land ownership)
+
+## Pivot Status (current)
+
+The product pivoted from "buy a fixed 2m² physical plot, get weekly delivery" → "buy a share in the farm's annual organic production, allocate across crops, receive seasonal harvest + off-season processed goods." See `LANDING_PIVOT_PLAN.md` (root) for the discovery + section-by-section roadmap and `docs/PRICING_MODEL_PIVOT.md` (stub awaiting Alex) for the canonical model.
+
+**Pilot launch:** Spring 2027 (was 2026).
+**Region:** Kotayk (was Armavir).
+**Capacity:** 30 places.
+**Landing today:** pre-launch validation surface. PlotField map, Farmer, Seasonal sections are hidden in live R2 (`sectionVisibility.*: false`). CTAFooter is the landing-side waitlist signup form.
 
 ---
 
@@ -31,11 +40,19 @@ app/
   admin/
     (auth)/login/         — Admin login
     (panel)/
-      page.tsx            — Admin dashboard
-      local/page.tsx      — Edit local landing (13 tabs)
+      page.tsx            — Admin dashboard (quick links + diaspora toggle)
+      waitlist/page.tsx   — Spring 2027 waitlist signups (multi-select, approve/decline/delete, CSV)
+      local/page.tsx      — Edit local landing (14 tabs)
       diaspora/page.tsx   — Edit diaspora landing (15 tabs)
       navigation/page.tsx — Edit nav links
       how-it-works/       — Edit how-it-works section
+
+  api/
+    join/route.ts                — Public POST: writes signups to R2 `waitlist/signups.json`
+    admin/waitlist/route.ts      — Auth-protected POST: bulk delete/approve/decline
+    admin/save/route.ts          — Auth-protected POST: writes content to R2
+    admin/content/route.ts       — Auth-protected GET: reads FS+R2 merged content
+    admin/upload/route.ts        — Auth-protected POST: image upload to R2
 
 components/
   layout/
@@ -65,10 +82,15 @@ content/
   [locale]/local.json
   [locale]/diaspora.json
   how-it-works.json
+  settings.json
   activity-log.json
 
+# R2-only (not in repo):
+#   waitlist/signups.json       — waitlist signups, written by /api/join
+
 scripts/
-  migrate-blob-to-r2.ts   — One-time migration from Vercel Blob → R2
+  migrate-blob-to-r2.ts   — One-time migration from Vercel Blob → R2 (historical)
+  list-waitlist.mjs       — Read-only CLI to print signups (`node scripts/list-waitlist.mjs`)
   generate-illustration.py
   fetch-satellite.py
 ```
@@ -97,32 +119,34 @@ Protected by next-auth session. Tabs save to R2, then call `/api/admin/save` whi
 2. Appends to activity log
 3. Calls `revalidatePath()` for affected pages + `revalidatePath('/', 'layout')` + `revalidatePath('/[locale]', 'layout')` + `revalidatePath('/[locale]/diaspora', 'page')`
 
-### Local page tabs (13):
+### Sidebar (current):
+Dashboard · Waitlist · Navigation · Local Page · Diaspora Page · Settings.
+(Removed in pivot cleanup: Farmer Profile, Available Plots, FAQ — they pointed to non-existent routes.)
+
+### Local page tabs (14):
 Hero, Problem, How It Works, Dashboard, Health, Convenience, Progress, Plot Map, Farmer, Seasonal, Trust, FAQ, About, CTA
 
 ### Diaspora page tabs (15):
 Hero, Problem, How It Works, Health, Convenience, Seasonal, Farmer, About, Trust, Dashboard Showcase, Progress, FAQ, CTA Footer, Ownership/Gift/Phase 2, Harvest Options
 
+### Waitlist (`/admin/waitlist`)
+
+Reads `waitlist/signups.json` directly from R2 (server component, `force-dynamic`). Bulk actions hit `POST /api/admin/waitlist` with `{ action, emails[] }` — supports `delete`, `approve`, `decline`. Signups have an optional `status` field (default `'pending'`). CSV download + mailto-BCC are also available. The `/api/join` endpoint sets `status: 'pending'` on new signups and dedupes by email.
+
 ---
 
-## PlotField Feature (Complete)
+## PlotField (Hidden under new model)
 
-Real GPS field in Armenia. 210 plots (14 cols × 15 rows), 2m² each, $21/mo.
+Built for the old "exclusive 2m² physical plot" model, which the pivot invalidated. **Currently hidden** in live: `sectionVisibility.plotMap: false` in R2 for both locales.
 
-**GPS corners (from KML):**
-- TL: 40.25260122, 44.53419455
-- TR: 40.25267617, 44.53440019
-- BR: 40.25254870, 44.53461399
-- BL: 40.25243123, 44.53429019
+**Do NOT re-enable for local landing.** Deletion is deferred — `app/[locale]/diaspora/page.tsx` still imports `PlotField` and calls `getPlotFieldConfig()`. The assets (illustration SVG, satellite image, GPS corners) may eventually be repurposed as proof-of-place visuals for the Transparency Pact (positive share framing, not exclusive ownership). Tracked as Open Question §13/5 in `LANDING_PIVOT_PLAN.md`.
 
-**Image:** `/public/images/field-illustration.svg` (1024×718) — topographic style, brand green/gold
-**Satellite fallback:** `/public/images/field-satellite.jpg`
+The old config (kept for diaspora until that pivot lands):
+- 210 plots (14×15), 2m² each, $21/mo (per-plot price NOT used in new model)
+- GPS corners point to the historical Armavir partner field; the new pilot region is **Kotayk** (separate site, GPS TBC)
+- Image: `/public/images/field-illustration.svg` (1024×718), satellite fallback `/public/images/field-satellite.jpg`
 
-**Plot states:** available (white), sold (red), reserved (gold), selected (yellow stroke #FFE066)
-**Mobile UX:** info bar below map. Desktop: overlay panel bottom-left.
-**CTA:** appears only on tap-selected plot (not hover).
-
-**Architecture rule:** Static image + SVG overlay, NOT a map library. Grid math / renderer / interaction are separated. Renderers are swappable via PlotField.tsx entry point.
+**Architecture rule (still applies if reused):** static image + SVG overlay, not a map library. Grid math / renderer / interaction are separated.
 
 ---
 
@@ -141,7 +165,12 @@ Two locales: `hy` (Armenian) and `en` (English). URL structure: `/hy`, `/en`, `/
 
 ---
 
-## Phase 2 (Not Started)
+## Next Phases (per LANDING_PIVOT_PLAN.md)
 
-- Admin panel for plot status overrides (sold/available/reserved per plot)
-- `PlotFieldMap.tsx` — Leaflet renderer for owner dashboard (map navigation context, not landing page)
+**Phase 1 (mostly done in this branch):** copy fixes (Trust, About, Convenience, FAQ, Hero stats), CTAFooter re-enable, waitlist persistence, admin Waitlist page, region rename to Kotayk.
+
+**Phase 2 (Pre-launch, structural):** Transparency Pact section (gated on farm-identity confirmation), Off-Season Story section, §6 Mandatory Framing block, Progress milestone reframe (drop sqm ladder), Hero mockup rewrite, per-locale `<title>` + meta.
+
+**Phase 3 (Launch-ready, after Spring 2027 pricing):** Crop Allocation Explainer with real numbers, Pricing block, Drone video integration, Vercel-Blob → R2 image migration.
+
+**Out of scope for this pivot task:** diaspora landing, App's claim flow (still old-model).
